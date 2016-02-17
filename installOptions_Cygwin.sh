@@ -31,7 +31,7 @@ echo '#!/bin/sh' > metaxa2 || exit $?
 echo "export PATH=$PREFIX/share/claident/bin:\$PATH" >> metaxa2 || exit $?
 echo "perl $PREFIX/share/claident/bin/metaxa2 \$*" >> metaxa2 || exit $?
 chmod 755 metaxa2 || exit $?
-mv metaxa2 $PREFIX/bin || exit $?
+mv metaxa2 $PREFIX/bin/ || exit $?
 echo 'Metaxa was installed correctly!'
 touch .metaxa || exit $?
 fi
@@ -45,7 +45,7 @@ echo '#!/bin/sh' > ITSx || exit $?
 echo "export PATH=$PREFIX/share/claident/bin:\$PATH" >> ITSx || exit $?
 echo "perl $PREFIX/share/claident/bin/ITSx \$*" >> ITSx || exit $?
 chmod 755 ITSx || exit $?
-mv ITSx $PREFIX/bin || exit $?
+mv ITSx $PREFIX/bin/ || exit $?
 echo 'ITSx was installed correctly!'
 touch .itsx || exit $?
 fi

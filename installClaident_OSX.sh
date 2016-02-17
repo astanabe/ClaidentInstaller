@@ -46,6 +46,7 @@ sh autogen.sh || exit $?
 CC=gcc-mp-4.8 CXX=g++-mp-4.8 CFLAGS="-O3 -m64 -fomit-frame-pointer -finline-functions" CXXFLAGS="-O3 -m64 -fomit-frame-pointer -finline-functions" CPPFLAGS="-I/opt/local/include" LDFLAGS="-O3 -m64 -L/opt/local/lib" sh ./configure --prefix=$PREFIX --disable-pdfman || exit $?
 gmake || exit $?
 gmake install-exec || sudo gmake install-exec || exit $?
+ln -s $PREFIX/bin/vsearch $PREFIX/share/claident/bin/vsearch || sudo ln -s $PREFIX/bin/vsearch $PREFIX/share/claident/bin/vsearch || exit $?
 cd .. || exit $?
 rm -rf vsearch-1.9.10 || exit $?
 rm -f vsearch-1.9.10.tar.gz || exit $?

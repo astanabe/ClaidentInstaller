@@ -45,6 +45,7 @@ sh autogen.sh || exit $?
 CFLAGS="-O3 -fomit-frame-pointer -finline-functions" CPPFLAGS="-O3 -fomit-frame-pointer -finline-functions" LDFLAGS="-O3 -fomit-frame-pointer -finline-functions" sh ./configure --prefix=$PREFIX --disable-pdfman || exit $?
 make || exit $?
 make install-exec || exit $?
+ln -s $PREFIX/bin/vsearch $PREFIX/share/claident/bin/vsearch || exit $?
 cd .. || exit $?
 rm -rf vsearch-1.9.10 || exit $?
 rm -f vsearch-1.9.10.tar.gz || exit $?
