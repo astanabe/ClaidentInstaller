@@ -39,30 +39,30 @@ touch .claident || exit $?
 fi
 # download , compile, and install VSEARCH
 if ! test -e .vsearch; then
-wget -c https://github.com/torognes/vsearch/archive/v1.9.10.tar.gz -O vsearch-1.9.10.tar.gz || exit $?
-tar -xzf vsearch-1.9.10.tar.gz || exit $?
-cd vsearch-1.9.10 || exit $?
+wget -c https://github.com/torognes/vsearch/archive/v1.10.0.tar.gz -O vsearch-1.10.0.tar.gz || exit $?
+tar -xzf vsearch-1.10.0.tar.gz || exit $?
+cd vsearch-1.10.0 || exit $?
 sh autogen.sh || exit $?
 CFLAGS="-O3 -fomit-frame-pointer -finline-functions" CPPFLAGS="-O3 -fomit-frame-pointer -finline-functions" LDFLAGS="-O3 -fomit-frame-pointer -finline-functions" sh ./configure --prefix=$PREFIX --disable-pdfman || exit $?
 make || exit $?
 make install-exec || sudo make install-exec || exit $?
 ln -s $PREFIX/bin/vsearch $PREFIX/share/claident/bin/vsearch || sudo ln -s $PREFIX/bin/vsearch $PREFIX/share/claident/bin/vsearch || exit $?
 cd .. || exit $?
-rm -rf vsearch-1.9.10 || exit $?
-rm -f vsearch-1.9.10.tar.gz || exit $?
+rm -rf vsearch-1.10.0 || exit $?
+rm -f vsearch-1.10.0.tar.gz || exit $?
 rm -f $PREFIX/share/claident/bin/vsearch || sudo rm -f $PREFIX/share/claident/bin/vsearch || exit $?
 touch .vsearch || exit $?
 fi
 # download, and install BLAST+
 if ! test -e .blast; then
-wget -c ftp://ftp.ncbi.nih.gov/blast/executables/blast+/2.2.31/ncbi-blast-2.2.31+-x64-linux.tar.gz || exit $?
-tar -xzf ncbi-blast-2.2.31+-x64-linux.tar.gz || exit $?
-cd ncbi-blast-2.2.31+/bin || exit $?
+wget -c ftp://ftp.ncbi.nih.gov/blast/executables/blast+/2.3.0/ncbi-blast-2.3.0+-x64-linux.tar.gz || exit $?
+tar -xzf ncbi-blast-2.3.0+-x64-linux.tar.gz || exit $?
+cd ncbi-blast-2.3.0+/bin || exit $?
 mkdir -p $PREFIX/share/claident/bin || sudo mkdir -p $PREFIX/share/claident/bin || exit $?
 mv * $PREFIX/share/claident/bin/ || sudo mv * $PREFIX/share/claident/bin/ || exit $?
 cd ../.. || exit $?
-rm -rf ncbi-blast-2.2.31+ || exit $?
-rm -f ncbi-blast-2.2.31+-x64-linux.tar.gz || exit $?
+rm -rf ncbi-blast-2.3.0+ || exit $?
+rm -f ncbi-blast-2.3.0+-x64-linux.tar.gz || exit $?
 touch .blast || exit $?
 fi
 echo 'Installation finished correctly!'
