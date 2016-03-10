@@ -12,12 +12,12 @@ touch .hmmer || exit $?
 fi
 # download and install MAFFT7
 if ! test -e .mafft; then
-wget -c http://mafft.cbrc.jp/alignment/software/mafft-7.271-mingw64.tar || exit $?
-tar -xf mafft-7.271-mingw64.tar || exit $?
+wget -c http://mafft.cbrc.jp/alignment/software/mafft-7.273-mingw64.tar || exit $?
+tar -xf mafft-7.273-mingw64.tar || exit $?
 mv usr/local/libexec/mafft $PREFIX/share/claident/bin/mafftdir || exit $?
 perl -i -npe 's/\/usr\/local\/libexec\/mafft/$ENV{"PREFIX"}\/share\/claident\/bin\/mafftdir/;s/prefix="\$MAFFT_BINARIES"/prefix=$ENV{"PREFIX"}\/share\/claident\/bin\/mafftdir/' usr/local/bin/mafft || exit $?
 mv usr/local/bin/mafft $PREFIX/share/claident/bin/ || exit $?
-rm -rf mafft-7.271-mingw64.tar usr || exit $?
+rm -rf mafft-7.273-mingw64.tar usr || exit $?
 echo 'MAFFT was installed correctly!'
 touch .mafft || exit $?
 fi

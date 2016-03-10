@@ -12,11 +12,11 @@ touch .hmmer || exit $?
 fi
 # download and install MAFFT
 if ! test -e .mafft; then
-wget -c http://mafft.cbrc.jp/alignment/software/mafft-7.271-mac.zip || exit $?
-unzip -qq mafft-7.271-mac.zip || exit $?
+wget -c http://mafft.cbrc.jp/alignment/software/mafft-7.273-mac.zip || exit $?
+unzip -qq mafft-7.273-mac.zip || exit $?
 mv mafft-mac/mafft.bat $PREFIX/share/claident/bin/mafft || sudo mv mafft-mac/mafft.bat $PREFIX/share/claident/bin/mafft || exit $?
 mv mafft-mac/mafftdir $PREFIX/share/claident/bin/ || sudo mv mafft-mac/mafftdir $PREFIX/share/claident/bin/ || exit $?
-rm -rf mafft-7.271-mac.zip mafft-mac || exit $?
+rm -rf mafft-7.273-mac.zip mafft-mac || exit $?
 echo 'MAFFT was installed correctly!'
 touch .mafft || exit $?
 fi

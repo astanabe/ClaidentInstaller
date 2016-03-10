@@ -28,28 +28,28 @@ touch .pear || exit $?
 fi
 # download, and install Claident
 if ! test -e .claident; then
-wget -c http://www.fifthdimension.jp/products/claident/claident-0.2.2015.11.19.zip || exit $?
-unzip -qq claident-0.2.2015.11.19.zip || exit $?
-cd claident-0.2.2015.11.19 || exit $?
+wget -c http://www.fifthdimension.jp/products/claident/claident-0.2.2016.03.11.zip || exit $?
+unzip -qq claident-0.2.2016.03.11.zip || exit $?
+cd claident-0.2.2016.03.11 || exit $?
 sh install_on_OSX.sh || exit $?
 cd .. || exit $?
-rm -rf claident-0.2.2015.11.19 || exit $?
-rm -f claident-0.2.2015.11.19.zip || exit $?
+rm -rf claident-0.2.2016.03.11 || exit $?
+rm -f claident-0.2.2016.03.11.zip || exit $?
 touch .claident || exit $?
 fi
 # download , compile, and install VSEARCH
 if ! test -e .vsearch; then
-wget -c https://github.com/torognes/vsearch/archive/v1.10.0.tar.gz -O vsearch-1.10.0.tar.gz || exit $?
-gnutar -xzf vsearch-1.10.0.tar.gz || exit $?
-cd vsearch-1.10.0 || exit $?
+wget -c https://github.com/torognes/vsearch/archive/v1.10.1.tar.gz -O vsearch-1.10.1.tar.gz || exit $?
+gnutar -xzf vsearch-1.10.1.tar.gz || exit $?
+cd vsearch-1.10.1 || exit $?
 sh autogen.sh || exit $?
 CC=gcc-mp-4.8 CXX=g++-mp-4.8 CFLAGS="-O3 -m64 -fomit-frame-pointer -finline-functions" CXXFLAGS="-O3 -m64 -fomit-frame-pointer -finline-functions" CPPFLAGS="-I/opt/local/include" LDFLAGS="-O3 -m64 -L/opt/local/lib" sh ./configure --prefix=$PREFIX --disable-pdfman || exit $?
 gmake || exit $?
 gmake install-exec || sudo gmake install-exec || exit $?
 ln -s $PREFIX/bin/vsearch $PREFIX/share/claident/bin/vsearch || sudo ln -s $PREFIX/bin/vsearch $PREFIX/share/claident/bin/vsearch || exit $?
 cd .. || exit $?
-rm -rf vsearch-1.10.0 || exit $?
-rm -f vsearch-1.10.0.tar.gz || exit $?
+rm -rf vsearch-1.10.1 || exit $?
+rm -f vsearch-1.10.1.tar.gz || exit $?
 rm -f $PREFIX/share/claident/bin/vsearch || sudo rm -f $PREFIX/share/claident/bin/vsearch || exit $?
 touch .vsearch || exit $?
 fi
