@@ -46,11 +46,10 @@ sh autogen.sh || exit $?
 CC=gcc-mp-4.8 CXX=g++-mp-4.8 CFLAGS="-O3 -m64 -fomit-frame-pointer -finline-functions" CXXFLAGS="-O3 -m64 -fomit-frame-pointer -finline-functions" CPPFLAGS="-I/opt/local/include" LDFLAGS="-O3 -m64 -L/opt/local/lib" sh ./configure --prefix=$PREFIX --disable-pdfman || exit $?
 gmake || exit $?
 gmake install-exec || sudo gmake install-exec || exit $?
-ln -s $PREFIX/bin/vsearch $PREFIX/share/claident/bin/vsearch || sudo ln -s $PREFIX/bin/vsearch $PREFIX/share/claident/bin/vsearch || exit $?
+ln -sf $PREFIX/bin/vsearch $PREFIX/share/claident/bin/vsearch || sudo ln -sf $PREFIX/bin/vsearch $PREFIX/share/claident/bin/vsearch || exit $?
 cd .. || exit $?
 rm -rf vsearch-1.10.1 || exit $?
 rm -f vsearch-1.10.1.tar.gz || exit $?
-rm -f $PREFIX/share/claident/bin/vsearch || sudo rm -f $PREFIX/share/claident/bin/vsearch || exit $?
 touch .vsearch || exit $?
 fi
 # download, and install BLAST+
