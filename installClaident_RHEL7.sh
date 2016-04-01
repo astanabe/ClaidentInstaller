@@ -39,18 +39,30 @@ touch .claident || exit $?
 fi
 # download , compile, and install VSEARCH
 if ! test -e .vsearch; then
-wget -c https://github.com/torognes/vsearch/archive/v1.10.1.tar.gz -O vsearch-1.10.1.tar.gz || exit $?
-tar -xzf vsearch-1.10.1.tar.gz || exit $?
-cd vsearch-1.10.1 || exit $?
-sh autogen.sh || exit $?
+wget -c https://github.com/torognes/vsearch/archive/v1.10.2.tar.gz -O vsearch-1.10.2.tar.gz || exit $?
+tar -xzf vsearch-1.10.2.tar.gz || exit $?
+cd vsearch-1.10.2 || exit $?
 CFLAGS="-O3 -fomit-frame-pointer -finline-functions" CPPFLAGS="-O3 -fomit-frame-pointer -finline-functions" LDFLAGS="-O3 -fomit-frame-pointer -finline-functions" sh ./configure --prefix=$PREFIX --disable-pdfman || exit $?
 make || exit $?
 make install-exec || sudo make install-exec || exit $?
 ln -sf $PREFIX/bin/vsearch $PREFIX/share/claident/bin/vsearch || sudo ln -sf $PREFIX/bin/vsearch $PREFIX/share/claident/bin/vsearch || exit $?
 cd .. || exit $?
-rm -rf vsearch-1.10.1 || exit $?
-rm -f vsearch-1.10.1.tar.gz || exit $?
+rm -rf vsearch-1.10.2 || exit $?
+rm -f vsearch-1.10.2.tar.gz || exit $?
 touch .vsearch || exit $?
+fi
+# download , compile, and install VSEARCH5D
+if ! test -e .vsearch5d; then
+wget -c https://github.com/astanabe/vsearch5d/archive/1.10.2.tar.gz -O vsearch5d-1.10.2.tar.gz || exit $?
+tar -xzf vsearch5d-1.10.2.tar.gz || exit $?
+cd vsearch5d-1.10.2 || exit $?
+CFLAGS="-O3 -fomit-frame-pointer -finline-functions" CPPFLAGS="-O3 -fomit-frame-pointer -finline-functions" LDFLAGS="-O3 -fomit-frame-pointer -finline-functions" sh ./configure --prefix=$PREFIX/share/claident || exit $?
+make || exit $?
+make install-exec || sudo make install-exec || exit $?
+cd .. || exit $?
+rm -rf vsearch5d-1.10.2 || exit $?
+rm -f vsearch5d-1.10.2.tar.gz || exit $?
+touch .vsearch5d || exit $?
 fi
 # download, and install BLAST+
 if ! test -e .blast; then
