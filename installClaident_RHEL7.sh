@@ -15,15 +15,16 @@ touch .assams || exit $?
 fi
 # download, compile, and install PEAR
 if ! test -e .pear; then
-wget -c http://sco.h-its.org/exelixis/web/software/pear/files/pear-0.9.6-src.tar.gz || exit $?
-tar -xzf pear-0.9.6-src.tar.gz || exit $?
-cd pear-0.9.6-src || exit $?
+wget -c https://github.com/xflouris/PEAR/archive/master.tar.gz -O PEAR-master.tar.gz || exit $?
+tar -xzf PEAR-master.tar.gz || exit $?
+cd PEAR-master || exit $?
+sh ./autogen.sh || exit $?
 CFLAGS="-O3 -fomit-frame-pointer -finline-functions" CPPFLAGS="-O3 -fomit-frame-pointer -finline-functions" LDFLAGS="-O3 -fomit-frame-pointer -finline-functions" sh ./configure --prefix=$PREFIX || exit $?
 make || exit $?
 make install || sudo make install || exit $?
 cd .. || exit $?
-rm -rf pear-0.9.6-src || exit $?
-rm -f pear-0.9.6-src.tar.gz || exit $?
+rm -rf PEAR-master || exit $?
+rm -f PEAR-master.tar.gz || exit $?
 touch .pear || exit $?
 fi
 # download, and install Claident
