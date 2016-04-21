@@ -79,8 +79,8 @@ wget -c http://fifthdimension.myqnapcloud.com/Database_20160219/semiall_class.ta
 wget -c http://fifthdimension.myqnapcloud.com/Database_20160219/semiall_class.tar.xz.sha256 || exit $?
 wget -c http://fifthdimension.myqnapcloud.com/Database_20160219/semiall_class.taxdb.tar.xz || exit $?
 wget -c http://fifthdimension.myqnapcloud.com/Database_20160219/semiall_class.taxdb.tar.xz.sha256 || exit $?
-ls *.sha256 | xargs -L 1 -P 4 -I {} sh -c 'gsha256sum -c {} || exit $?; rm -f {} || exit $?'
-ls *.tar.xz | xargs -L 1 -P 4 -I {} sh -c 'gnutar -xJf {} || exit $?; rm -f {} || exit $?'
+ls *.sha256 | xargs -L 1 -P 4 -I {} sh -c 'gsha256sum -c {} || exit $?; rm -f {} || exit $?' || exit $?
+ls *.tar.xz | xargs -L 1 -P 4 -I {} sh -c 'gnutar -xJf {} || exit $?; rm -f {} || exit $?' || exit $?
 mkdir -p $PREFIX/share/claident/taxdb || sudo mkdir -p $PREFIX/share/claident/taxdb || exit $?
 mv *.taxdb $PREFIX/share/claident/taxdb/ || sudo mv *.taxdb $PREFIX/share/claident/taxdb/ || exit $?
 mkdir -p $PREFIX/share/claident/blastdb || sudo mkdir -p $PREFIX/share/claident/blastdb || exit $?
@@ -110,8 +110,8 @@ wget -c http://fifthdimension.myqnapcloud.com/Database_20160219/prokaryota_all_g
 wget -c http://fifthdimension.myqnapcloud.com/Database_20160219/prokaryota_all_genus.tar.xz.sha256 || exit $?
 wget -c http://fifthdimension.myqnapcloud.com/Database_20160219/prokaryota_all_genus.taxdb.tar.xz || exit $?
 wget -c http://fifthdimension.myqnapcloud.com/Database_20160219/prokaryota_all_genus.taxdb.tar.xz.sha256 || exit $?
-ls *.sha256 | xargs -L 1 -P 4 -I {} sh -c 'gsha256sum -c {} || exit $?; rm -f {} || exit $?'
-ls *.tar.xz | xargs -L 1 -P 4 -I {} sh -c 'gnutar -xJf {} || exit $?; rm -f {} || exit $?'
+ls *.sha256 | xargs -L 1 -P 4 -I {} sh -c 'gsha256sum -c {} || exit $?; rm -f {} || exit $?' || exit $?
+ls *.tar.xz | xargs -L 1 -P 4 -I {} sh -c 'gnutar -xJf {} || exit $?; rm -f {} || exit $?' || exit $?
 mkdir -p $PREFIX/share/claident/taxdb || sudo mkdir -p $PREFIX/share/claident/taxdb || exit $?
 mv *.taxdb $PREFIX/share/claident/taxdb/ || sudo mv *.taxdb $PREFIX/share/claident/taxdb/ || exit $?
 mkdir -p $PREFIX/share/claident/blastdb || sudo mkdir -p $PREFIX/share/claident/blastdb || exit $?
