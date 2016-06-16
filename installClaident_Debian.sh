@@ -4,7 +4,7 @@ export PREFIX=/usr/local || exit $?
 fi
 # download, compile, and install Assams
 if ! test -e .assams; then
-wget -c http://www.fifthdimension.jp/products/assams/assams-0.2.2015.08.08.zip || exit $?
+wget -c https://www.fifthdimension.jp/products/assams/assams-0.2.2015.08.08.zip || exit $?
 unzip -qq assams-0.2.2015.08.08.zip || exit $?
 cd assams-0.2.2015.08.08 || exit $?
 sh install_on_Debian.sh || exit $?
@@ -29,7 +29,7 @@ touch .pear || exit $?
 fi
 # download, and install Claident
 if ! test -e .claident; then
-wget -c http://www.fifthdimension.jp/products/claident/claident-0.2.2016.04.07.zip || exit $?
+wget -c https://www.fifthdimension.jp/products/claident/claident-0.2.2016.04.07.zip || exit $?
 unzip -qq claident-0.2.2016.04.07.zip || exit $?
 cd claident-0.2.2016.04.07 || exit $?
 sh install_on_Debian.sh || exit $?
