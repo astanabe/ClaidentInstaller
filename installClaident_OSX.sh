@@ -40,42 +40,42 @@ touch .claident || exit $?
 fi
 # download , compile, and install VSEARCH
 if ! test -e .vsearch; then
-wget -c https://github.com/torognes/vsearch/archive/v1.10.2.tar.gz -O vsearch-1.10.2.tar.gz || exit $?
-gnutar -xzf vsearch-1.10.2.tar.gz || exit $?
-cd vsearch-1.10.2 || exit $?
+wget -c https://github.com/torognes/vsearch/archive/v1.11.1.tar.gz -O vsearch-1.11.1.tar.gz || exit $?
+gnutar -xzf vsearch-1.11.1.tar.gz || exit $?
+cd vsearch-1.11.1 || exit $?
 CC=gcc-mp-4.8 CXX=g++-mp-4.8 CFLAGS="-O3 -m64 -fomit-frame-pointer -finline-functions" CXXFLAGS="-O3 -m64 -fomit-frame-pointer -finline-functions" CPPFLAGS="-I/opt/local/include" LDFLAGS="-O3 -m64 -L/opt/local/lib" sh ./configure --prefix=$PREFIX --disable-pdfman || exit $?
 gmake || exit $?
 gmake install-exec || sudo gmake install-exec || exit $?
 mkdir -p $PREFIX/share/claident/bin || sudo mkdir -p $PREFIX/share/claident/bin || exit $?
 ln -sf $PREFIX/bin/vsearch $PREFIX/share/claident/bin/vsearch || sudo ln -sf $PREFIX/bin/vsearch $PREFIX/share/claident/bin/vsearch || exit $?
 cd .. || exit $?
-rm -rf vsearch-1.10.2 || exit $?
-rm -f vsearch-1.10.2.tar.gz || exit $?
+rm -rf vsearch-1.11.1 || exit $?
+rm -f vsearch-1.11.1.tar.gz || exit $?
 touch .vsearch || exit $?
 fi
 # download , compile, and install VSEARCH5D
 if ! test -e .vsearch5d; then
-wget -c https://github.com/astanabe/vsearch5d/archive/1.10.2.tar.gz -O vsearch5d-1.10.2.tar.gz || exit $?
-gnutar -xzf vsearch5d-1.10.2.tar.gz || exit $?
-cd vsearch5d-1.10.2 || exit $?
+wget -c https://github.com/astanabe/vsearch5d/archive/1.11.1.tar.gz -O vsearch5d-1.11.1.tar.gz || exit $?
+gnutar -xzf vsearch5d-1.11.1.tar.gz || exit $?
+cd vsearch5d-1.11.1 || exit $?
 CC=gcc-mp-4.8 CXX=g++-mp-4.8 CFLAGS="-O3 -m64 -fomit-frame-pointer -finline-functions" CXXFLAGS="-O3 -m64 -fomit-frame-pointer -finline-functions" CPPFLAGS="-I/opt/local/include" LDFLAGS="-O3 -m64 -L/opt/local/lib" sh ./configure --prefix=$PREFIX/share/claident || exit $?
 gmake || exit $?
 gmake install-exec || sudo gmake install-exec || exit $?
 cd .. || exit $?
-rm -rf vsearch5d-1.10.2 || exit $?
-rm -f vsearch5d-1.10.2.tar.gz || exit $?
+rm -rf vsearch5d-1.11.1 || exit $?
+rm -f vsearch5d-1.11.1.tar.gz || exit $?
 touch .vsearch5d || exit $?
 fi
 # download, and install BLAST+
 if ! test -e .blast; then
-wget -c ftp://ftp.ncbi.nih.gov/blast/executables/blast+/2.3.0/ncbi-blast-2.3.0+-universal-macosx.tar.gz || exit $?
-gnutar -xzf ncbi-blast-2.3.0+-universal-macosx.tar.gz || exit $?
-cd ncbi-blast-2.3.0+/bin || exit $?
+wget -c https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.4.0/ncbi-blast-2.4.0+-universal-macosx.tar.gz || exit $?
+gnutar -xzf ncbi-blast-2.4.0+-universal-macosx.tar.gz || exit $?
+cd ncbi-blast-2.4.0+/bin || exit $?
 mkdir -p $PREFIX/share/claident/bin || sudo mkdir -p $PREFIX/share/claident/bin || exit $?
 mv * $PREFIX/share/claident/bin/ || sudo mv * $PREFIX/share/claident/bin/ || exit $?
 cd ../.. || exit $?
-rm -rf ncbi-blast-2.3.0+ || exit $?
-rm -f ncbi-blast-2.3.0+-universal-macosx.tar.gz || exit $?
+rm -rf ncbi-blast-2.4.0+ || exit $?
+rm -f ncbi-blast-2.4.0+-universal-macosx.tar.gz || exit $?
 touch .blast || exit $?
 fi
 echo 'Installation finished correctly!'
