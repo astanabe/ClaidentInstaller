@@ -39,16 +39,16 @@ touch .claident || exit $?
 fi
 # download , compile, and install VSEARCH
 if ! test -e .vsearch; then
-wget -c https://github.com/torognes/vsearch/archive/v1.11.1.tar.gz -O vsearch-1.11.2.tar.gz || exit $?
+wget -c https://github.com/torognes/vsearch/archive/v1.11.2.tar.gz -O vsearch-1.11.2.tar.gz || exit $?
 tar -xzf vsearch-1.11.2.tar.gz || exit $?
-cd vsearch-1.11.1 || exit $?
+cd vsearch-1.11.2 || exit $?
 CFLAGS="-O3 -fomit-frame-pointer -finline-functions" CPPFLAGS="-O3 -fomit-frame-pointer -finline-functions" LDFLAGS="-O3 -fomit-frame-pointer -finline-functions" sh ./configure --prefix=$PREFIX --disable-pdfman || exit $?
 make || exit $?
 make install-exec || exit $?
 mkdir -p $PREFIX/share/claident/bin || exit $?
 ln -sf $PREFIX/bin/vsearch $PREFIX/share/claident/bin/vsearch || exit $?
 cd .. || exit $?
-rm -rf vsearch-1.11.1 || exit $?
+rm -rf vsearch-1.11.2 || exit $?
 rm -f vsearch-1.11.2.tar.gz || exit $?
 touch .vsearch || exit $?
 fi
@@ -56,12 +56,12 @@ fi
 if ! test -e .vsearch5d; then
 wget -c https://github.com/astanabe/vsearch5d/archive/1.11.2.tar.gz -O vsearch5d-1.11.2.tar.gz || exit $?
 tar -xzf vsearch5d-1.11.2.tar.gz || exit $?
-cd vsearch5d-1.11.1 || exit $?
+cd vsearch5d-1.11.2 || exit $?
 CFLAGS="-O3 -fomit-frame-pointer -finline-functions" CPPFLAGS="-O3 -fomit-frame-pointer -finline-functions" LDFLAGS="-O3 -fomit-frame-pointer -finline-functions" sh ./configure --prefix=$PREFIX/share/claident || exit $?
 make || exit $?
 make install-exec || exit $?
 cd .. || exit $?
-rm -rf vsearch5d-1.11.1 || exit $?
+rm -rf vsearch5d-1.11.2 || exit $?
 rm -f vsearch5d-1.11.2.tar.gz || exit $?
 touch .vsearch5d || exit $?
 fi
