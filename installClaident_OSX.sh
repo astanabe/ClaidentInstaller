@@ -43,11 +43,15 @@ if ! test -e .vsearch; then
 wget -c https://github.com/torognes/vsearch/archive/v1.11.2.tar.gz -O vsearch-1.11.2.tar.gz || exit $?
 gnutar -xzf vsearch-1.11.2.tar.gz || exit $?
 cd vsearch-1.11.2 || exit $?
-CC=gcc-mp-4.8 CXX=g++-mp-4.8 CFLAGS="-O3 -m64 -fomit-frame-pointer -finline-functions" CXXFLAGS="-O3 -m64 -fomit-frame-pointer -finline-functions" CPPFLAGS="-I/opt/local/include" LDFLAGS="-O3 -m64 -L/opt/local/lib" sh ./configure --prefix=$PREFIX --disable-pdfman || exit $?
+CC=gcc-mp-4.8 CXX=g++-mp-4.8 CFLAGS="-O3 -m64 -fomit-frame-pointer -finline-functions" CXXFLAGS="-O3 -m64 -fomit-frame-pointer -finline-functions" CPPFLAGS="-I/opt/local/include" LDFLAGS="-O3 -m64 -L/opt/local/lib" sh ./configure --prefix=$PREFIX/share/claident --disable-pdfman || exit $?
 gmake || exit $?
+if test -e $PREFIX/share/claident/bin/vsearch; then
+rm $PREFIX/share/claident/bin/vsearch || sudo rm $PREFIX/share/claident/bin/vsearch || exit $?
+fi
 gmake install-exec || sudo gmake install-exec || exit $?
-mkdir -p $PREFIX/share/claident/bin || sudo mkdir -p $PREFIX/share/claident/bin || exit $?
-ln -sf $PREFIX/bin/vsearch $PREFIX/share/claident/bin/vsearch || sudo ln -sf $PREFIX/bin/vsearch $PREFIX/share/claident/bin/vsearch || exit $?
+if ! test -e $PREFIX/bin/vsearch; then
+ln -sf $PREFIX/share/claident/bin/vsearch $PREFIX/bin/vsearch || sudo ln -sf $PREFIX/share/claident/bin/vsearch $PREFIX/bin/vsearch || exit $?
+fi
 cd .. || exit $?
 rm -rf vsearch-1.11.2 || exit $?
 rm -f vsearch-1.11.2.tar.gz || exit $?
