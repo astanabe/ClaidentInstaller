@@ -43,6 +43,7 @@ if ! test -e .vsearch; then
 wget -c https://github.com/torognes/vsearch/archive/v2.0.0.tar.gz -O vsearch-2.0.0.tar.gz || exit $?
 tar -xzf vsearch-2.0.0.tar.gz || exit $?
 cd vsearch-2.0.0 || exit $?
+sh ./autogen.sh || exit $?
 CFLAGS="-O3 -fomit-frame-pointer -finline-functions" CPPFLAGS="-O3 -fomit-frame-pointer -finline-functions" LDFLAGS="-O3 -fomit-frame-pointer -finline-functions" sh ./configure --prefix=$PREFIX/share/claident --disable-pdfman || exit $?
 make || exit $?
 if test -e $PREFIX/share/claident/bin/vsearch; then
@@ -62,6 +63,7 @@ if ! test -e .vsearch5d; then
 wget -c https://github.com/astanabe/vsearch5d/archive/v2.0.0.tar.gz -O vsearch5d-2.0.0.tar.gz || exit $?
 tar -xzf vsearch5d-2.0.0.tar.gz || exit $?
 cd vsearch5d-2.0.0 || exit $?
+sh ./autogen.sh || exit $?
 CFLAGS="-O3 -fomit-frame-pointer -finline-functions" CPPFLAGS="-O3 -fomit-frame-pointer -finline-functions" LDFLAGS="-O3 -fomit-frame-pointer -finline-functions" sh ./configure --prefix=$PREFIX/share/claident || exit $?
 make || exit $?
 make install-exec || sudo make install-exec || exit $?
