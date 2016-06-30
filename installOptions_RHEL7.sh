@@ -25,7 +25,7 @@ fi
 if ! test -e .metaxa; then
 wget -c http://microbiology.se/sw/Metaxa2_2.1.3.tar.gz || exit $?
 tar -xzf Metaxa2_2.1.3.tar.gz || exit $?
-mv Metaxa2_2.1.3/metaxa2 Metaxa2_2.1.3/metaxa2_* $PREFIX/share/claident/bin/ || sudo mv Metaxa2_2.1.3/metaxa2 Metaxa2_2.1.3/metaxa2_* $PREFIX/share/claident/bin/ || exit $?
+cp -R Metaxa2_2.1.3/metaxa2 Metaxa2_2.1.3/metaxa2_* $PREFIX/share/claident/bin/ || sudo cp -R Metaxa2_2.1.3/metaxa2 Metaxa2_2.1.3/metaxa2_* $PREFIX/share/claident/bin/ || exit $?
 rm -rf Metaxa2_2.1.3.tar.gz Metaxa2_2.1.3 || exit $?
 echo '#!/bin/sh' > metaxa2 || exit $?
 echo "export PATH=$PREFIX/share/claident/bin:\$PATH" >> metaxa2 || exit $?
