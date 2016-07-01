@@ -39,7 +39,7 @@ fi
 if ! test -e .itsx; then
 wget -c http://microbiology.se/sw/ITSx_1.0.11.tar.gz || exit $?
 tar -xzf ITSx_1.0.11.tar.gz || exit $?
-mv ITSx_1.0.11/ITSx ITSx_1.0.11/ITSx_db $PREFIX/share/claident/bin/ || sudo mv ITSx_1.0.11/ITSx ITSx_1.0.11/ITSx_db $PREFIX/share/claident/bin/ || exit $?
+cp -R ITSx_1.0.11/ITSx ITSx_1.0.11/ITSx_db $PREFIX/share/claident/bin/ || sudo cp -R ITSx_1.0.11/ITSx ITSx_1.0.11/ITSx_db $PREFIX/share/claident/bin/ || exit $?
 rm -rf ITSx_1.0.11.tar.gz ITSx_1.0.11 || exit $?
 echo '#!/bin/sh' > ITSx || exit $?
 echo "export PATH=$PREFIX/share/claident/bin:\$PATH" >> ITSx || exit $?
