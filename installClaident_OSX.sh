@@ -7,7 +7,7 @@ if ! test -e .assams; then
 wget -c https://www.fifthdimension.jp/products/assams/assams-0.2.2015.08.08.zip || exit $?
 unzip -qq assams-0.2.2015.08.08.zip || exit $?
 cd assams-0.2.2015.08.08 || exit $?
-sh install_on_OSX.sh || exit $?
+CONFIG=$PREFIX/share/assams sh install_on_OSX.sh || exit $?
 cd .. || exit $?
 rm -rf assams-0.2.2015.08.08 || exit $?
 rm -f assams-0.2.2015.08.08.zip || exit $?
