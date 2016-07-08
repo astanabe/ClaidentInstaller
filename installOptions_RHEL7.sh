@@ -6,7 +6,7 @@ if ! test -e .hmmer; then
 wget -c http://eddylab.org/software/hmmer3/3.1b2/hmmer-3.1b2-linux-intel-x86_64.tar.gz || exit $?
 tar -xzf hmmer-3.1b2-linux-intel-x86_64.tar.gz || exit $?
 mkdir -p $PREFIX/share/claident/bin || sudo mkdir -p $PREFIX/share/claident/bin || exit $?
-cp -R hmmer-3.1b2-linux-intel-x86_64/binaries/* $PREFIX/share/claident/bin/ || sudo cp -R hmmer-3.1b2-linux-intel-x86_64/binaries/* $PREFIX/share/claident/bin/ || exit $?
+mv hmmer-3.1b2-linux-intel-x86_64/binaries/* $PREFIX/share/claident/bin/ || sudo mv hmmer-3.1b2-linux-intel-x86_64/binaries/* $PREFIX/share/claident/bin/ || exit $?
 rm -rf hmmer-3.1b2-linux-intel-x86_64.tar.gz hmmer-3.1b2-linux-intel-x86_64 || exit $?
 echo 'HMMer was installed correctly!'
 touch .hmmer || exit $?
@@ -28,7 +28,8 @@ if ! test -e .metaxa; then
 wget -c http://microbiology.se/sw/Metaxa2_2.1.3.tar.gz || exit $?
 tar -xzf Metaxa2_2.1.3.tar.gz || exit $?
 mkdir -p $PREFIX/share/claident/bin || sudo mkdir -p $PREFIX/share/claident/bin || exit $?
-cp -R Metaxa2_2.1.3/metaxa2 Metaxa2_2.1.3/metaxa2_* $PREFIX/share/claident/bin/ || sudo cp -R Metaxa2_2.1.3/metaxa2 Metaxa2_2.1.3/metaxa2_* $PREFIX/share/claident/bin/ || exit $?
+rm -rf $PREFIX/share/claident/bin/metaxa2_db || sudo rm -rf $PREFIX/share/claident/bin/metaxa2_db || exit $?
+mv Metaxa2_2.1.3/metaxa2 Metaxa2_2.1.3/metaxa2_* $PREFIX/share/claident/bin/ || sudo mv Metaxa2_2.1.3/metaxa2 Metaxa2_2.1.3/metaxa2_* $PREFIX/share/claident/bin/ || exit $?
 rm -rf Metaxa2_2.1.3.tar.gz Metaxa2_2.1.3 || exit $?
 echo '#!/bin/sh' > metaxa2 || exit $?
 echo "export PATH=$PREFIX/share/claident/bin:\$PATH" >> metaxa2 || exit $?
