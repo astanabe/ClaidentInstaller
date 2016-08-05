@@ -73,7 +73,7 @@ touch .vsearch5d || exit $?
 fi
 # download, and install BLAST+
 if ! test -e .blast; then
-wget -c https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.4.0/ncbi-blast-2.4.0+-x64-win64.tar.gz || exit $?
+wget -c ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.4.0/ncbi-blast-2.4.0+-x64-win64.tar.gz || exit $?
 tar -xzf ncbi-blast-2.4.0+-x64-win64.tar.gz || exit $?
 cd ncbi-blast-2.4.0+/bin || exit $?
 mkdir -p $PREFIX/share/claident/bin || exit $?
