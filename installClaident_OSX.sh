@@ -40,36 +40,36 @@ touch .claident || exit $?
 fi
 # download , compile, and install VSEARCH
 if ! test -e .vsearch; then
-wget -c https://github.com/torognes/vsearch/archive/v2.0.3.tar.gz -O vsearch-2.0.3.tar.gz || exit $?
-gnutar -xzf vsearch-2.0.3.tar.gz || exit $?
-cd vsearch-2.0.3 || exit $?
+wget -c https://github.com/torognes/vsearch/archive/v2.0.5.tar.gz -O vsearch-2.0.5.tar.gz || exit $?
+gnutar -xzf vsearch-2.0.5.tar.gz || exit $?
+cd vsearch-2.0.5 || exit $?
 sh ./autogen.sh || exit $?
 CC=gcc-mp-4.8 CXX=g++-mp-4.8 CFLAGS="-O3 -m64 -fomit-frame-pointer -finline-functions" CXXFLAGS="-O3 -m64 -fomit-frame-pointer -finline-functions" CPPFLAGS="-I/opt/local/include" LDFLAGS="-O3 -m64 -L/opt/local/lib" sh ./configure --prefix=$PREFIX/share/claident --disable-pdfman || exit $?
 gmake || exit $?
 if test -e $PREFIX/share/claident/bin/vsearch; then
-rm $PREFIX/share/claident/bin/vsearch || sudo rm $PREFIX/share/claident/bin/vsearch || exit $?
+rm -f $PREFIX/share/claident/bin/vsearch || sudo rm -f $PREFIX/share/claident/bin/vsearch || exit $?
 fi
 gmake install-exec || sudo gmake install-exec || exit $?
 if ! test -e $PREFIX/bin/vsearch; then
 ln -sf $PREFIX/share/claident/bin/vsearch $PREFIX/bin/vsearch || sudo ln -sf $PREFIX/share/claident/bin/vsearch $PREFIX/bin/vsearch || exit $?
 fi
 cd .. || exit $?
-rm -rf vsearch-2.0.3 || exit $?
-rm -f vsearch-2.0.3.tar.gz || exit $?
+rm -rf vsearch-2.0.5 || exit $?
+rm -f vsearch-2.0.5.tar.gz || exit $?
 touch .vsearch || exit $?
 fi
 # download , compile, and install VSEARCH5D
 if ! test -e .vsearch5d; then
-wget -c https://github.com/astanabe/vsearch5d/archive/v2.0.3.tar.gz -O vsearch5d-2.0.3.tar.gz || exit $?
-gnutar -xzf vsearch5d-2.0.3.tar.gz || exit $?
-cd vsearch5d-2.0.3 || exit $?
+wget -c https://github.com/astanabe/vsearch5d/archive/v2.0.5.tar.gz -O vsearch5d-2.0.5.tar.gz || exit $?
+gnutar -xzf vsearch5d-2.0.5.tar.gz || exit $?
+cd vsearch5d-2.0.5 || exit $?
 sh ./autogen.sh || exit $?
 CC=gcc-mp-4.8 CXX=g++-mp-4.8 CFLAGS="-O3 -m64 -fomit-frame-pointer -finline-functions" CXXFLAGS="-O3 -m64 -fomit-frame-pointer -finline-functions" CPPFLAGS="-I/opt/local/include" LDFLAGS="-O3 -m64 -L/opt/local/lib" sh ./configure --prefix=$PREFIX/share/claident || exit $?
 gmake || exit $?
 gmake install-exec || sudo gmake install-exec || exit $?
 cd .. || exit $?
-rm -rf vsearch5d-2.0.3 || exit $?
-rm -f vsearch5d-2.0.3.tar.gz || exit $?
+rm -rf vsearch5d-2.0.5 || exit $?
+rm -f vsearch5d-2.0.5.tar.gz || exit $?
 touch .vsearch5d || exit $?
 fi
 # download, and install BLAST+
