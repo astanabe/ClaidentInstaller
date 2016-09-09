@@ -29,13 +29,13 @@ touch .pear || exit $?
 fi
 # download, and install Claident
 if ! test -e .claident; then
-wget -c https://www.fifthdimension.jp/products/claident/claident-0.2.2016.07.05.zip || exit $?
-unzip -qq claident-0.2.2016.07.05.zip || exit $?
-cd claident-0.2.2016.07.05 || exit $?
+wget -c https://github.com/astanabe/Claident/archive/v0.1.2016.08.05.tar.gz -O Claident-0.1.2016.08.05.tar.gz || exit $?
+tar -xzf Claident-0.1.2016.08.05.tar.gz || exit $?
+cd Claident-0.1.2016.08.05 || exit $?
 sh install_on_Debian.sh || exit $?
 cd .. || exit $?
-rm -rf claident-0.2.2016.07.05 || exit $?
-rm -f claident-0.2.2016.07.05.zip || exit $?
+rm -rf Claident-0.1.2016.08.05 || exit $?
+rm -f Claident-0.1.2016.08.05.zip || exit $?
 touch .claident || exit $?
 fi
 # download , compile, and install VSEARCH
