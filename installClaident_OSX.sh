@@ -29,13 +29,13 @@ touch .pear || exit $?
 fi
 # download, and install Claident
 if ! test -e .claident; then
-wget -c https://github.com/astanabe/Claident/archive/v0.1.2016.08.05.tar.gz -O Claident-0.1.2016.08.05.tar.gz || exit $?
-tar -xzf Claident-0.1.2016.08.05.tar.gz || exit $?
-cd Claident-0.1.2016.08.05 || exit $?
+wget -c https://github.com/astanabe/Claident/archive/v0.2.2016.08.05.tar.gz -O Claident-0.2.2016.08.05.tar.gz || exit $?
+tar -xzf Claident-0.2.2016.08.05.tar.gz || exit $?
+cd Claident-0.2.2016.08.05 || exit $?
 sh install_on_OSX.sh || exit $?
 cd .. || exit $?
-rm -rf Claident-0.1.2016.08.05 || exit $?
-rm -f Claident-0.1.2016.08.05.zip || exit $?
+rm -rf Claident-0.2.2016.08.05 || exit $?
+rm -f Claident-0.2.2016.08.05.zip || exit $?
 touch .claident || exit $?
 fi
 # download , compile, and install VSEARCH
