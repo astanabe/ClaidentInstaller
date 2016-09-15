@@ -3,9 +3,9 @@ export PREFIX=/usr/local || exit $?
 fi
 # download, and install sff_extract
 if ! test -e .sffextract; then
-PYTHON := $(filter /%,$(shell /bin/sh -c 'type python'))
+PYTHON=`which python` || exit $?
 wget -c http://bioinf.comav.upv.es/downloads/sff_extract_0_3_0 || exit $?
-echo '#!'$(PYTHON) > sff_extract || exit $?
+echo '#!'$PYTHON > sff_extract || exit $?
 cat sff_extract_0_3_0 >> sff_extract || exit $?
 chmod 755 sff_extract || exit $?
 cp sff_extract $PREFIX/bin/ || sudo cp sff_extract $PREFIX/bin/ || exit $?
