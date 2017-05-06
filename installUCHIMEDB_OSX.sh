@@ -12,16 +12,16 @@ fi
 # download and install UNITE UCHIME reference databases
 if ! test -e .unite; then
 mkdir -p $PREFIX/share/claident/uchimedb || sudo mkdir -p $PREFIX/share/claident/uchimedb || exit $?
-wget -c https://unite.ut.ee/sh_files/uchime_reference_dataset_01.01.2016.zip || exit $?
-unzip -qq uchime_reference_dataset_01.01.2016.zip || exit $?
-cd uchime_reference_dataset_01.01.2016 || exit $?
-mv uchime_reference_dataset_01.01.2016.fasta $PREFIX/share/claident/uchimedb/unite20160101.fasta || sudo mv uchime_reference_dataset_01.01.2016.fasta $PREFIX/share/claident/uchimedb/unite20160101.fasta || exit $?
-mv untrimmed_ITS_sequences/sh_general_release_dynamic_01.01.2016_dev.fasta $PREFIX/share/claident/uchimedb/unite20160101untrim.fasta || sudo mv untrimmed_ITS_sequences/sh_general_release_dynamic_01.01.2016_dev.fasta $PREFIX/share/claident/uchimedb/unite20160101untrim.fasta || exit $?
-mv ITS1_ITS2_datasets/uchime_sh_refs_dynamic_develop_985_01.01.2016.ITS1.fasta $PREFIX/share/claident/uchimedb/unite20160101its1.fasta || sudo mv ITS1_ITS2_datasets/uchime_sh_refs_dynamic_develop_985_01.01.2016.ITS1.fasta $PREFIX/share/claident/uchimedb/unite20160101its1.fasta || exit $?
-mv ITS1_ITS2_datasets/uchime_sh_refs_dynamic_develop_985_01.01.2016.ITS2.fasta $PREFIX/share/claident/uchimedb/unite20160101its2.fasta || sudo mv ITS1_ITS2_datasets/uchime_sh_refs_dynamic_develop_985_01.01.2016.ITS2.fasta $PREFIX/share/claident/uchimedb/unite20160101its2.fasta || exit $?
+wget -c https://unite.ut.ee/sh_files/uchime_reference_dataset_01.12.2016.zip || exit $?
+unzip -qq uchime_reference_dataset_01.12.2016.zip || exit $?
+cd uchime_reference_dataset_01.12.2016 || exit $?
+mv uchime_reference_dataset_01.12.2016.fasta $PREFIX/share/claident/uchimedb/unite20161201.fasta || sudo mv uchime_reference_dataset_01.12.2016.fasta $PREFIX/share/claident/uchimedb/unite20161201.fasta || exit $?
+mv untrimmed_ITS_sequences/uchime_reference_dataset_untrimmed_01.12.2016.fasta $PREFIX/share/claident/uchimedb/unite20161201untrim.fasta || sudo mv untrimmed_ITS_sequences/uchime_reference_dataset_untrimmed_01.12.2016.fasta $PREFIX/share/claident/uchimedb/unite20161201untrim.fasta || exit $?
+mv ITS1_ITS2_datasets/uchime_reference_dataset_01.12.2016.ITS1.fasta $PREFIX/share/claident/uchimedb/unite20161201its1.fasta || sudo mv ITS1_ITS2_datasets/uchime_reference_dataset_01.12.2016.ITS1.fasta $PREFIX/share/claident/uchimedb/unite20161201its1.fasta || exit $?
+mv ITS1_ITS2_datasets/uchime_reference_dataset_01.12.2016.ITS2.fasta $PREFIX/share/claident/uchimedb/unite20161201its2.fasta || sudo mv ITS1_ITS2_datasets/uchime_reference_dataset_01.12.2016.ITS2.fasta $PREFIX/share/claident/uchimedb/unite20161201its2.fasta || exit $?
 cd .. || exit $?
-rm -rf uchime_reference_dataset_01.01.2016 || exit $?
-rm -f uchime_reference_dataset_01.01.2016.zip || exit $?
+rm -rf uchime_reference_dataset_01.12.2016 || exit $?
+rm -f uchime_reference_dataset_01.12.2016.zip || exit $?
 echo 'The UNITE databases for UCHIME were installed correctly!'
 touch .unite || exit $?
 fi
