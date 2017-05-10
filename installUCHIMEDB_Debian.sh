@@ -9,6 +9,18 @@ mv rdp_gold.fa $PREFIX/share/claident/uchimedb/rdpgoldv9.fasta || sudo mv rdp_go
 echo 'The RDP v9 database for UCHIME was installed correctly!'
 touch .rdp || exit $?
 fi
+# download and install SILVA reference databases
+if ! test -e .silva; then
+mkdir -p $PREFIX/share/claident/uchimedb || sudo mkdir -p $PREFIX/share/claident/uchimedb || exit $?
+wget -c https://www.arb-silva.de/fileadmin/silva_databases/release_128/Exports/SILVA_128_LSURef_tax_silva.fasta.gz || exit $?
+wget -c https://www.arb-silva.de/fileadmin/silva_databases/release_128/Exports/SILVA_128_SSURef_tax_silva.fasta.gz || exit $?
+gzip -d SILVA_128_LSURef_tax_silva.fasta.gz || exit $?
+gzip -d SILVA_128_SSURef_tax_silva.fasta.gz || exit $?
+mv SILVA_128_LSURef_tax_silva.fasta $PREFIX/share/claident/uchimedb/silva128LSUref.fasta || sudo mv SILVA_128_LSURef_tax_silva.fasta $PREFIX/share/claident/uchimedb/silva128LSUref.fasta || exit $?
+mv SILVA_128_SSURef_tax_silva.fasta $PREFIX/share/claident/uchimedb/silva128SSUref.fasta || sudo mv SILVA_128_SSURef_tax_silva.fasta $PREFIX/share/claident/uchimedb/silva128SSUref.fasta || exit $?
+echo 'The SILVA release 128 database for UCHIME were installed correctly!'
+touch .silva || exit $?
+fi
 # download and install UNITE UCHIME reference databases
 if ! test -e .unite; then
 mkdir -p $PREFIX/share/claident/uchimedb || sudo mkdir -p $PREFIX/share/claident/uchimedb || exit $?

@@ -35,7 +35,7 @@ cd Claident-0.2.2017.05.06 || exit $?
 sh install_on_Debian.sh || exit $?
 cd .. || exit $?
 rm -rf Claident-0.2.2017.05.06 || exit $?
-rm -f Claident-0.2.2017.05.06.zip || exit $?
+rm -f Claident-0.2.2017.05.06.tar.gz || exit $?
 touch .claident || exit $?
 fi
 # download , compile, and install VSEARCH
