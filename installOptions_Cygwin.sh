@@ -8,7 +8,9 @@ wget -c http://bioinf.comav.upv.es/downloads/sff_extract_0_3_0 || exit $?
 echo '#!'$PYTHON > sff_extract || exit $?
 cat sff_extract_0_3_0 >> sff_extract || exit $?
 chmod 755 sff_extract || exit $?
-cp sff_extract $PREFIX/bin/ || exit $?
+mkdir -p $PREFIX/bin || exit $?
+mv sff_extract $PREFIX/bin/ || exit $?
+rm sff_extract_0_3_0 || exit $?
 echo 'sff_extract was installed correctly!'
 touch .sffextract || exit $?
 fi

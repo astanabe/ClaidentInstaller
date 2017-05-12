@@ -3,106 +3,112 @@ export PREFIX=/usr/local || exit $?
 fi
 # download, check, and install BLAST and taxonomy databases
 if ! test -e .overall; then
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/animals_COX1_genus.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/animals_COX1_genus.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/animals_COX1_genus.taxdb.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/animals_COX1_genus.taxdb.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/animals_mt_genus.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/animals_mt_genus.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/animals_mt_genus.taxdb.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/animals_mt_genus.taxdb.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/eukaryota_LSU_genus.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/eukaryota_LSU_genus.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/eukaryota_LSU_genus.taxdb.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/eukaryota_LSU_genus.taxdb.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/eukaryota_SSU_genus.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/eukaryota_SSU_genus.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/eukaryota_SSU_genus.taxdb.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/eukaryota_SSU_genus.taxdb.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/fungi_ITS_genus.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/fungi_ITS_genus.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/fungi_ITS_genus.taxdb.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/fungi_ITS_genus.taxdb.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/plants_matK_genus.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/plants_matK_genus.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/plants_matK_genus.taxdb.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/plants_matK_genus.taxdb.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/plants_rbcL_genus.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/plants_rbcL_genus.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/plants_rbcL_genus.taxdb.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/plants_rbcL_genus.taxdb.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/plants_trnH-psbA_genus.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/plants_trnH-psbA_genus.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/plants_trnH-psbA_genus.taxdb.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/plants_trnH-psbA_genus.taxdb.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/semiall_class.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/semiall_class.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/semiall_class.taxdb.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/semiall_class.taxdb.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/prokaryota_16S_genus.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/prokaryota_16S_genus.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/prokaryota_16S_genus.taxdb.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/prokaryota_16S_genus.taxdb.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/prokaryota_all_genus.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/prokaryota_all_genus.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/prokaryota_all_genus.taxdb.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/prokaryota_all_genus.taxdb.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.00.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.00.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.01.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.01.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.02.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.02.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.03.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.03.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.04.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.04.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.05.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.05.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.06.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.06.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.07.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.07.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.08.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.08.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.09.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.09.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.10.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.10.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.11.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.11.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.12.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.12.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.13.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.13.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.14.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.14.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.15.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.15.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.16.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.16.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.17.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.17.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.18.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.18.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.19.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.19.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.20.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.20.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.21.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.21.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.22.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.22.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.23.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.23.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.24.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.24.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.25.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.25.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.tar.xz.sha256 || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.taxdb.tar.xz || exit $?
-wget -c https://fifthdimension.myqnapcloud.com/Database_20160820/overall_class.taxdb.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/animals_COX1_genus.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/animals_COX1_genus.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/animals_COX1_genus.taxdb.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/animals_COX1_genus.taxdb.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/animals_mt_genus.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/animals_mt_genus.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/animals_mt_genus.taxdb.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/animals_mt_genus.taxdb.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/eukaryota_LSU_genus.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/eukaryota_LSU_genus.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/eukaryota_LSU_genus.taxdb.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/eukaryota_LSU_genus.taxdb.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/eukaryota_SSU_genus.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/eukaryota_SSU_genus.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/eukaryota_SSU_genus.taxdb.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/eukaryota_SSU_genus.taxdb.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/fungi_ITS_genus.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/fungi_ITS_genus.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/fungi_ITS_genus.taxdb.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/fungi_ITS_genus.taxdb.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/plants_matK_genus.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/plants_matK_genus.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/plants_matK_genus.taxdb.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/plants_matK_genus.taxdb.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/plants_rbcL_genus.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/plants_rbcL_genus.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/plants_rbcL_genus.taxdb.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/plants_rbcL_genus.taxdb.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/plants_trnH-psbA_genus.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/plants_trnH-psbA_genus.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/plants_trnH-psbA_genus.taxdb.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/plants_trnH-psbA_genus.taxdb.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/semiall_class.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/semiall_class.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/semiall_class.taxdb.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/semiall_class.taxdb.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/prokaryota_16S_genus.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/prokaryota_16S_genus.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/prokaryota_16S_genus.taxdb.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/prokaryota_16S_genus.taxdb.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/prokaryota_all_genus.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/prokaryota_all_genus.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/prokaryota_all_genus.taxdb.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/prokaryota_all_genus.taxdb.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.00.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.00.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.01.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.01.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.02.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.02.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.03.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.03.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.04.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.04.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.05.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.05.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.06.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.06.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.07.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.07.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.08.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.08.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.09.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.09.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.10.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.10.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.11.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.11.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.12.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.12.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.13.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.13.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.14.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.14.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.15.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.15.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.16.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.16.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.17.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.17.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.18.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.18.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.19.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.19.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.20.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.20.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.21.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.21.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.22.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.22.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.23.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.23.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.24.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.24.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.25.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.25.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.26.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.26.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.27.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.27.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.28.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.28.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.tar.xz.sha256 || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.taxdb.tar.xz || exit $?
+wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.taxdb.tar.xz.sha256 || exit $?
 ls *.sha256 | xargs -L 1 -P 4 -I {} sh -c 'gsha256sum -c {} || exit $?; rm -f {} || exit $?' || exit $?
 ls *.tar.xz | xargs -L 1 -P 4 -I {} sh -c 'gnutar -xJf {} || exit $?; rm -f {} || exit $?' || exit $?
 mkdir -p $PREFIX/share/claident/taxdb || sudo mkdir -p $PREFIX/share/claident/taxdb || exit $?
