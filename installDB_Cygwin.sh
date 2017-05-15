@@ -109,8 +109,8 @@ wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_cl
 wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.tar.xz.sha256 || exit $?
 wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.taxdb.tar.xz || exit $?
 wget --limit-rate=524288 -c https://www.claident.org/blastdb/20170119/overall_class.taxdb.tar.xz.sha256 || exit $?
-ls *.sha256 | xargs -L 1 -P 4 -I {} sh -c 'sha256sum -c {} || exit $?; rm -f {} || exit $?' || exit $?
-ls *.tar.xz | xargs -L 1 -P 4 -I {} sh -c 'tar -xJf {} || exit $?; rm -f {} || exit $?' || exit $?
+ls *.sha256 | xargs -L 1 -P 4 -I {} sh -c 'sha256sum -c {} || exit $?' || exit $?
+ls *.tar.xz | xargs -L 1 -P 4 -I {} sh -c 'tar -xJf {} || exit $?' || exit $?
 mkdir -p $PREFIX/share/claident/taxdb || exit $?
 mv *.taxdb $PREFIX/share/claident/taxdb/ || exit $?
 mkdir -p $PREFIX/share/claident/blastdb || exit $?
@@ -146,6 +146,8 @@ rm -f $PREFIX/share/claident/blastdb/overall_genus.*
 rm -f $PREFIX/share/claident/blastdb/overall_species.*
 mv overall_class.??.n?? $PREFIX/share/claident/blastdb/ || exit $?
 mv *.n.gil *.nal $PREFIX/share/claident/blastdb/ || exit $?
+rm *.sha256 || exit $?
+rm *.tar.xz || exit $?
 touch .overall || exit $?
 echo 'The "overall" family databases were installed correctly!'
 fi
