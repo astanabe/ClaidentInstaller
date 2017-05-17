@@ -1,4 +1,4 @@
-sudo apt-get -y install unzip zlib1g-dev libbz2-dev autoconf automake || exit $?
+sudo apt-get -y install gcc g++ make autoconf automake python libz-dev libbz2-dev tar gzip xz-utils unzip coreutils grep perl libdbi-perl libdbd-sqlite3-perl libwww-perl libfile-copy-recursive-perl || exit $?
 if test -z $PREFIX; then
 export PREFIX=/usr/local || exit $?
 fi

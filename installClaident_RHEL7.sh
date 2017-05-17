@@ -1,4 +1,4 @@
-sudo yum install -y wget unzip zlib-devel bzip2-devel autoconf automake || exit $?
+sudo yum install -y binutils gcc gcc-c++ gcc-plugin-devel libstdc++ libgcc glibc-static libstdc++-static bzip2-devel autoconf automake make python wget zlib zlib-devel tar gzip xz unzip coreutils grep perl perl-local-lib perl-Time-HiRes perl-CPAN perl-File-Copy-Recursive perl-YAML perl-DBI perl-DBD-SQLite perl-libwww-perl tcsh || exit $?
 if test -z $PREFIX; then
 export PREFIX=/usr/local || exit $?
 fi

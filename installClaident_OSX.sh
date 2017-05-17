@@ -1,4 +1,4 @@
-sudo port install gcc48 +universal libgcc +universal coreutils gmake wget unzip gnutar xz +universal zlib +universal bzip2 +universal autoconf automake build_arch=x86_64 universal_archs="x86_64 i386" || exit $?
+sudo port install p5-dbi p5-dbd-sqlite p5-file-copy-recursive gmake gcc5 libgcc coreutils gmake wget unzip gnutar xz zlib bzip2 autoconf automake build_arch=x86_64 || exit $?
 if test -z $PREFIX; then
 export PREFIX=/usr/local || exit $?
 fi
