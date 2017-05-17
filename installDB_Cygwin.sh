@@ -3,7 +3,7 @@ export PREFIX=/usr/local || exit $?
 fi
 # download, check, and install BLAST and taxonomy databases
 if ! test -e .overall; then
-wget https://www.claident.org/DBURL.txt || exit $?
+wget -c https://www.claident.org/DBURL.txt || exit $?
 wget --limit-rate=524288 -c -i DBURL.txt || exit $?
 rm DBURL.txt || exit?
 ls *.sha256 | xargs -L 1 -P 4 -I {} sh -c 'sha256sum -c {} || exit $?' || exit $?
