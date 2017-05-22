@@ -19,7 +19,7 @@ wget -c https://github.com/xflouris/PEAR/archive/master.tar.gz -O PEAR-master.ta
 tar -xzf PEAR-master.tar.gz || exit $?
 cd PEAR-master || exit $?
 sh ./autogen.sh || exit $?
-CFLAGS="-O3 -fomit-frame-pointer -finline-functions" CPPFLAGS="-O3 -fomit-frame-pointer -finline-functions" LDFLAGS="-O3 -fomit-frame-pointer -finline-functions" sh ./configure --prefix=$PREFIX || exit $?
+CFLAGS="-O3 -fomit-frame-pointer -finline-functions" CPPFLAGS="-O3 -fomit-frame-pointer -finline-functions" CXXFLAGS="-O3 -fomit-frame-pointer -finline-functions" LDFLAGS="-O3 -fomit-frame-pointer -finline-functions" sh ./configure --prefix=$PREFIX || exit $?
 make || exit $?
 make install || sudo make install || exit $?
 cd .. || exit $?
@@ -44,7 +44,7 @@ wget -c https://github.com/torognes/vsearch/archive/v2.4.3.tar.gz -O vsearch-2.4
 tar -xzf vsearch-2.4.3.tar.gz || exit $?
 cd vsearch-2.4.3 || exit $?
 sh ./autogen.sh || exit $?
-CFLAGS="-O3 -fomit-frame-pointer -finline-functions" CPPFLAGS="-O3 -fomit-frame-pointer -finline-functions" LDFLAGS="-O3 -fomit-frame-pointer -finline-functions" sh ./configure --prefix=$PREFIX/share/claident --disable-pdfman || exit $?
+CFLAGS="-O3 -fomit-frame-pointer -finline-functions" CPPFLAGS="-O3 -fomit-frame-pointer -finline-functions" CXXFLAGS="-O3 -fomit-frame-pointer -finline-functions" LDFLAGS="-O3 -fomit-frame-pointer -finline-functions" sh ./configure --prefix=$PREFIX/share/claident --disable-pdfman || exit $?
 make || exit $?
 if test -e $PREFIX/share/claident/bin/vsearch; then
 rm -f $PREFIX/share/claident/bin/vsearch || sudo rm -f $PREFIX/share/claident/bin/vsearch || exit $?
@@ -64,7 +64,7 @@ wget -c https://github.com/astanabe/vsearch5d/archive/v2.4.3.tar.gz -O vsearch5d
 tar -xzf vsearch5d-2.4.3.tar.gz || exit $?
 cd vsearch5d-2.4.3 || exit $?
 sh ./autogen.sh || exit $?
-CFLAGS="-O3 -fomit-frame-pointer -finline-functions" CPPFLAGS="-O3 -fomit-frame-pointer -finline-functions" LDFLAGS="-O3 -fomit-frame-pointer -finline-functions" sh ./configure --prefix=$PREFIX/share/claident || exit $?
+CFLAGS="-O3 -fomit-frame-pointer -finline-functions" CPPFLAGS="-O3 -fomit-frame-pointer -finline-functions" CXXFLAGS="-O3 -fomit-frame-pointer -finline-functions" LDFLAGS="-O3 -fomit-frame-pointer -finline-functions" sh ./configure --prefix=$PREFIX/share/claident || exit $?
 make || exit $?
 make install-exec || sudo make install-exec || exit $?
 cd .. || exit $?

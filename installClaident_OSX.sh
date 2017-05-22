@@ -19,7 +19,7 @@ wget -c https://github.com/xflouris/PEAR/archive/master.tar.gz -O PEAR-master.ta
 gnutar -xzf PEAR-master.tar.gz || exit $?
 cd PEAR-master || exit $?
 sh ./autogen.sh || exit $?
-CC=gcc-mp-4.8 CXX=g++-mp-4.8 CFLAGS="-O3 -m64 -fomit-frame-pointer -finline-functions" CXXFLAGS="-O3 -m64 -fomit-frame-pointer -finline-functions" CPPFLAGS="-I/opt/local/include" LDFLAGS="-O3 -m64 -L/opt/local/lib" sh ./configure --prefix=$PREFIX || exit $?
+CC=gcc-mp-5 CXX=g++-mp-5 CFLAGS="-O3 -m64 -fomit-frame-pointer -finline-functions" CXXFLAGS="-O3 -m64 -fomit-frame-pointer -finline-functions" CPPFLAGS="-I/opt/local/include" LDFLAGS="-O3 -m64 -L/opt/local/lib" sh ./configure --prefix=$PREFIX || exit $?
 gmake || exit $?
 gmake install || sudo gmake install || exit $?
 cd .. || exit $?
@@ -44,7 +44,7 @@ wget -c https://github.com/torognes/vsearch/archive/v2.4.3.tar.gz -O vsearch-2.4
 gnutar -xzf vsearch-2.4.3.tar.gz || exit $?
 cd vsearch-2.4.3 || exit $?
 sh ./autogen.sh || exit $?
-CC=gcc-mp-4.8 CXX=g++-mp-4.8 CFLAGS="-O3 -m64 -fomit-frame-pointer -finline-functions" CXXFLAGS="-O3 -m64 -fomit-frame-pointer -finline-functions" CPPFLAGS="-I/opt/local/include" LDFLAGS="-O3 -m64 -L/opt/local/lib" sh ./configure --prefix=$PREFIX/share/claident --disable-pdfman || exit $?
+CC=gcc-mp-5 CXX=g++-mp-5 CFLAGS="-O3 -m64 -fomit-frame-pointer -finline-functions" CXXFLAGS="-O3 -m64 -fomit-frame-pointer -finline-functions" CPPFLAGS="-I/opt/local/include" LDFLAGS="-O3 -m64 -L/opt/local/lib" sh ./configure --prefix=$PREFIX/share/claident --disable-pdfman || exit $?
 gmake || exit $?
 if test -e $PREFIX/share/claident/bin/vsearch; then
 rm -f $PREFIX/share/claident/bin/vsearch || sudo rm -f $PREFIX/share/claident/bin/vsearch || exit $?
@@ -64,7 +64,7 @@ wget -c https://github.com/astanabe/vsearch5d/archive/v2.4.3.tar.gz -O vsearch5d
 gnutar -xzf vsearch5d-2.4.3.tar.gz || exit $?
 cd vsearch5d-2.4.3 || exit $?
 sh ./autogen.sh || exit $?
-CC=gcc-mp-4.8 CXX=g++-mp-4.8 CFLAGS="-O3 -m64 -fomit-frame-pointer -finline-functions" CXXFLAGS="-O3 -m64 -fomit-frame-pointer -finline-functions" CPPFLAGS="-I/opt/local/include" LDFLAGS="-O3 -m64 -L/opt/local/lib" sh ./configure --prefix=$PREFIX/share/claident || exit $?
+CC=gcc-mp-5 CXX=g++-mp-5 CFLAGS="-O3 -m64 -fomit-frame-pointer -finline-functions" CXXFLAGS="-O3 -m64 -fomit-frame-pointer -finline-functions" CPPFLAGS="-I/opt/local/include" LDFLAGS="-O3 -m64 -L/opt/local/lib" sh ./configure --prefix=$PREFIX/share/claident || exit $?
 gmake || exit $?
 gmake install-exec || sudo gmake install-exec || exit $?
 cd .. || exit $?

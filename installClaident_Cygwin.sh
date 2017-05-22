@@ -14,11 +14,11 @@ touch .assams || exit $?
 fi
 # download, compile, and install PEAR
 if ! test -e .pear; then
-wget -c https://github.com/xflouris/PEAR/archive/v0.9.10.tar.gz -O PEAR-0.9.10.tar.gz || exit $?
-tar -xzf PEAR-0.9.10.tar.gz || exit $?
-cd PEAR-0.9.10 || exit $?
+wget -c https://github.com/xflouris/PEAR/archive/master.tar.gz -O PEAR-master.tar.gz || exit $?
+tar -xzf PEAR-master.tar.gz || exit $?
+cd PEAR-master || exit $?
 sh ./autogen.sh || exit $?
-CFLAGS="-O3 -fomit-frame-pointer -finline-functions" CPPFLAGS="-O3 -fomit-frame-pointer -finline-functions" LDFLAGS="-O3 -fomit-frame-pointer -finline-functions" sh ./configure --prefix=$PREFIX || exit $?
+CC="x86_64-w64-mingw32-gcc" CXX="x86_64-w64-mingw32-g++" CFLAGS="-O3 -fomit-frame-pointer -finline-functions" CPPFLAGS="-O3 -fomit-frame-pointer -finline-functions" CXXFLAGS="-O3 -fomit-frame-pointer -finline-functions" LDFLAGS="-O3 -fomit-frame-pointer -finline-functions" sh ./configure --prefix=$PREFIX || exit $?
 make || exit $?
 make install || exit $?
 cd .. || exit $?
@@ -43,7 +43,8 @@ wget -c https://github.com/torognes/vsearch/archive/v2.4.3.tar.gz -O vsearch-2.4
 tar -xzf vsearch-2.4.3.tar.gz || exit $?
 cd vsearch-2.4.3 || exit $?
 sh ./autogen.sh || exit $?
-CFLAGS="-O3 -fomit-frame-pointer -finline-functions" CPPFLAGS="-O3 -fomit-frame-pointer -finline-functions" LDFLAGS="-O3 -fomit-frame-pointer -finline-functions" sh ./configure --prefix=$PREFIX/share/claident --disable-pdfman || exit $?
+CC="x86_64-w64-mingw32-gcc" CXX="x86_64-w64-mingw32-g++" CFLAGS="-O3 -fomit-frame-pointer -finline-functions" CPPFLAGS="-O3 -fomit-frame-pointer -finline-functions" CXXFLAGS="-O3 -fomit-frame-pointer -finline-functions" LDFLAGS="-O3 -fomit-frame-pointer -finline-functions" sh ./configure --prefix=$PREFIX/share/claident --build=x86_64-w64-mingw32 --disable-pdfman || exit $?
+cp /usr/x86_64-w64-mingw32/sys-root/mingw/lib/libregex.a src/ || exit $?
 make || exit $?
 if test -e $PREFIX/share/claident/bin/vsearch; then
 rm -f $PREFIX/share/claident/bin/vsearch || exit $?
@@ -63,7 +64,8 @@ wget -c https://github.com/astanabe/vsearch5d/archive/v2.4.3.tar.gz -O vsearch5d
 tar -xzf vsearch5d-2.4.3.tar.gz || exit $?
 cd vsearch5d-2.4.3 || exit $?
 sh ./autogen.sh || exit $?
-CFLAGS="-O3 -fomit-frame-pointer -finline-functions" CPPFLAGS="-O3 -fomit-frame-pointer -finline-functions" LDFLAGS="-O3 -fomit-frame-pointer -finline-functions" sh ./configure --prefix=$PREFIX/share/claident || exit $?
+CC="x86_64-w64-mingw32-gcc" CXX="x86_64-w64-mingw32-g++" CFLAGS="-O3 -fomit-frame-pointer -finline-functions" CPPFLAGS="-O3 -fomit-frame-pointer -finline-functions" CXXFLAGS="-O3 -fomit-frame-pointer -finline-functions" LDFLAGS="-O3 -fomit-frame-pointer -finline-functions" sh ./configure --prefix=$PREFIX/share/claident --build=x86_64-w64-mingw32 || exit $?
+cp /usr/x86_64-w64-mingw32/sys-root/mingw/lib/libregex.a src/ || exit $?
 make || exit $?
 make install-exec || exit $?
 cd .. || exit $?
