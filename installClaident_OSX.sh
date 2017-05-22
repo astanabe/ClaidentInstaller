@@ -74,14 +74,14 @@ touch .vsearch5d || exit $?
 fi
 # download, and install BLAST+
 if ! test -e .blast; then
-wget -c ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.6.0/ncbi-blast-2.6.0+-universal-macosx.tar.gz || exit $?
-gnutar -xzf ncbi-blast-2.6.0+-universal-macosx.tar.gz || exit $?
+wget -c ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.6.0/ncbi-blast-2.6.0+-x64-macosx.tar.gz || exit $?
+gnutar -xzf ncbi-blast-2.6.0+-x64-macosx.tar.gz || exit $?
 cd ncbi-blast-2.6.0+/bin || exit $?
 mkdir -p $PREFIX/share/claident/bin || sudo mkdir -p $PREFIX/share/claident/bin || exit $?
 mv * $PREFIX/share/claident/bin/ || sudo mv * $PREFIX/share/claident/bin/ || exit $?
 cd ../.. || exit $?
 rm -rf ncbi-blast-2.6.0+ || exit $?
-rm -f ncbi-blast-2.6.0+-universal-macosx.tar.gz || exit $?
+rm -f ncbi-blast-2.6.0+-x64-macosx.tar.gz || exit $?
 touch .blast || exit $?
 fi
 echo 'Installation finished correctly!'
