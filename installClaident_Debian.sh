@@ -13,20 +13,6 @@ rm -rf assams-0.2.2015.08.08 || exit $?
 rm -f assams-0.2.2015.08.08.zip || exit $?
 touch .assams || exit $?
 fi
-# download, compile, and install PEAR
-if ! test -e .pear; then
-wget -c https://github.com/xflouris/PEAR/archive/master.tar.gz -O PEAR-master.tar.gz || exit $?
-tar -xzf PEAR-master.tar.gz || exit $?
-cd PEAR-master || exit $?
-sh ./autogen.sh || exit $?
-CFLAGS="-O3 -fomit-frame-pointer -finline-functions" CPPFLAGS="-O3 -fomit-frame-pointer -finline-functions" CXXFLAGS="-O3 -fomit-frame-pointer -finline-functions" LDFLAGS="-O3 -fomit-frame-pointer -finline-functions" sh ./configure --prefix=$PREFIX || exit $?
-make || exit $?
-make install || sudo make install || exit $?
-cd .. || exit $?
-rm -rf PEAR-master || exit $?
-rm -f PEAR-master.tar.gz || exit $?
-touch .pear || exit $?
-fi
 # download, and install Claident
 if ! test -e .claident; then
 wget -c https://github.com/astanabe/Claident/archive/v0.2.2017.05.22.tar.gz -O Claident-0.2.2017.05.22.tar.gz || exit $?
