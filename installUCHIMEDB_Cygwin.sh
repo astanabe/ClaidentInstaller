@@ -54,7 +54,7 @@ fi
 # download and install Claident Databases for UCHIME
 if ! test -e .cdu; then
 mkdir -p $PREFIX/share/claident/uchimedb || exit $?
-wget -c https://claident.hopto.org/uchimedb20170513/cdu_20170513.tar.xz || exit $?
+wget -c https://claident.biol.sci.kobe-u.ac.jp/uchimedb20170513/cdu_20170513.tar.xz || exit $?
 tar -xJf cdu_20170513.tar.xz || exit $?
 mv cdu12s.fasta cducox1.fasta cducytb.fasta cdumatk.fasta cdurbcl.fasta cdutrnhpsba.fasta $PREFIX/share/claident/uchimedb/ || exit $?
 rm -f cdu_20170513.tar.xz || exit $?
