@@ -21,6 +21,7 @@ Type and run the following commands before installation.
 
 ```
 export http_proxy=http://server.address:portnumber
+export https_proxy=http://server.address:portnumber
 export ftp_proxy=http://server.address:portnumber
 ```
 
@@ -28,6 +29,7 @@ If you need username and password to use proxy, use the following commands inste
 
 ```
 export http_proxy=http://username:password@server.address:portnumber
+export https_proxy=http://username:password@server.address:portnumber
 export ftp_proxy=http://username:password@server.address:portnumber
 ```
 
