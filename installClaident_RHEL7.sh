@@ -1,4 +1,4 @@
-sudo yum install -y binutils gcc gcc-c++ gcc-plugin-devel libstdc++ libgcc glibc-static libstdc++-static bzip2-devel autoconf automake make python wget zlib zlib-devel tar gzip xz unzip coreutils grep perl perl-local-lib perl-Time-HiRes perl-CPAN perl-File-Copy-Recursive perl-YAML perl-DBI perl-DBD-SQLite perl-libwww-perl tcsh || exit $?
+sudo -E yum install -y binutils gcc gcc-c++ gcc-plugin-devel libstdc++ libgcc glibc-static libstdc++-static bzip2-devel autoconf automake make python wget zlib zlib-devel tar gzip xz unzip coreutils grep perl perl-local-lib perl-Time-HiRes perl-CPAN perl-File-Copy-Recursive perl-YAML perl-DBI perl-DBD-SQLite perl-libwww-perl tcsh || exit $?
 if test -z $PREFIX; then
 export PREFIX=/usr/local || exit $?
 fi
@@ -23,6 +23,19 @@ cd .. || exit $?
 rm -rf Claident-0.2.2017.05.22 || exit $?
 rm -f Claident-0.2.2017.05.22.tar.gz || exit $?
 touch .claident || exit $?
+fi
+# download , compile, and install Swarm
+if ! test -e .swarm; then
+wget -c https://github.com/torognes/swarm/archive/v2.2.2.tar.gz -O swarm-2.2.2.tar.gz || exit $?
+tar -xzf swarm-2.2.2.tar.gz || exit $?
+cd swarm-2.2.2/src || exit $?
+make CXXFLAGS="-O3 -mtune=native -fomit-frame-pointer -finline-functions -Icityhash" || exit $?
+mkdir -p $PREFIX/share/claident/bin || sudo mkdir -p $PREFIX/share/claident/bin || exit $?
+mv swarm $PREFIX/share/claident/bin/ || sudo mv swarm $PREFIX/share/claident/bin/ || exit $?
+cd ../.. || exit $?
+rm -rf swarm-2.2.2 || exit $?
+rm -f swarm-2.2.2.tar.gz || exit $?
+touch .swarm || exit $?
 fi
 # download , compile, and install VSEARCH
 if ! test -e .vsearch; then
@@ -60,14 +73,14 @@ touch .vsearch5d || exit $?
 fi
 # download, and install BLAST+
 if ! test -e .blast; then
-wget -c ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.6.0/ncbi-blast-2.6.0+-x64-linux.tar.gz || exit $?
-tar -xzf ncbi-blast-2.6.0+-x64-linux.tar.gz || exit $?
-cd ncbi-blast-2.6.0+/bin || exit $?
+wget -c ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.7.1/ncbi-blast-2.7.1+-x64-linux.tar.gz || exit $?
+tar -xzf ncbi-blast-2.7.1+-x64-linux.tar.gz || exit $?
+cd ncbi-blast-2.7.1+/bin || exit $?
 mkdir -p $PREFIX/share/claident/bin || sudo mkdir -p $PREFIX/share/claident/bin || exit $?
 mv * $PREFIX/share/claident/bin/ || sudo mv * $PREFIX/share/claident/bin/ || exit $?
 cd ../.. || exit $?
-rm -rf ncbi-blast-2.6.0+ || exit $?
-rm -f ncbi-blast-2.6.0+-x64-linux.tar.gz || exit $?
+rm -rf ncbi-blast-2.7.1+ || exit $?
+rm -f ncbi-blast-2.7.1+-x64-linux.tar.gz || exit $?
 touch .blast || exit $?
 fi
 echo 'Installation finished correctly!'
