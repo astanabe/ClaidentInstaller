@@ -14,13 +14,13 @@ touch .assams || exit $?
 fi
 # download, and install Claident
 if ! test -e .claident; then
-wget -c https://github.com/astanabe/Claident/archive/v0.2.2018.05.07.tar.gz -O Claident-0.2.2018.05.07.tar.gz || exit $?
-tar -xzf Claident-0.2.2018.05.07.tar.gz || exit $?
-cd Claident-0.2.2018.05.07 || exit $?
+wget -c https://github.com/astanabe/Claident/archive/v0.2.2018.05.08.tar.gz -O Claident-0.2.2018.05.08.tar.gz || exit $?
+tar -xzf Claident-0.2.2018.05.08.tar.gz || exit $?
+cd Claident-0.2.2018.05.08 || exit $?
 sh install_on_Cygwin.sh || exit $?
 cd .. || exit $?
-rm -rf Claident-0.2.2018.05.07 || exit $?
-rm -f Claident-0.2.2018.05.07.tar.gz || exit $?
+rm -rf Claident-0.2.2018.05.08 || exit $?
+rm -f Claident-0.2.2018.05.08.tar.gz || exit $?
 touch .claident || exit $?
 fi
 # download , compile, and install Swarm
