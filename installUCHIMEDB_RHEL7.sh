@@ -13,17 +13,23 @@ fi
 if ! test -e .silva; then
 mkdir -p $PREFIX/share/claident/uchimedb || sudo mkdir -p $PREFIX/share/claident/uchimedb || exit $?
 wget -c https://www.arb-silva.de/fileadmin/silva_databases/release_132/Exports/SILVA_132_LSURef_tax_silva.fasta.gz || exit $?
+wget -c https://www.arb-silva.de/fileadmin/silva_databases/release_132/Exports/SILVA_132_LSURef_tax_silva.fasta.gz.md5 || exit $?
+md5sum -c SILVA_132_LSURef_tax_silva.fasta.gz.md5 || exit $?
+rm SILVA_132_LSURef_tax_silva.fasta.gz.md5 || exit $?
 gzip -d SILVA_132_LSURef_tax_silva.fasta.gz || exit $?
 $PREFIX/share/claident/bin/vsearch --threads 4 --notrunclabels --label_suffix revcomp --fastx_revcomp SILVA_132_LSURef_tax_silva.fasta --fastaout SILVA_132_LSURef_tax_silva_rc.fasta || exit $?
 cat SILVA_132_LSURef_tax_silva.fasta SILVA_132_LSURef_tax_silva_rc.fasta > silva132LSUref.fasta || exit $?
 rm -f SILVA_132_LSURef_tax_silva.fasta SILVA_132_LSURef_tax_silva_rc.fasta || exit $?
 mv silva132LSUref.fasta $PREFIX/share/claident/uchimedb/ || sudo mv silva132LSUref.fasta $PREFIX/share/claident/uchimedb/ || exit $?
-wget -c https://www.arb-silva.de/fileadmin/silva_databases/release_132/Exports/SILVA_132_SSURef_Nr99_tax_silva.fasta.gz || exit $?
-gzip -d SILVA_132_SSURef_Nr99_tax_silva.fasta.gz || exit $?
-$PREFIX/share/claident/bin/vsearch --threads 4 --notrunclabels --label_suffix revcomp --fastx_revcomp SILVA_132_SSURef_Nr99_tax_silva.fasta --fastaout SILVA_132_SSURef_Nr99_tax_silva_rc.fasta || exit $?
-cat SILVA_132_SSURef_Nr99_tax_silva.fasta SILVA_132_SSURef_Nr99_tax_silva_rc.fasta > silva132SSUrefnr99.fasta || exit $?
-rm -f SILVA_132_SSURef_Nr99_tax_silva.fasta SILVA_132_SSURef_Nr99_tax_silva_rc.fasta || exit $?
-mv silva132SSUrefnr99.fasta $PREFIX/share/claident/uchimedb/ || sudo mv silva132SSUrefnr99.fasta $PREFIX/share/claident/uchimedb/ || exit $?
+wget -c https://www.arb-silva.de/fileadmin/silva_databases/release_132/Exports/SILVA_132_SSURef_tax_silva.fasta.gz || exit $?
+wget -c https://www.arb-silva.de/fileadmin/silva_databases/release_132/Exports/SILVA_132_SSURef_tax_silva.fasta.gz.md5 || exit $?
+md5sum -c SILVA_132_SSURef_tax_silva.fasta.gz.md5 || exit $?
+rm SILVA_132_SSURef_tax_silva.fasta.gz.md5 || exit $?
+gzip -d SILVA_132_SSURef_tax_silva.fasta.gz || exit $?
+$PREFIX/share/claident/bin/vsearch --threads 4 --notrunclabels --label_suffix revcomp --fastx_revcomp SILVA_132_SSURef_tax_silva.fasta --fastaout SILVA_132_SSURef_tax_silva_rc.fasta || exit $?
+cat SILVA_132_SSURef_tax_silva.fasta SILVA_132_SSURef_tax_silva_rc.fasta > silva132SSUref.fasta || exit $?
+rm -f SILVA_132_SSURef_tax_silva.fasta SILVA_132_SSURef_tax_silva_rc.fasta || exit $?
+mv silva132SSUref.fasta $PREFIX/share/claident/uchimedb/ || sudo mv silva132SSUref.fasta $PREFIX/share/claident/uchimedb/ || exit $?
 echo 'The SILVA release 132 database for UCHIME were installed correctly!'
 touch .silva || exit $?
 fi
