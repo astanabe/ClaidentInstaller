@@ -26,13 +26,13 @@ touch .hmmer || exit $?
 fi
 # download and install MAFFT
 if ! test -e .mafft; then
-wget -c http://mafft.cbrc.jp/alignment/software/mafft-7.397-linux.tgz || exit $?
-tar -xzf mafft-7.397-linux.tgz || exit $?
+wget -c http://mafft.cbrc.jp/alignment/software/mafft-7.402-linux.tgz || exit $?
+tar -xzf mafft-7.402-linux.tgz || exit $?
 mkdir -p $PREFIX/share/claident/bin || sudo mkdir -p $PREFIX/share/claident/bin || exit $?
 mv mafft-linux64/mafft.bat $PREFIX/share/claident/bin/mafft || sudo mv mafft-linux64/mafft.bat $PREFIX/share/claident/bin/mafft || exit $?
 rm -rf $PREFIX/share/claident/bin/mafftdir || sudo rm -rf $PREFIX/share/claident/bin/mafftdir || exit $?
 mv mafft-linux64/mafftdir $PREFIX/share/claident/bin/ || sudo mv mafft-linux64/mafftdir $PREFIX/share/claident/bin/ || exit $?
-rm -rf mafft-7.397-linux.tgz mafft-linux64 mafft-linux32 || exit $?
+rm -rf mafft-7.402-linux.tgz mafft-linux64 mafft-linux32 || exit $?
 echo 'MAFFT was installed correctly!'
 touch .mafft || exit $?
 fi

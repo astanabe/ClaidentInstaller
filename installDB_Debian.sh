@@ -4,12 +4,43 @@ fi
 # download, check, and install BLAST and taxonomy databases
 if ! test -e .overall; then
 wget -c https://www.claident.org/DBURL.txt.xz || exit $?
+rm -f DBURL.txt || exit $?
 xz -d DBURL.txt.xz || exit $?
 wget --limit-rate=524288 -c -i DBURL.txt || exit $?
-rm DBURL.txt || exit?
+rm -f DBURL.txt || exit $?
 ls *.sha256 | xargs -L 1 -P 4 -I {} sh -c 'sha256sum -c {} || exit $?' || exit $?
 ls *.tar.xz | xargs -L 1 -P 4 -I {} sh -c 'tar -xJf {} || exit $?' || exit $?
 mkdir -p $PREFIX/share/claident/taxdb || sudo mkdir -p $PREFIX/share/claident/taxdb || exit $?
+rm -f $PREFIX/share/claident/taxdb/animals_COX1_genus.taxdb || sudo rm -f $PREFIX/share/claident/taxdb/animals_COX1_genus.taxdb
+rm -f $PREFIX/share/claident/taxdb/animals_COX1_species.taxdb || sudo rm -f $PREFIX/share/claident/taxdb/animals_COX1_species.taxdb
+rm -f $PREFIX/share/claident/taxdb/animals_mt_genus.taxdb || sudo rm -f $PREFIX/share/claident/taxdb/animals_mt_genus.taxdb
+rm -f $PREFIX/share/claident/taxdb/animals_mt_species.taxdb || sudo rm -f $PREFIX/share/claident/taxdb/animals_mt_species.taxdb
+rm -f $PREFIX/share/claident/taxdb/eukaryota_LSU_genus.taxdb || sudo rm -f $PREFIX/share/claident/taxdb/eukaryota_LSU_genus.taxdb
+rm -f $PREFIX/share/claident/taxdb/eukaryota_LSU_species.taxdb || sudo rm -f $PREFIX/share/claident/taxdb/eukaryota_LSU_species.taxdb
+rm -f $PREFIX/share/claident/taxdb/eukaryota_SSU_genus.taxdb || sudo rm -f $PREFIX/share/claident/taxdb/eukaryota_SSU_genus.taxdb
+rm -f $PREFIX/share/claident/taxdb/eukaryota_SSU_species.taxdb || sudo rm -f $PREFIX/share/claident/taxdb/eukaryota_SSU_species.taxdb
+rm -f $PREFIX/share/claident/taxdb/fungi_ITS_genus.taxdb || sudo rm -f $PREFIX/share/claident/taxdb/fungi_ITS_genus.taxdb
+rm -f $PREFIX/share/claident/taxdb/fungi_ITS_species.taxdb || sudo rm -f $PREFIX/share/claident/taxdb/fungi_ITS_species.taxdb
+rm -f $PREFIX/share/claident/taxdb/plants_matK_genus.taxdb || sudo rm -f $PREFIX/share/claident/taxdb/plants_matK_genus.taxdb
+rm -f $PREFIX/share/claident/taxdb/plants_matK_species.taxdb || sudo rm -f $PREFIX/share/claident/taxdb/plants_matK_species.taxdb
+rm -f $PREFIX/share/claident/taxdb/plants_rbcL_genus.taxdb || sudo rm -f $PREFIX/share/claident/taxdb/plants_rbcL_genus.taxdb
+rm -f $PREFIX/share/claident/taxdb/plants_rbcL_species.taxdb || sudo rm -f $PREFIX/share/claident/taxdb/plants_rbcL_species.taxdb
+rm -f $PREFIX/share/claident/taxdb/plants_trnH-psbA_genus.taxdb || sudo rm -f $PREFIX/share/claident/taxdb/plants_trnH-psbA_genus.taxdb
+rm -f $PREFIX/share/claident/taxdb/plants_trnH-psbA_species.taxdb || sudo rm -f $PREFIX/share/claident/taxdb/plants_trnH-psbA_species.taxdb
+rm -f $PREFIX/share/claident/taxdb/prokaryota_16S_genus.taxdb || sudo rm -f $PREFIX/share/claident/taxdb/prokaryota_16S_genus.taxdb
+rm -f $PREFIX/share/claident/taxdb/prokaryota_16S_species.taxdb || sudo rm -f $PREFIX/share/claident/taxdb/prokaryota_16S_species.taxdb
+rm -f $PREFIX/share/claident/taxdb/prokaryota_all_genus.taxdb || sudo rm -f $PREFIX/share/claident/taxdb/prokaryota_all_genus.taxdb
+rm -f $PREFIX/share/claident/taxdb/prokaryota_all_species.taxdb || sudo rm -f $PREFIX/share/claident/taxdb/prokaryota_all_species.taxdb
+rm -f $PREFIX/share/claident/taxdb/semiall_class.taxdb || sudo rm -f $PREFIX/share/claident/taxdb/semiall_class.taxdb
+rm -f $PREFIX/share/claident/taxdb/semiall_order.taxdb || sudo rm -f $PREFIX/share/claident/taxdb/semiall_order.taxdb
+rm -f $PREFIX/share/claident/taxdb/semiall_family.taxdb || sudo rm -f $PREFIX/share/claident/taxdb/semiall_family.taxdb
+rm -f $PREFIX/share/claident/taxdb/semiall_genus.taxdb || sudo rm -f $PREFIX/share/claident/taxdb/semiall_genus.taxdb
+rm -f $PREFIX/share/claident/taxdb/semiall_species.taxdb || sudo rm -f $PREFIX/share/claident/taxdb/semiall_species.taxdb
+rm -f $PREFIX/share/claident/taxdb/overall_class.taxdb || sudo rm -f $PREFIX/share/claident/taxdb/overall_class.taxdb
+rm -f $PREFIX/share/claident/taxdb/overall_order.taxdb || sudo rm -f $PREFIX/share/claident/taxdb/overall_order.taxdb
+rm -f $PREFIX/share/claident/taxdb/overall_family.taxdb || sudo rm -f $PREFIX/share/claident/taxdb/overall_family.taxdb
+rm -f $PREFIX/share/claident/taxdb/overall_genus.taxdb || sudo rm -f $PREFIX/share/claident/taxdb/overall_genus.taxdb
+rm -f $PREFIX/share/claident/taxdb/overall_species.taxdb || sudo rm -f $PREFIX/share/claident/taxdb/overall_species.taxdb
 mv *.taxdb $PREFIX/share/claident/taxdb/ || sudo mv *.taxdb $PREFIX/share/claident/taxdb/ || exit $?
 mkdir -p $PREFIX/share/claident/blastdb || sudo mkdir -p $PREFIX/share/claident/blastdb || exit $?
 rm -f $PREFIX/share/claident/blastdb/animals_COX1_genus.* || sudo rm -f $PREFIX/share/claident/blastdb/animals_COX1_genus.*
