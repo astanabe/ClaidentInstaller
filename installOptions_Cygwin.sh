@@ -26,25 +26,25 @@ touch .hmmer || exit $?
 fi
 # download and install MAFFT7
 if ! test -e .mafft; then
-wget -c http://mafft.cbrc.jp/alignment/software/mafft-7.402-mingw64-signed.tar || exit $?
-tar -xf mafft-7.402-mingw64-signed.tar || exit $?
+wget -c http://mafft.cbrc.jp/alignment/software/mafft-7.407-mingw64-signed.tar || exit $?
+tar -xf mafft-7.407-mingw64-signed.tar || exit $?
 mkdir -p $PREFIX/share/claident/bin || exit $?
 rm -rf $PREFIX/share/claident/bin/mafftdir || exit $?
 mv usr/local/libexec/mafft $PREFIX/share/claident/bin/mafftdir || exit $?
 perl -i -npe 's/\/usr\/local\/libexec\/mafft/$ENV{"PREFIX"}\/share\/claident\/bin\/mafftdir/;s/prefix="\$MAFFT_BINARIES"/prefix=$ENV{"PREFIX"}\/share\/claident\/bin\/mafftdir/' usr/local/bin/mafft || exit $?
 mv usr/local/bin/mafft $PREFIX/share/claident/bin/ || exit $?
-rm -rf mafft-7.402-mingw64-signed.tar usr || exit $?
+rm -rf mafft-7.407-mingw64-signed.tar usr || exit $?
 echo 'MAFFT was installed correctly!'
 touch .mafft || exit $?
 fi
 # download and install Metaxa
 if ! test -e .metaxa; then
-wget -c http://microbiology.se/sw/Metaxa2_2.1.3.tar.gz || exit $?
-tar -xzf Metaxa2_2.1.3.tar.gz || exit $?
+wget -c http://microbiology.se/sw/Metaxa2_2.2.tar.gz || exit $?
+tar -xzf Metaxa2_2.2.tar.gz || exit $?
 mkdir -p $PREFIX/share/claident/bin || exit $?
 rm -rf $PREFIX/share/claident/bin/metaxa2_db || exit $?
-mv Metaxa2_2.1.3/metaxa2 Metaxa2_2.1.3/metaxa2_* $PREFIX/share/claident/bin/ || exit $?
-rm -rf Metaxa2_2.1.3.tar.gz Metaxa2_2.1.3 || exit $?
+mv Metaxa2_2.2/metaxa2 Metaxa2_2.2/metaxa2_* $PREFIX/share/claident/bin/ || exit $?
+rm -rf Metaxa2_2.2.tar.gz Metaxa2_2.2 || exit $?
 echo '#!/bin/sh' > metaxa2 || exit $?
 echo "export PATH=$PREFIX/share/claident/bin:\$PATH" >> metaxa2 || exit $?
 echo "perl $PREFIX/share/claident/bin/metaxa2 \$*" >> metaxa2 || exit $?
