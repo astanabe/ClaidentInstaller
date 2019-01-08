@@ -1,19 +1,6 @@
 if test -z $PREFIX; then
 export PREFIX=/usr/local || exit $?
 fi
-# download, and install sff_extract
-if ! test -e .sffextract; then
-PYTHON=`which python` || exit $?
-wget -c http://bioinf.comav.upv.es/downloads/sff_extract_0_3_0 || exit $?
-echo '#!'$PYTHON > sff_extract || exit $?
-cat sff_extract_0_3_0 >> sff_extract || exit $?
-chmod 755 sff_extract || exit $?
-mkdir -p $PREFIX/bin || sudo mkdir -p $PREFIX/bin || exit $?
-mv sff_extract $PREFIX/bin/ || sudo mv sff_extract $PREFIX/bin/ || exit $?
-rm sff_extract_0_3_0 || exit $?
-echo 'sff_extract was installed correctly!'
-touch .sffextract || exit $?
-fi
 # download and install HMMer
 if ! test -e .hmmer; then
 wget -c http://eddylab.org/software/hmmer3/3.1b2/hmmer-3.1b2-macosx-intel.tar.gz || exit $?
