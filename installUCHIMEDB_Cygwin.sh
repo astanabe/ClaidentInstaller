@@ -71,8 +71,8 @@ fi
 # download and install Claident Databases for UCHIME
 if ! test -e .cdu; then
 mkdir -p $PREFIX/share/claident/uchimedb || exit $?
-wget -c https://claident.est.ryukoku.ac.jp/uchimedb20180529/cdu_20180529.tar.xz || exit $?
-wget -c https://claident.est.ryukoku.ac.jp/uchimedb20180529/cdu_20180529.tar.xz.sha256 || exit $?
+wget -c https://www.claident.org/uchimedb/20180529/cdu_20180529.tar.xz || exit $?
+wget -c https://www.claident.org/uchimedb/20180529/cdu_20180529.tar.xz.sha256 || exit $?
 sha256sum -c cdu_20180529.tar.xz.sha256 || exit $?
 rm cdu_20180529.tar.xz.sha256 || exit $?
 tar -xJf cdu_20180529.tar.xz || exit $?
