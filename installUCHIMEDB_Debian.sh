@@ -50,6 +50,10 @@ mkdir -p $PREFIX/share/claident/uchimedb || sudo mkdir -p $PREFIX/share/claident
 wget -c https://unite.ut.ee/sh_files/uchime_reference_dataset_28.06.2017.zip || exit $?
 unzip -qq uchime_reference_dataset_28.06.2017.zip || exit $?
 cd uchime_reference_dataset_28.06.2017 || exit $?
+perl -i -npe 's/×/XX/g' uchime_reference_dataset_28.06.2017.fasta
+perl -i -npe 's/×/XX/g' untrimmed_sequences/uchime_reference_dataset_untrimmed_28.06.2017.fasta
+perl -i -npe 's/×/XX/g' ITS1_ITS2_datasets/uchime_reference_dataset_ITS1_28.06.2017.fasta
+perl -i -npe 's/×/XX/g' ITS1_ITS2_datasets/uchime_reference_dataset_ITS2_28.06.2017.fasta
 $PREFIX/share/claident/bin/vsearch --threads 4 --notrunclabels --label_suffix revcomp --fastx_revcomp uchime_reference_dataset_28.06.2017.fasta --fastaout uchime_reference_dataset_28.06.2017.rc.fasta || exit $?
 cat uchime_reference_dataset_28.06.2017.fasta uchime_reference_dataset_28.06.2017.rc.fasta > unite20170628.fasta || exit $?
 mv unite20170628.fasta $PREFIX/share/claident/uchimedb/ || sudo mv unite20170628.fasta $PREFIX/share/claident/uchimedb/ || exit $?
