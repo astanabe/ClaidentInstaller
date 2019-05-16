@@ -12,7 +12,7 @@ fi
 # download and install DAIRYdb reference database
 if ! test -e .dairydb; then
 mkdir -p $PREFIX/share/claident/uchimedb || sudo mkdir -p $PREFIX/share/claident/uchimedb || exit $?
-wget -c https://github.com/marcomeola/DAIRYdb/raw/master/DAIRYdb_v1.2.0_20190222/DAIRYdb_v1.2.0_20190222_blast/DAIRYdb_v1.2.0_20190222_blast.fasta || exit $?
+wget -c https://github.com/marcomeola/DAIRYdb/raw/master/DAIRYdb_v1.2.0_20190222/DAIRYdb_v1.2.0_20190222_blast/DAIRYdb_v1.2.0_20190222_blast.fasta -O DAIRYdb_v1.2.0_blast.fasta || exit $?
 $PREFIX/share/claident/bin/vsearch --threads 4 --notrunclabels --label_suffix revcomp --fastx_revcomp DAIRYdb_v1.2.0_blast.fasta --fastaout DAIRYdb_v1.2.0_blast_rc.fasta || exit $?
 cat DAIRYdb_v1.2.0_blast.fasta DAIRYdb_v1.2.0_blast_rc.fasta > dairydb1.2.0.fasta || exit $?
 rm -f DAIRYdb_v1.2.0_blast.fasta DAIRYdb_v1.2.0_blast_rc.fasta || exit $?
