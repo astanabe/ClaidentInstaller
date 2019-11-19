@@ -75,13 +75,13 @@ fi
 # download and install Claident Databases for UCHIME
 if ! test -e .cdu; then
 mkdir -p $PREFIX/share/claident/uchimedb || sudo mkdir -p $PREFIX/share/claident/uchimedb || exit $?
-wget -c https://www.claident.org/uchimedb/20190427/cdu_20190427.tar.xz || exit $?
-wget -c https://www.claident.org/uchimedb/20190427/cdu_20190427.tar.xz.sha256 || exit $?
-gsha256sum -c cdu_20190427.tar.xz.sha256 || exit $?
-rm cdu_20190427.tar.xz.sha256 || exit $?
-gnutar -xJf cdu_20190427.tar.xz || exit $?
+wget -c https://www.claident.org/uchimedb/20190921/cdu_20190921.tar.xz || exit $?
+wget -c https://www.claident.org/uchimedb/20190921/cdu_20190921.tar.xz.sha256 || exit $?
+gsha256sum -c cdu_20190921.tar.xz.sha256 || exit $?
+rm cdu_20190921.tar.xz.sha256 || exit $?
+gnutar -xJf cdu_20190921.tar.xz || exit $?
 mv cdu12s.fasta cdu16s.fasta cducox1.fasta cducytb.fasta cdudloop.fasta cdumatk.fasta cdurbcl.fasta cdutrnhpsba.fasta $PREFIX/share/claident/uchimedb/ || sudo mv cdu12s.fasta cdu16s.fasta cducox1.fasta cducytb.fasta cdudloop.fasta cdumatk.fasta cdurbcl.fasta cdutrnhpsba.fasta $PREFIX/share/claident/uchimedb/ || exit $?
-rm -f cdu_20190427.tar.xz || exit $?
+rm -f cdu_20190921.tar.xz || exit $?
 echo 'The Claident Databases for UCHIME were installed correctly!'
 touch .cdu || exit $?
 fi
