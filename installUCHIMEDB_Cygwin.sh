@@ -12,36 +12,37 @@ fi
 # download and install DAIRYdb reference database
 if ! test -e .dairydb; then
 mkdir -p $PREFIX/share/claident/uchimedb || exit $?
-wget -c https://github.com/marcomeola/DAIRYdb/raw/master/DAIRYdb_v1.2.0_20190222/DAIRYdb_v1.2.0_20190222_blast/DAIRYdb_v1.2.0_20190222_blast.fasta -O DAIRYdb_v1.2.0_blast.fasta || exit $?
-$PREFIX/share/claident/bin/vsearch --threads 4 --notrunclabels --label_suffix revcomp --fastx_revcomp DAIRYdb_v1.2.0_blast.fasta --fastaout DAIRYdb_v1.2.0_blast_rc.fasta || exit $?
-cat DAIRYdb_v1.2.0_blast.fasta DAIRYdb_v1.2.0_blast_rc.fasta > dairydb1.2.0.fasta || exit $?
-rm -f DAIRYdb_v1.2.0_blast.fasta DAIRYdb_v1.2.0_blast_rc.fasta || exit $?
-mv dairydb1.2.0.fasta $PREFIX/share/claident/uchimedb/ || exit $?
-echo 'The DAIRYdb v1.2.0 database for UCHIME were installed correctly!'
+wget -c https://github.com/marcomeola/DAIRYdb/raw/master/DAIRYdb_v1.2.4_20200604/DAIRYdb_v1.2.4_20200604_blast/DAIRYdb_v1.2.4_20200604_blast.tgz -O DAIRYdb_v1.2.4_20200604_blast.tgz || exit $?
+tar -xzf DAIRYdb_v1.2.4_20200604_blast.tgz || exit $?
+$PREFIX/share/claident/bin/vsearch --threads 4 --notrunclabels --label_suffix revcomp --fastx_revcomp DAIRYdb_v1.2.4_20200603_blast.fasta --fastaout DAIRYdb_v1.2.4_20200603_blast_rc.fasta || exit $?
+cat DAIRYdb_v1.2.4_20200603_blast.fasta DAIRYdb_v1.2.4_20200603_blast_rc.fasta > dairydb1.2.4.fasta || exit $?
+rm -f DAIRYdb_v1.2.4_20200603_blast.fasta DAIRYdb_v1.2.4_20200603_blast_rc.fasta DAIRYdb_v1.2.4_20200603_blast.fasta.n?? DAIRYdb_v1.2.4_20200604_blast.tgz || exit $?
+mv dairydb1.2.4.fasta $PREFIX/share/claident/uchimedb/ || exit $?
+echo 'The DAIRYdb v1.2.4 database for UCHIME were installed correctly!'
 touch .dairydb || exit $?
 fi
 # download and install SILVA reference databases
 if ! test -e .silva; then
 mkdir -p $PREFIX/share/claident/uchimedb || exit $?
-wget -c https://www.arb-silva.de/fileadmin/silva_databases/release_132/Exports/SILVA_132_LSURef_tax_silva.fasta.gz || exit $?
-wget -c https://www.arb-silva.de/fileadmin/silva_databases/release_132/Exports/SILVA_132_LSURef_tax_silva.fasta.gz.md5 || exit $?
-md5sum -c SILVA_132_LSURef_tax_silva.fasta.gz.md5 || exit $?
-rm SILVA_132_LSURef_tax_silva.fasta.gz.md5 || exit $?
-gzip -d SILVA_132_LSURef_tax_silva.fasta.gz || exit $?
-$PREFIX/share/claident/bin/vsearch --threads 4 --notrunclabels --label_suffix revcomp --fastx_revcomp SILVA_132_LSURef_tax_silva.fasta --fastaout SILVA_132_LSURef_tax_silva_rc.fasta || exit $?
-cat SILVA_132_LSURef_tax_silva.fasta SILVA_132_LSURef_tax_silva_rc.fasta > silva132LSUref.fasta || exit $?
-rm -f SILVA_132_LSURef_tax_silva.fasta SILVA_132_LSURef_tax_silva_rc.fasta || exit $?
-mv silva132LSUref.fasta $PREFIX/share/claident/uchimedb/ || exit $?
-wget -c https://www.arb-silva.de/fileadmin/silva_databases/release_132/Exports/SILVA_132_SSURef_tax_silva.fasta.gz || exit $?
-wget -c https://www.arb-silva.de/fileadmin/silva_databases/release_132/Exports/SILVA_132_SSURef_tax_silva.fasta.gz.md5 || exit $?
-md5sum -c SILVA_132_SSURef_tax_silva.fasta.gz.md5 || exit $?
-rm SILVA_132_SSURef_tax_silva.fasta.gz.md5 || exit $?
-gzip -d SILVA_132_SSURef_tax_silva.fasta.gz || exit $?
-$PREFIX/share/claident/bin/vsearch --threads 4 --notrunclabels --label_suffix revcomp --fastx_revcomp SILVA_132_SSURef_tax_silva.fasta --fastaout SILVA_132_SSURef_tax_silva_rc.fasta || exit $?
-cat SILVA_132_SSURef_tax_silva.fasta SILVA_132_SSURef_tax_silva_rc.fasta > silva132SSUref.fasta || exit $?
-rm -f SILVA_132_SSURef_tax_silva.fasta SILVA_132_SSURef_tax_silva_rc.fasta || exit $?
-mv silva132SSUref.fasta $PREFIX/share/claident/uchimedb/ || exit $?
-echo 'The SILVA release 132 database for UCHIME were installed correctly!'
+wget -c https://www.arb-silva.de/fileadmin/silva_databases/release_138_1/Exports/SILVA_138.1_LSURef_tax_silva.fasta.gz || exit $?
+wget -c https://www.arb-silva.de/fileadmin/silva_databases/release_138_1/Exports/SILVA_138.1_LSURef_tax_silva.fasta.gz.md5 || exit $?
+md5sum -c SILVA_138.1_LSURef_tax_silva.fasta.gz.md5 || exit $?
+rm SILVA_138.1_LSURef_tax_silva.fasta.gz.md5 || exit $?
+gzip -d SILVA_138.1_LSURef_tax_silva.fasta.gz || exit $?
+$PREFIX/share/claident/bin/vsearch --threads 4 --notrunclabels --label_suffix revcomp --fastx_revcomp SILVA_138.1_LSURef_tax_silva.fasta --fastaout SILVA_138.1_LSURef_tax_silva_rc.fasta || exit $?
+cat SILVA_138.1_LSURef_tax_silva.fasta SILVA_138.1_LSURef_tax_silva_rc.fasta > silva138.1LSUref.fasta || exit $?
+rm -f SILVA_138.1_LSURef_tax_silva.fasta SILVA_138.1_LSURef_tax_silva_rc.fasta || exit $?
+mv silva138.1LSUref.fasta $PREFIX/share/claident/uchimedb/ || exit $?
+wget -c https://www.arb-silva.de/fileadmin/silva_databases/release_138_1/Exports/SILVA_138.1_SSURef_tax_silva.fasta.gz || exit $?
+wget -c https://www.arb-silva.de/fileadmin/silva_databases/release_138_1/Exports/SILVA_138.1_SSURef_tax_silva.fasta.gz.md5 || exit $?
+md5sum -c SILVA_138.1_SSURef_tax_silva.fasta.gz.md5 || exit $?
+rm SILVA_138.1_SSURef_tax_silva.fasta.gz.md5 || exit $?
+gzip -d SILVA_138.1_SSURef_tax_silva.fasta.gz || exit $?
+$PREFIX/share/claident/bin/vsearch --threads 4 --notrunclabels --label_suffix revcomp --fastx_revcomp SILVA_138.1_SSURef_tax_silva.fasta --fastaout SILVA_138.1_SSURef_tax_silva_rc.fasta || exit $?
+cat SILVA_138.1_SSURef_tax_silva.fasta SILVA_138.1_SSURef_tax_silva_rc.fasta > silva138.1SSUref.fasta || exit $?
+rm -f SILVA_138.1_SSURef_tax_silva.fasta SILVA_138.1_SSURef_tax_silva_rc.fasta || exit $?
+mv silva138.1SSUref.fasta $PREFIX/share/claident/uchimedb/ || exit $?
+echo 'The SILVA release 138.1 database for UCHIME were installed correctly!'
 touch .silva || exit $?
 fi
 # download and install UNITE UCHIME reference databases
