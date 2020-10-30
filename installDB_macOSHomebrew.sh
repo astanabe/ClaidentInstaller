@@ -6,7 +6,7 @@ if ! test -e .overall; then
 wget -c https://www.claident.org/DBURL.txt.xz || exit $?
 rm -f DBURL.txt || exit $?
 xz -d DBURL.txt.xz || exit $?
-wget --limit-rate=524288 -c -i DBURL.txt || exit $?
+wget --limit-rate=5242880 -c -i DBURL.txt || exit $?
 rm -f DBURL.txt || exit $?
 ls *.sha256 | xargs -L 1 -P 4 -I {} sh -c 'gsha256sum -c {} || exit $?' || exit $?
 ls *.tar.xz | xargs -L 1 -P 4 -I {} sh -c 'gtar -xJf {} || exit $?' || exit $?
@@ -74,7 +74,7 @@ rm -f $PREFIX/share/claident/blastdb/overall_family.* || sudo rm -f $PREFIX/shar
 rm -f $PREFIX/share/claident/blastdb/overall_genus.* || sudo rm -f $PREFIX/share/claident/blastdb/overall_genus.*
 rm -f $PREFIX/share/claident/blastdb/overall_species.* || sudo rm -f $PREFIX/share/claident/blastdb/overall_species.*
 mv overall_class.??.n?? $PREFIX/share/claident/blastdb/ || sudo mv overall_class.??.n?? $PREFIX/share/claident/blastdb/ || exit $?
-mv *.n.gil *.nal $PREFIX/share/claident/blastdb/ || sudo mv *.n.gil *.nal $PREFIX/share/claident/blastdb/ || exit $?
+mv *.bsl *.nal $PREFIX/share/claident/blastdb/ || sudo mv *.bsl *.nal $PREFIX/share/claident/blastdb/ || exit $?
 rm *.sha256 || exit $?
 rm *.tar.xz || exit $?
 touch .overall || exit $?
