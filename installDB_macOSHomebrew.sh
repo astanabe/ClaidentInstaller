@@ -8,8 +8,8 @@ rm -f DBURL.txt || exit $?
 xz -d DBURL.txt.xz || exit $?
 wget --limit-rate=524288 -c -i DBURL.txt || exit $?
 rm -f DBURL.txt || exit $?
-ls *.sha256 | xargs -L 1 -P 4 -I {} sh -c 'sha256sum -c {} || exit $?' || exit $?
-ls *.tar.xz | xargs -L 1 -P 4 -I {} sh -c 'tar -xJf {} || exit $?' || exit $?
+ls *.sha256 | xargs -L 1 -P 4 -I {} sh -c 'gsha256sum -c {} || exit $?' || exit $?
+ls *.tar.xz | xargs -L 1 -P 4 -I {} sh -c 'gtar -xJf {} || exit $?' || exit $?
 mkdir -p $PREFIX/share/claident/taxdb || sudo mkdir -p $PREFIX/share/claident/taxdb || exit $?
 rm -f $PREFIX/share/claident/taxdb/animals_COX1_genus.taxdb || sudo rm -f $PREFIX/share/claident/taxdb/animals_COX1_genus.taxdb
 rm -f $PREFIX/share/claident/taxdb/animals_COX1_species.taxdb || sudo rm -f $PREFIX/share/claident/taxdb/animals_COX1_species.taxdb

@@ -2,6 +2,20 @@
 
 Automatic installer shell scripts for Claident.
 
+## Prerequisites
+
+Mac users need to install Xcode command line tools before installing Claident.
+Xcode command line tools can install by running the following command in the terminal.
+
+```
+xcode-select --install
+```
+
+In addition, mac users also need to install 1 of the following package manager.
+
+- [MacPorts](https://www.macports.org/install.php)
+- [Homebrew](https://brew.sh/)
+
 ## How to use
 
 ```

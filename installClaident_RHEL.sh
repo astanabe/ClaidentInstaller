@@ -1,4 +1,5 @@
-sudo -E apt-get -y install gcc g++ gfortran make autoconf automake libz-dev libbz2-dev tar gzip xz-utils unzip coreutils grep perl libdbi-perl libdbd-sqlite3-perl libwww-perl libfile-copy-recursive-perl libio-compress-lzma-perl libopenblas-serial-dev libopenblas64-serial-dev libcurl4-openssl-dev || exit $?
+sudo -E yum install -y binutils gcc gcc-c++ gcc-plugin-devel libstdc++ libgcc glibc-static libstdc++-static bzip2-devel autoconf automake make wget zlib zlib-devel tar gzip xz unzip coreutils grep perl perl-local-lib perl-Time-HiRes perl-CPAN perl-File-Copy-Recursive perl-YAML perl-DBI perl-DBD-SQLite perl-libwww-perl perl-IO-Compress tcsh || exit $?
+sudo -HE sh -c "yes '' | cpan -fi Statistics::Descriptive IO::Compress::Gzip IO::Compress::Bzip2 IO::Compress::Lzma IO::Compress::Xz" || exit $?
 if test -z $PREFIX; then
 export PREFIX=/usr/local || exit $?
 fi
@@ -20,7 +21,7 @@ if ! test -e .swarm; then
 wget -c https://github.com/torognes/swarm/archive/v3.0.0.tar.gz -O swarm-3.0.0.tar.gz || exit $?
 tar -xzf swarm-3.0.0.tar.gz || exit $?
 cd swarm-3.0.0/src || exit $?
-make CXXFLAGS="-O3 -mtune=native -fomit-frame-pointer -finline-functions -Icityhash" -j8 || exit $?
+make CXXFLAGS="-O3 -mtune=native -fomit-frame-pointer -finline-functions -Icityhash" || exit $?
 mkdir -p $PREFIX/share/claident/bin || sudo mkdir -p $PREFIX/share/claident/bin || exit $?
 mv swarm $PREFIX/share/claident/bin/ || sudo mv swarm $PREFIX/share/claident/bin/ || exit $?
 cd ../.. || exit $?
@@ -35,7 +36,7 @@ tar -xzf vsearch-2.15.0.tar.gz || exit $?
 cd vsearch-2.15.0 || exit $?
 sh ./autogen.sh || exit $?
 CFLAGS="-O3 -fomit-frame-pointer -finline-functions" CPPFLAGS="-O3 -fomit-frame-pointer -finline-functions" CXXFLAGS="-O3 -fomit-frame-pointer -finline-functions" LDFLAGS="-O3 -fomit-frame-pointer -finline-functions" sh ./configure --prefix=$PREFIX/share/claident --disable-pdfman || exit $?
-make -j8 || exit $?
+make || exit $?
 if test -e $PREFIX/share/claident/bin/vsearch; then
 rm -f $PREFIX/share/claident/bin/vsearch || sudo rm -f $PREFIX/share/claident/bin/vsearch || exit $?
 fi
@@ -55,7 +56,7 @@ tar -xzf vsearch5d-2.15.0.tar.gz || exit $?
 cd vsearch5d-2.15.0 || exit $?
 sh ./autogen.sh || exit $?
 CFLAGS="-O3 -fomit-frame-pointer -finline-functions" CPPFLAGS="-O3 -fomit-frame-pointer -finline-functions" CXXFLAGS="-O3 -fomit-frame-pointer -finline-functions" LDFLAGS="-O3 -fomit-frame-pointer -finline-functions" sh ./configure --prefix=$PREFIX/share/claident || exit $?
-make -j8 || exit $?
+make || exit $?
 make install-exec || sudo make install-exec || exit $?
 cd .. || exit $?
 rm -rf vsearch5d-2.15.0 || exit $?
@@ -85,10 +86,10 @@ make install-strip || sudo make install-strip || exit $?
 cd .. || exit $?
 rm -rf R-4.0.3 || exit $?
 if test -w $PREFIX/share/claident/lib/R; then
-$PREFIX/share/claident/bin/R --vanilla -e 'install.packages(c("ape","vegan","picante","mpmcorrelogram","ggplot2","ggsci","bipartite","geosphere"),repos="https://cloud.r-project.org/",dependencies=T,clean=T)' || exit $?
+$PREFIX/share/claident/bin/R --vanilla -e 'install.packages("ape",repos="https://cloud.r-project.org/",dependencies=T,clean=T)' || exit $?
 $PREFIX/share/claident/bin/R --vanilla -e 'source("https://raw.githubusercontent.com/r-lib/remotes/master/install-github.R")$value("benjjneb/dada2@v1.16",dependencies=T,clean=T,upgrade="never")' || exit $?
 else
-sudo $PREFIX/share/claident/bin/R --vanilla -e 'install.packages(c("ape","vegan","picante","mpmcorrelogram","ggplot2","ggsci","bipartite","geosphere"),repos="https://cloud.r-project.org/",dependencies=T,clean=T)' || exit $?
+sudo $PREFIX/share/claident/bin/R --vanilla -e 'install.packages("ape",repos="https://cloud.r-project.org/",dependencies=T,clean=T)' || exit $?
 sudo $PREFIX/share/claident/bin/R --vanilla -e 'source("https://raw.githubusercontent.com/r-lib/remotes/master/install-github.R")$value("benjjneb/dada2@v1.16",dependencies=T,clean=T,upgrade="never")' || exit $?
 fi
 rm -f R-4.0.3.tar.gz || exit $?

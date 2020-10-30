@@ -13,7 +13,7 @@ fi
 if ! test -e .dairydb; then
 mkdir -p $PREFIX/share/claident/uchimedb || sudo mkdir -p $PREFIX/share/claident/uchimedb || exit $?
 wget -c https://github.com/marcomeola/DAIRYdb/raw/master/DAIRYdb_v1.2.4_20200604/DAIRYdb_v1.2.4_20200604_blast/DAIRYdb_v1.2.4_20200604_blast.tgz -O DAIRYdb_v1.2.4_20200604_blast.tgz || exit $?
-tar -xzf DAIRYdb_v1.2.4_20200604_blast.tgz || exit $?
+gnutar -xzf DAIRYdb_v1.2.4_20200604_blast.tgz || exit $?
 $PREFIX/share/claident/bin/vsearch --threads 4 --notrunclabels --label_suffix revcomp --fastx_revcomp DAIRYdb_v1.2.4_20200603_blast.fasta --fastaout DAIRYdb_v1.2.4_20200603_blast_rc.fasta || exit $?
 cat DAIRYdb_v1.2.4_20200603_blast.fasta DAIRYdb_v1.2.4_20200603_blast_rc.fasta > dairydb1.2.4.fasta || exit $?
 rm -f DAIRYdb_v1.2.4_20200603_blast.fasta DAIRYdb_v1.2.4_20200603_blast_rc.fasta DAIRYdb_v1.2.4_20200603_blast.fasta.n?? DAIRYdb_v1.2.4_20200604_blast.tgz || exit $?
@@ -26,7 +26,7 @@ if ! test -e .silva; then
 mkdir -p $PREFIX/share/claident/uchimedb || sudo mkdir -p $PREFIX/share/claident/uchimedb || exit $?
 wget -c https://www.arb-silva.de/fileadmin/silva_databases/release_138_1/Exports/SILVA_138.1_LSURef_tax_silva.fasta.gz || exit $?
 wget -c https://www.arb-silva.de/fileadmin/silva_databases/release_138_1/Exports/SILVA_138.1_LSURef_tax_silva.fasta.gz.md5 || exit $?
-md5sum -c SILVA_138.1_LSURef_tax_silva.fasta.gz.md5 || exit $?
+gmd5sum -c SILVA_138.1_LSURef_tax_silva.fasta.gz.md5 || exit $?
 rm SILVA_138.1_LSURef_tax_silva.fasta.gz.md5 || exit $?
 gzip -d SILVA_138.1_LSURef_tax_silva.fasta.gz || exit $?
 $PREFIX/share/claident/bin/vsearch --threads 4 --notrunclabels --label_suffix revcomp --fastx_revcomp SILVA_138.1_LSURef_tax_silva.fasta --fastaout SILVA_138.1_LSURef_tax_silva_rc.fasta || exit $?
@@ -35,7 +35,7 @@ rm -f SILVA_138.1_LSURef_tax_silva.fasta SILVA_138.1_LSURef_tax_silva_rc.fasta |
 mv silva138.1LSUref.fasta $PREFIX/share/claident/uchimedb/ || sudo mv silva138.1LSUref.fasta $PREFIX/share/claident/uchimedb/ || exit $?
 wget -c https://www.arb-silva.de/fileadmin/silva_databases/release_138_1/Exports/SILVA_138.1_SSURef_tax_silva.fasta.gz || exit $?
 wget -c https://www.arb-silva.de/fileadmin/silva_databases/release_138_1/Exports/SILVA_138.1_SSURef_tax_silva.fasta.gz.md5 || exit $?
-md5sum -c SILVA_138.1_SSURef_tax_silva.fasta.gz.md5 || exit $?
+gmd5sum -c SILVA_138.1_SSURef_tax_silva.fasta.gz.md5 || exit $?
 rm SILVA_138.1_SSURef_tax_silva.fasta.gz.md5 || exit $?
 gzip -d SILVA_138.1_SSURef_tax_silva.fasta.gz || exit $?
 $PREFIX/share/claident/bin/vsearch --threads 4 --notrunclabels --label_suffix revcomp --fastx_revcomp SILVA_138.1_SSURef_tax_silva.fasta --fastaout SILVA_138.1_SSURef_tax_silva_rc.fasta || exit $?
@@ -78,9 +78,9 @@ if ! test -e .cdu; then
 mkdir -p $PREFIX/share/claident/uchimedb || sudo mkdir -p $PREFIX/share/claident/uchimedb || exit $?
 wget -c https://www.claident.org/uchimedb/20190921/cdu_20190921.tar.xz || exit $?
 wget -c https://www.claident.org/uchimedb/20190921/cdu_20190921.tar.xz.sha256 || exit $?
-sha256sum -c cdu_20190921.tar.xz.sha256 || exit $?
+gsha256sum -c cdu_20190921.tar.xz.sha256 || exit $?
 rm cdu_20190921.tar.xz.sha256 || exit $?
-tar -xJf cdu_20190921.tar.xz || exit $?
+gnutar -xJf cdu_20190921.tar.xz || exit $?
 mv cdu12s.fasta cdu16s.fasta cducox1.fasta cducytb.fasta cdudloop.fasta cdumatk.fasta cdurbcl.fasta cdutrnhpsba.fasta $PREFIX/share/claident/uchimedb/ || sudo mv cdu12s.fasta cdu16s.fasta cducox1.fasta cducytb.fasta cdudloop.fasta cdumatk.fasta cdurbcl.fasta cdutrnhpsba.fasta $PREFIX/share/claident/uchimedb/ || exit $?
 rm -f cdu_20190921.tar.xz || exit $?
 echo 'The Claident Databases for UCHIME were installed correctly!'

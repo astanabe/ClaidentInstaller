@@ -13,13 +13,13 @@ touch .hmmer || exit $?
 fi
 # download and install MAFFT
 if ! test -e .mafft; then
-wget -c http://mafft.cbrc.jp/alignment/software/mafft-7.427-linux.tgz || exit $?
-tar -xzf mafft-7.427-linux.tgz || exit $?
+wget -c http://mafft.cbrc.jp/alignment/software/mafft-7.471-linux.tgz || exit $?
+tar -xzf mafft-7.471-linux.tgz || exit $?
 mkdir -p $PREFIX/share/claident/bin || sudo mkdir -p $PREFIX/share/claident/bin || exit $?
 mv mafft-linux64/mafft.bat $PREFIX/share/claident/bin/mafft || sudo mv mafft-linux64/mafft.bat $PREFIX/share/claident/bin/mafft || exit $?
 rm -rf $PREFIX/share/claident/bin/mafftdir || sudo rm -rf $PREFIX/share/claident/bin/mafftdir || exit $?
 mv mafft-linux64/mafftdir $PREFIX/share/claident/bin/ || sudo mv mafft-linux64/mafftdir $PREFIX/share/claident/bin/ || exit $?
-rm -rf mafft-7.427-linux.tgz mafft-linux64 mafft-linux32 || exit $?
+rm -rf mafft-7.471-linux.tgz mafft-linux64 mafft-linux32 || exit $?
 echo 'MAFFT was installed correctly!'
 touch .mafft || exit $?
 fi
@@ -41,12 +41,12 @@ touch .metaxa || exit $?
 fi
 # download and install ITSx
 if ! test -e .itsx; then
-wget -c http://microbiology.se/sw/ITSx_1.1.1.tar.gz || exit $?
-tar -xzf ITSx_1.1.1.tar.gz || exit $?
+wget -c http://microbiology.se/sw/ITSx_1.1.2.tar.gz || exit $?
+tar -xzf ITSx_1.1.2.tar.gz || exit $?
 mkdir -p $PREFIX/share/claident/bin || sudo mkdir -p $PREFIX/share/claident/bin || exit $?
 rm -rf $PREFIX/share/claident/bin/ITSx_db || sudo rm -rf $PREFIX/share/claident/bin/ITSx_db || exit $?
-mv ITSx_1.1.1/ITSx ITSx_1.1.1/ITSx_db $PREFIX/share/claident/bin/ || sudo mv ITSx_1.1.1/ITSx ITSx_1.1.1/ITSx_db $PREFIX/share/claident/bin/ || exit $?
-rm -rf ITSx_1.1.1.tar.gz ITSx_1.1.1 || exit $?
+mv ITSx_1.1.2/ITSx ITSx_1.1.2/ITSx_db $PREFIX/share/claident/bin/ || sudo mv ITSx_1.1.2/ITSx ITSx_1.1.2/ITSx_db $PREFIX/share/claident/bin/ || exit $?
+rm -rf ITSx_1.1.2.tar.gz ITSx_1.1.2 || exit $?
 echo '#!/bin/sh' > ITSx || exit $?
 echo "export PATH=$PREFIX/share/claident/bin:\$PATH" >> ITSx || exit $?
 echo "perl $PREFIX/share/claident/bin/ITSx \$*" >> ITSx || exit $?
