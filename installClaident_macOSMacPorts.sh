@@ -1,18 +1,27 @@
 sudo -E port install p5-dbi p5-dbd-sqlite p5-file-copy-recursive p5-statistics-descriptive p5-io-compress p5-io-compress-lzma gmake libgcc coreutils wget unzip gnutar xz zlib bzip2 autoconf automake build_arch=x86_64 || exit $?
+wget -c https://www.cpan.org/authors/id/M/MI/MIKEK/Statistics-Distributions-1.02.tar.gz -O Statistics-Distributions-1.02.tar.gz || exit $?
+tar -xzf Statistics-Distributions-1.02.tar.gz || exit $?
+cd Statistics-Distributions-1.02 || exit $?
+perl Makefile.PL || exit $?
+gmake || exit $?
+sudo gmake install || exit $?
+cd .. || exit $?
+rm -rf Statistics-Distributions-1.02 || exit $?
+rm -f Statistics-Distributions-1.02.tar.gz || exit $?
 if test -z $PREFIX; then
 export PREFIX=/usr/local || exit $?
 fi
 # download, and install Claident
 if ! test -e .claident; then
-wget -c https://github.com/astanabe/Claident/archive/v0.2.2019.05.10.tar.gz -O Claident-0.2.2019.05.10.tar.gz || exit $?
-tar -xzf Claident-0.2.2019.05.10.tar.gz || exit $?
-cd Claident-0.2.2019.05.10 || exit $?
+wget -c https://github.com/astanabe/Claident/archive/v0.9.2020.11.06.tar.gz -O Claident-0.9.2020.11.06.tar.gz || exit $?
+tar -xzf Claident-0.9.2020.11.06.tar.gz || exit $?
+cd Claident-0.9.2020.11.06 || exit $?
 gmake PREFIX=$PREFIX || exit $?
 gmake PREFIX=$PREFIX install || sudo gmake PREFIX=$PREFIX install || exit $?
 cp $PREFIX/share/claident/.claident ~/.claident || exit $?
 cd .. || exit $?
-rm -rf Claident-0.2.2019.05.10 || exit $?
-rm -f Claident-0.2.2019.05.10.tar.gz || exit $?
+rm -rf Claident-0.9.2020.11.06 || exit $?
+rm -f Claident-0.9.2020.11.06.tar.gz || exit $?
 touch .claident || exit $?
 fi
 # download , compile, and install Swarm

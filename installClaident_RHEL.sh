@@ -1,19 +1,19 @@
 sudo -E yum install -y binutils gcc gcc-c++ gcc-plugin-devel libstdc++ libgcc glibc-static libstdc++-static bzip2-devel autoconf automake make wget zlib zlib-devel tar gzip xz unzip coreutils grep perl perl-local-lib perl-Time-HiRes perl-CPAN perl-File-Copy-Recursive perl-YAML perl-DBI perl-DBD-SQLite perl-libwww-perl perl-IO-Compress tcsh || exit $?
-sudo -HE sh -c "yes '' | cpan -fi Statistics::Descriptive IO::Compress::Gzip IO::Compress::Bzip2 IO::Compress::Lzma IO::Compress::Xz" || exit $?
+sudo -HE sh -c "yes '' | cpan -fi Statistics::Descriptive Statistics::Distributions IO::Compress::Gzip IO::Compress::Bzip2 IO::Compress::Lzma IO::Compress::Xz" || exit $?
 if test -z $PREFIX; then
 export PREFIX=/usr/local || exit $?
 fi
 # download, and install Claident
 if ! test -e .claident; then
-wget -c https://github.com/astanabe/Claident/archive/v0.2.2019.05.10.tar.gz -O Claident-0.2.2019.05.10.tar.gz || exit $?
-tar -xzf Claident-0.2.2019.05.10.tar.gz || exit $?
-cd Claident-0.2.2019.05.10 || exit $?
+wget -c https://github.com/astanabe/Claident/archive/v0.9.2020.11.06.tar.gz -O Claident-0.9.2020.11.06.tar.gz || exit $?
+tar -xzf Claident-0.9.2020.11.06.tar.gz || exit $?
+cd Claident-0.9.2020.11.06 || exit $?
 make PREFIX=$PREFIX || exit $?
 make PREFIX=$PREFIX install || sudo make PREFIX=$PREFIX install || exit $?
 cp $PREFIX/share/claident/.claident ~/.claident || exit $?
 cd .. || exit $?
-rm -rf Claident-0.2.2019.05.10 || exit $?
-rm -f Claident-0.2.2019.05.10.tar.gz || exit $?
+rm -rf Claident-0.9.2020.11.06 || exit $?
+rm -f Claident-0.9.2020.11.06.tar.gz || exit $?
 touch .claident || exit $?
 fi
 # download , compile, and install Swarm

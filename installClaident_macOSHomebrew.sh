@@ -1,19 +1,19 @@
 sudo -E brew install make gcc coreutils wget unzip gnu-tar xz zlib bzip2 autoconf automake || exit $?
-sudo -HE sh -c "yes '' | cpan -fi Statistics::Descriptive File::Copy::Recursive DBI DBD::SQLite IO::Compress IO::Compress::Gzip IO::Compress::Bzip2 IO::Compress::Lzma IO::Compress::Xz" || exit $?
+sudo -HE sh -c "yes '' | cpan -fi Statistics::Descriptive Statistics::Distributions File::Copy::Recursive DBI DBD::SQLite IO::Compress IO::Compress::Gzip IO::Compress::Bzip2 IO::Compress::Lzma IO::Compress::Xz" || exit $?
 if test -z $PREFIX; then
 export PREFIX=/usr/local || exit $?
 fi
 # download, and install Claident
 if ! test -e .claident; then
-wget -c https://github.com/astanabe/Claident/archive/v0.2.2019.05.10.tar.gz -O Claident-0.2.2019.05.10.tar.gz || exit $?
-tar -xzf Claident-0.2.2019.05.10.tar.gz || exit $?
-cd Claident-0.2.2019.05.10 || exit $?
+wget -c https://github.com/astanabe/Claident/archive/v0.9.2020.11.06.tar.gz -O Claident-0.9.2020.11.06.tar.gz || exit $?
+tar -xzf Claident-0.9.2020.11.06.tar.gz || exit $?
+cd Claident-0.9.2020.11.06 || exit $?
 gmake PREFIX=$PREFIX || exit $?
 gmake PREFIX=$PREFIX install || sudo gmake PREFIX=$PREFIX install || exit $?
 cp $PREFIX/share/claident/.claident ~/.claident || exit $?
 cd .. || exit $?
-rm -rf Claident-0.2.2019.05.10 || exit $?
-rm -f Claident-0.2.2019.05.10.tar.gz || exit $?
+rm -rf Claident-0.9.2020.11.06 || exit $?
+rm -f Claident-0.9.2020.11.06.tar.gz || exit $?
 touch .claident || exit $?
 fi
 # download , compile, and install Swarm

@@ -1,18 +1,18 @@
-sudo -E apt-get -y install gcc g++ gfortran make autoconf automake libz-dev libbz2-dev tar gzip xz-utils unzip coreutils grep perl libdbi-perl libdbd-sqlite3-perl libwww-perl libfile-copy-recursive-perl libio-compress-lzma-perl libopenblas-serial-dev libopenblas64-serial-dev libcurl4-openssl-dev || exit $?
+sudo -E apt-get -y install gcc g++ gfortran make autoconf automake libz-dev libbz2-dev tar gzip xz-utils unzip coreutils grep perl libdbi-perl libdbd-sqlite3-perl libwww-perl libfile-copy-recursive-perl libstatistics-distributions-perl libio-compress-lzma-perl libopenblas-serial-dev libopenblas64-serial-dev libcurl4-openssl-dev || exit $?
 if test -z $PREFIX; then
 export PREFIX=/usr/local || exit $?
 fi
 # download, and install Claident
 if ! test -e .claident; then
-wget -c https://github.com/astanabe/Claident/archive/v0.2.2019.05.10.tar.gz -O Claident-0.2.2019.05.10.tar.gz || exit $?
-tar -xzf Claident-0.2.2019.05.10.tar.gz || exit $?
-cd Claident-0.2.2019.05.10 || exit $?
+wget -c https://github.com/astanabe/Claident/archive/v0.9.2020.11.06.tar.gz -O Claident-0.9.2020.11.06.tar.gz || exit $?
+tar -xzf Claident-0.9.2020.11.06.tar.gz || exit $?
+cd Claident-0.9.2020.11.06 || exit $?
 make PREFIX=$PREFIX || exit $?
 make PREFIX=$PREFIX install || sudo make PREFIX=$PREFIX install || exit $?
 cp $PREFIX/share/claident/.claident ~/.claident || exit $?
 cd .. || exit $?
-rm -rf Claident-0.2.2019.05.10 || exit $?
-rm -f Claident-0.2.2019.05.10.tar.gz || exit $?
+rm -rf Claident-0.9.2020.11.06 || exit $?
+rm -f Claident-0.9.2020.11.06.tar.gz || exit $?
 touch .claident || exit $?
 fi
 # download , compile, and install Swarm

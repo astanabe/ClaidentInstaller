@@ -8,8 +8,8 @@ rm -f DBURL.txt || exit $?
 xz -d DBURL.txt.xz || exit $?
 wget --limit-rate=5242880 -c -i DBURL.txt || exit $?
 rm -f DBURL.txt || exit $?
-ls *.sha256 | xargs -L 1 -P 4 -I {} sh -c 'sha256sum -c {} || exit $?' || exit $?
-ls *.tar.xz | xargs -L 1 -P 4 -I {} sh -c 'tar -xJf {} || exit $?' || exit $?
+ls "*.sha256" | xargs -L 1 -P 4 -I {} sh -c 'sha256sum -c {} || exit $?' || exit $?
+ls "*.tar.xz" | xargs -L 1 -P 4 -I {} sh -c 'tar -xJf {} || exit $?' || exit $?
 mkdir -p $PREFIX/share/claident/taxdb || sudo mkdir -p $PREFIX/share/claident/taxdb || exit $?
 rm -f $PREFIX/share/claident/taxdb/animals_COX1_genus.taxdb || sudo rm -f $PREFIX/share/claident/taxdb/animals_COX1_genus.taxdb
 rm -f $PREFIX/share/claident/taxdb/animals_COX1_species.taxdb || sudo rm -f $PREFIX/share/claident/taxdb/animals_COX1_species.taxdb
@@ -41,7 +41,7 @@ rm -f $PREFIX/share/claident/taxdb/overall_order.taxdb || sudo rm -f $PREFIX/sha
 rm -f $PREFIX/share/claident/taxdb/overall_family.taxdb || sudo rm -f $PREFIX/share/claident/taxdb/overall_family.taxdb
 rm -f $PREFIX/share/claident/taxdb/overall_genus.taxdb || sudo rm -f $PREFIX/share/claident/taxdb/overall_genus.taxdb
 rm -f $PREFIX/share/claident/taxdb/overall_species.taxdb || sudo rm -f $PREFIX/share/claident/taxdb/overall_species.taxdb
-mv *.taxdb $PREFIX/share/claident/taxdb/ || sudo mv *.taxdb $PREFIX/share/claident/taxdb/ || exit $?
+mv "*.taxdb" $PREFIX/share/claident/taxdb/ || sudo mv "*.taxdb" $PREFIX/share/claident/taxdb/ || exit $?
 mkdir -p $PREFIX/share/claident/blastdb || sudo mkdir -p $PREFIX/share/claident/blastdb || exit $?
 rm -f $PREFIX/share/claident/blastdb/animals_COX1_genus.* || sudo rm -f $PREFIX/share/claident/blastdb/animals_COX1_genus.*
 rm -f $PREFIX/share/claident/blastdb/animals_COX1_species.* || sudo rm -f $PREFIX/share/claident/blastdb/animals_COX1_species.*
@@ -73,10 +73,10 @@ rm -f $PREFIX/share/claident/blastdb/overall_order.* || sudo rm -f $PREFIX/share
 rm -f $PREFIX/share/claident/blastdb/overall_family.* || sudo rm -f $PREFIX/share/claident/blastdb/overall_family.*
 rm -f $PREFIX/share/claident/blastdb/overall_genus.* || sudo rm -f $PREFIX/share/claident/blastdb/overall_genus.*
 rm -f $PREFIX/share/claident/blastdb/overall_species.* || sudo rm -f $PREFIX/share/claident/blastdb/overall_species.*
-mv overall_class.??.n?? $PREFIX/share/claident/blastdb/ || sudo mv overall_class.??.n?? $PREFIX/share/claident/blastdb/ || exit $?
-mv *.bsl *.nal $PREFIX/share/claident/blastdb/ || sudo mv *.bsl *.nal $PREFIX/share/claident/blastdb/ || exit $?
-rm *.sha256 || exit $?
-rm *.tar.xz || exit $?
+mv "overall_class.??.n??" $PREFIX/share/claident/blastdb/ || sudo mv "overall_class.??.n??" $PREFIX/share/claident/blastdb/ || exit $?
+mv "*.bsl" "*.nal" $PREFIX/share/claident/blastdb/ || sudo mv "*.bsl" "*.nal" $PREFIX/share/claident/blastdb/ || exit $?
+rm "*.sha256" || exit $?
+rm "*.tar.xz" || exit $?
 touch .overall || exit $?
 echo 'The "overall" family databases were installed correctly!'
 fi
