@@ -101,6 +101,7 @@ else
 sudo $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");source("https://raw.githubusercontent.com/r-lib/remotes/master/install-github.R")$value("benjjneb/dada2@v1.16",dependencies=T,clean=T,upgrade="never")' || exit $?
 fi
 rm -f R-4.0.3.tar.gz || exit $?
+touch .dada2 || exit $?
 fi
 echo 'Installation finished correctly!'
 echo 'You do not need to care about error messages.'
