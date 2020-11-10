@@ -86,10 +86,10 @@ gmake install-strip || sudo gmake install-strip || exit $?
 cd .. || exit $?
 rm -rf R-4.0.3 || exit $?
 if test -w $PREFIX/share/claident/lib/R; then
-$PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");install.packages("ape",repos="https://cloud.r-project.org/",dependencies=T,clean=T)' || exit $?
+#$PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");install.packages("ape",repos="https://cloud.r-project.org/",dependencies=T,clean=T)' || exit $?
 $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");source("https://raw.githubusercontent.com/r-lib/remotes/master/install-github.R")$value("benjjneb/dada2@v1.16",dependencies=T,clean=T,upgrade="never")' || exit $?
 else
-sudo $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");install.packages("ape",repos="https://cloud.r-project.org/",dependencies=T,clean=T)' || exit $?
+#sudo $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");install.packages("ape",repos="https://cloud.r-project.org/",dependencies=T,clean=T)' || exit $?
 sudo $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");source("https://raw.githubusercontent.com/r-lib/remotes/master/install-github.R")$value("benjjneb/dada2@v1.16",dependencies=T,clean=T,upgrade="never")' || exit $?
 fi
 rm -f R-4.0.3.tar.gz || exit $?
