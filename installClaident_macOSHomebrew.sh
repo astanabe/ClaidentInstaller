@@ -31,9 +31,9 @@ touch .swarm || exit $?
 fi
 # download , compile, and install VSEARCH
 if ! test -e .vsearch; then
-wget -c https://github.com/torognes/vsearch/archive/v2.15.0.tar.gz -O vsearch-2.15.0.tar.gz || exit $?
-gtar -xzf vsearch-2.15.0.tar.gz || exit $?
-cd vsearch-2.15.0 || exit $?
+wget -c https://github.com/torognes/vsearch/archive/v2.15.1.tar.gz -O vsearch-2.15.1.tar.gz || exit $?
+gtar -xzf vsearch-2.15.1.tar.gz || exit $?
+cd vsearch-2.15.1 || exit $?
 sh ./autogen.sh || exit $?
 CC=gcc-mp-5 CXX=g++-mp-5 CFLAGS="-O3 -m64 -fomit-frame-pointer -finline-functions" CXXFLAGS="-O3 -m64 -fomit-frame-pointer -finline-functions" CPPFLAGS="-I/opt/local/include" LDFLAGS="-O3 -m64 -L/opt/local/lib" sh ./configure --prefix=$PREFIX/share/claident --disable-pdfman || exit $?
 gmake || exit $?
@@ -45,34 +45,34 @@ if ! test -e $PREFIX/bin/vsearch; then
 ln -sf $PREFIX/share/claident/bin/vsearch $PREFIX/bin/vsearch || sudo ln -sf $PREFIX/share/claident/bin/vsearch $PREFIX/bin/vsearch || exit $?
 fi
 cd .. || exit $?
-rm -rf vsearch-2.15.0 || exit $?
-rm -f vsearch-2.15.0.tar.gz || exit $?
+rm -rf vsearch-2.15.1 || exit $?
+rm -f vsearch-2.15.1.tar.gz || exit $?
 touch .vsearch || exit $?
 fi
 # download , compile, and install VSEARCH5D
 if ! test -e .vsearch5d; then
-wget -c https://github.com/astanabe/vsearch5d/archive/v2.15.0.tar.gz -O vsearch5d-2.15.0.tar.gz || exit $?
-gtar -xzf vsearch5d-2.15.0.tar.gz || exit $?
-cd vsearch5d-2.15.0 || exit $?
+wget -c https://github.com/astanabe/vsearch5d/archive/v2.15.1.tar.gz -O vsearch5d-2.15.1.tar.gz || exit $?
+gtar -xzf vsearch5d-2.15.1.tar.gz || exit $?
+cd vsearch5d-2.15.1 || exit $?
 sh ./autogen.sh || exit $?
 CC=gcc-mp-5 CXX=g++-mp-5 CFLAGS="-O3 -m64 -fomit-frame-pointer -finline-functions" CXXFLAGS="-O3 -m64 -fomit-frame-pointer -finline-functions" CPPFLAGS="-I/opt/local/include" LDFLAGS="-O3 -m64 -L/opt/local/lib" sh ./configure --prefix=$PREFIX/share/claident || exit $?
 gmake || exit $?
 gmake install-exec || sudo gmake install-exec || exit $?
 cd .. || exit $?
-rm -rf vsearch5d-2.15.0 || exit $?
-rm -f vsearch5d-2.15.0.tar.gz || exit $?
+rm -rf vsearch5d-2.15.1 || exit $?
+rm -f vsearch5d-2.15.1.tar.gz || exit $?
 touch .vsearch5d || exit $?
 fi
 # download, and install BLAST+
 if ! test -e .blast; then
-wget -c ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.10.1/ncbi-blast-2.10.1+-x64-macosx.tar.gz || exit $?
-gtar -xzf ncbi-blast-2.10.1+-x64-macosx.tar.gz || exit $?
-cd ncbi-blast-2.10.1+/bin || exit $?
+wget -c ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.11.0/ncbi-blast-2.11.0+-x64-macosx.tar.gz || exit $?
+gtar -xzf ncbi-blast-2.11.0+-x64-macosx.tar.gz || exit $?
+cd ncbi-blast-2.11.0+/bin || exit $?
 mkdir -p $PREFIX/share/claident/bin || sudo mkdir -p $PREFIX/share/claident/bin || exit $?
 mv * $PREFIX/share/claident/bin/ || sudo mv * $PREFIX/share/claident/bin/ || exit $?
 cd ../.. || exit $?
-rm -rf ncbi-blast-2.10.1+ || exit $?
-rm -f ncbi-blast-2.10.1+-x64-macosx.tar.gz || exit $?
+rm -rf ncbi-blast-2.11.0+ || exit $?
+rm -f ncbi-blast-2.11.0+-x64-macosx.tar.gz || exit $?
 touch .blast || exit $?
 fi
 # download, compile, and install R and DADA2
