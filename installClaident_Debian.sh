@@ -4,15 +4,15 @@ export PREFIX=/usr/local || exit $?
 fi
 # download, and install Claident
 if ! test -e .claident; then
-wget -c https://github.com/astanabe/Claident/archive/v0.9.2020.11.17.tar.gz -O Claident-0.9.2020.11.17.tar.gz || exit $?
-tar -xzf Claident-0.9.2020.11.17.tar.gz || exit $?
-cd Claident-0.9.2020.11.17 || exit $?
+wget -c https://github.com/astanabe/Claident/archive/v0.9.2020.11.27.tar.gz -O Claident-0.9.2020.11.27.tar.gz || exit $?
+tar -xzf Claident-0.9.2020.11.27.tar.gz || exit $?
+cd Claident-0.9.2020.11.27 || exit $?
 make PREFIX=$PREFIX || exit $?
 make PREFIX=$PREFIX install || sudo make PREFIX=$PREFIX install || exit $?
 cp $PREFIX/share/claident/.claident ~/.claident || exit $?
 cd .. || exit $?
-rm -rf Claident-0.9.2020.11.17 || exit $?
-rm -f Claident-0.9.2020.11.17.tar.gz || exit $?
+rm -rf Claident-0.9.2020.11.27 || exit $?
+rm -f Claident-0.9.2020.11.27.tar.gz || exit $?
 touch .claident || exit $?
 fi
 # download , compile, and install Swarm
