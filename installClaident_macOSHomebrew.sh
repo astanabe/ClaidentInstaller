@@ -9,7 +9,7 @@ wget -c https://github.com/astanabe/Claident/archive/v0.9.2020.12.17.tar.gz -O C
 tar -xzf Claident-0.9.2020.12.17.tar.gz || exit $?
 cd Claident-0.9.2020.12.17 || exit $?
 gmake PREFIX=$PREFIX || exit $?
-gmake PREFIX=$PREFIX install || sudo gmake PREFIX=$PREFIX install || exit $?
+gmake PREFIX=$PREFIX install 2> /dev/null || sudo gmake PREFIX=$PREFIX install || exit $?
 cp $PREFIX/share/claident/.claident ~/.claident || exit $?
 cd .. || exit $?
 rm -rf Claident-0.9.2020.12.17 || exit $?
@@ -22,8 +22,8 @@ wget -c https://github.com/torognes/swarm/archive/v3.0.0.tar.gz -O swarm-3.0.0.t
 gtar -xzf swarm-3.0.0.tar.gz || exit $?
 cd swarm-3.0.0/src || exit $?
 gmake CXXFLAGS="-O3 -m64 -mtune=native -fomit-frame-pointer -finline-functions -Icityhash" || exit $?
-mkdir -p $PREFIX/share/claident/bin || sudo mkdir -p $PREFIX/share/claident/bin || exit $?
-mv swarm $PREFIX/share/claident/bin/ || sudo mv swarm $PREFIX/share/claident/bin/ || exit $?
+mkdir -p $PREFIX/share/claident/bin 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/bin || exit $?
+mv swarm $PREFIX/share/claident/bin/ 2> /dev/null || sudo mv swarm $PREFIX/share/claident/bin/ || exit $?
 cd ../.. || exit $?
 rm -rf swarm-3.0.0 || exit $?
 rm -f swarm-3.0.0.tar.gz || exit $?
@@ -38,11 +38,11 @@ sh ./autogen.sh || exit $?
 CC=gcc-mp-5 CXX=g++-mp-5 CFLAGS="-O3 -m64 -fomit-frame-pointer -finline-functions" CXXFLAGS="-O3 -m64 -fomit-frame-pointer -finline-functions" CPPFLAGS="-I/opt/local/include" LDFLAGS="-O3 -m64 -L/opt/local/lib" sh ./configure --prefix=$PREFIX/share/claident --disable-pdfman || exit $?
 gmake || exit $?
 if test -e $PREFIX/share/claident/bin/vsearch; then
-rm -f $PREFIX/share/claident/bin/vsearch || sudo rm -f $PREFIX/share/claident/bin/vsearch || exit $?
+rm -f $PREFIX/share/claident/bin/vsearch 2> /dev/null || sudo rm -f $PREFIX/share/claident/bin/vsearch || exit $?
 fi
-gmake install-exec || sudo gmake install-exec || exit $?
+gmake install-exec 2> /dev/null || sudo gmake install-exec || exit $?
 if ! test -e $PREFIX/bin/vsearch; then
-ln -sf $PREFIX/share/claident/bin/vsearch $PREFIX/bin/vsearch || sudo ln -sf $PREFIX/share/claident/bin/vsearch $PREFIX/bin/vsearch || exit $?
+ln -sf $PREFIX/share/claident/bin/vsearch $PREFIX/bin/vsearch 2> /dev/null || sudo ln -sf $PREFIX/share/claident/bin/vsearch $PREFIX/bin/vsearch || exit $?
 fi
 cd .. || exit $?
 rm -rf vsearch-2.15.1 || exit $?
@@ -57,7 +57,7 @@ cd vsearch5d-2.15.1 || exit $?
 sh ./autogen.sh || exit $?
 CC=gcc-mp-5 CXX=g++-mp-5 CFLAGS="-O3 -m64 -fomit-frame-pointer -finline-functions" CXXFLAGS="-O3 -m64 -fomit-frame-pointer -finline-functions" CPPFLAGS="-I/opt/local/include" LDFLAGS="-O3 -m64 -L/opt/local/lib" sh ./configure --prefix=$PREFIX/share/claident || exit $?
 gmake || exit $?
-gmake install-exec || sudo gmake install-exec || exit $?
+gmake install-exec 2> /dev/null || sudo gmake install-exec || exit $?
 cd .. || exit $?
 rm -rf vsearch5d-2.15.1 || exit $?
 rm -f vsearch5d-2.15.1.tar.gz || exit $?
@@ -68,8 +68,8 @@ if ! test -e .blast; then
 wget -c ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.11.0/ncbi-blast-2.11.0+-x64-macosx.tar.gz || exit $?
 gtar -xzf ncbi-blast-2.11.0+-x64-macosx.tar.gz || exit $?
 cd ncbi-blast-2.11.0+/bin || exit $?
-mkdir -p $PREFIX/share/claident/bin || sudo mkdir -p $PREFIX/share/claident/bin || exit $?
-mv * $PREFIX/share/claident/bin/ || sudo mv * $PREFIX/share/claident/bin/ || exit $?
+mkdir -p $PREFIX/share/claident/bin 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/bin || exit $?
+mv * $PREFIX/share/claident/bin/ 2> /dev/null || sudo mv * $PREFIX/share/claident/bin/ || exit $?
 cd ../.. || exit $?
 rm -rf ncbi-blast-2.11.0+ || exit $?
 rm -f ncbi-blast-2.11.0+-x64-macosx.tar.gz || exit $?
@@ -82,7 +82,7 @@ gtar -xzf R-4.0.3.tar.gz || exit $?
 cd R-4.0.3 || exit $?
 ./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=no --with-pic --with-x=no || exit $?
 gmake -j8 || exit $?
-gmake install-strip || sudo gmake install-strip || exit $?
+gmake install-strip 2> /dev/null || sudo gmake install-strip || exit $?
 cd .. || exit $?
 rm -rf R-4.0.3 || exit $?
 if test -w $PREFIX/share/claident/lib/R; then
