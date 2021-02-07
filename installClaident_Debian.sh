@@ -1,4 +1,4 @@
-sudo -E apt-get -y install gcc g++ gfortran make autoconf automake libz-dev libbz2-dev tar gzip xz-utils unzip coreutils grep perl libdbi-perl libdbd-sqlite3-perl libwww-perl libfile-copy-recursive-perl libstatistics-distributions-perl libio-compress-lzma-perl libopenblas-serial-dev libopenblas64-serial-dev libcurl4-openssl-dev || exit $?
+sudo -E apt-get -y install gcc g++ gfortran make autoconf automake zlib1g-dev libbz2-dev liblzma-dev libreadline-dev libpcre2-dev libjpeg-dev libpng-dev libcairo2-dev libpango1.0-dev libtiff-dev tcl-dev tk-dev tar gzip xz-utils unzip coreutils grep perl libdbi-perl libdbd-sqlite3-perl libwww-perl libfile-copy-recursive-perl libstatistics-distributions-perl libio-compress-lzma-perl libopenblas-serial-dev libopenblas64-serial-dev libcurl4-openssl-dev || exit $?
 if test -z $PREFIX; then
 export PREFIX=/usr/local || exit $?
 fi
@@ -82,6 +82,10 @@ cd R-4.0.3 || exit $?
 ./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=no --with-pic --with-x=no || exit $?
 make -j8 || exit $?
 make install-strip 2> /dev/null || sudo make install-strip || exit $?
+if ! test -e $PREFIX/bin/R; then
+ln -sf $PREFIX/share/claident/bin/R $PREFIX/bin/R 2> /dev/null || sudo ln -sf $PREFIX/share/claident/bin/R $PREFIX/bin/R || exit $?
+ln -sf $PREFIX/share/claident/bin/Rscript $PREFIX/bin/Rscript 2> /dev/null || sudo ln -sf $PREFIX/share/claident/bin/Rscript $PREFIX/bin/Rscript || exit $?
+fi
 cd .. || exit $?
 rm -rf R-4.0.3 || exit $?
 if test -w $PREFIX/share/claident/lib/R; then
