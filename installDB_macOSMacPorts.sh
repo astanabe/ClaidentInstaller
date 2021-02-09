@@ -3,10 +3,10 @@ export PREFIX=/usr/local || exit $?
 fi
 # download, check, and install BLAST and taxonomy databases
 if ! test -e .taxdb; then
-wget -c https://www.claident.org/TAXDBURL.txt.xz || exit $?
+wget -nv -c https://www.claident.org/TAXDBURL.txt.xz || exit $?
 rm -f TAXDBURL.txt || exit $?
 xz -d TAXDBURL.txt.xz || exit $?
-wget --limit-rate=5242880 -c -i TAXDBURL.txt || exit $?
+wget -nv --limit-rate=5242880 -c -i TAXDBURL.txt || exit $?
 rm -f TAXDBURL.txt || exit $?
 ls *.sha256 | xargs -L 1 -P 4 -I {} sh -c 'gsha256sum -c {} || exit $?' || exit $?
 ls *.tar.xz | xargs -L 1 -P 4 -I {} sh -c 'gnutar -xJf {} || exit $?' || exit $?
@@ -81,10 +81,10 @@ echo 'The taxonomy databases were installed correctly!'
 fi
 # download, check, and install BLAST databases
 if ! test -e .blastdb; then
-wget -c https://www.claident.org/BLASTDBURL.txt.xz || exit $?
+wget -nv -c https://www.claident.org/BLASTDBURL.txt.xz || exit $?
 rm -f BLASTDBURL.txt || exit $?
 xz -d BLASTDBURL.txt.xz || exit $?
-wget --limit-rate=5242880 -c -i BLASTDBURL.txt || exit $?
+wget -nv --limit-rate=5242880 -c -i BLASTDBURL.txt || exit $?
 rm -f BLASTDBURL.txt || exit $?
 ls *.sha256 | xargs -L 1 -P 4 -I {} sh -c 'gsha256sum -c {} || exit $?' || exit $?
 ls *.tar.xz | xargs -L 1 -P 4 -I {} sh -c 'gnutar -xJf {} || exit $?' || exit $?

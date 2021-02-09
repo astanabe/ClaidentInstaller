@@ -1,5 +1,5 @@
 sudo -E port install p5-dbi p5-dbd-sqlite p5-file-copy-recursive p5-statistics-descriptive p5-io-compress p5-io-compress-lzma gmake libgcc coreutils wget unzip gnutar xz zlib bzip2 autoconf automake build_arch=x86_64 || exit $?
-wget -c https://www.cpan.org/authors/id/M/MI/MIKEK/Statistics-Distributions-1.02.tar.gz -O Statistics-Distributions-1.02.tar.gz || exit $?
+wget -nv -c https://www.cpan.org/authors/id/M/MI/MIKEK/Statistics-Distributions-1.02.tar.gz -O Statistics-Distributions-1.02.tar.gz || exit $?
 tar -xzf Statistics-Distributions-1.02.tar.gz || exit $?
 cd Statistics-Distributions-1.02 || exit $?
 perl Makefile.PL || exit $?
@@ -13,7 +13,7 @@ export PREFIX=/usr/local || exit $?
 fi
 # download, and install Claident
 if ! test -e .claident; then
-wget -c https://github.com/astanabe/Claident/archive/v0.9.2020.12.17.tar.gz -O Claident-0.9.2020.12.17.tar.gz || exit $?
+wget -nv -c https://github.com/astanabe/Claident/archive/v0.9.2020.12.17.tar.gz -O Claident-0.9.2020.12.17.tar.gz || exit $?
 tar -xzf Claident-0.9.2020.12.17.tar.gz || exit $?
 cd Claident-0.9.2020.12.17 || exit $?
 gmake PREFIX=$PREFIX || exit $?
@@ -26,7 +26,7 @@ touch .claident || exit $?
 fi
 # download , compile, and install Swarm
 if ! test -e .swarm; then
-wget -c https://github.com/torognes/swarm/archive/v3.0.0.tar.gz -O swarm-3.0.0.tar.gz || exit $?
+wget -nv -c https://github.com/torognes/swarm/archive/v3.0.0.tar.gz -O swarm-3.0.0.tar.gz || exit $?
 gnutar -xzf swarm-3.0.0.tar.gz || exit $?
 cd swarm-3.0.0/src || exit $?
 gmake CXXFLAGS="-O3 -m64 -mtune=native -fomit-frame-pointer -finline-functions -Icityhash" || exit $?
@@ -39,7 +39,7 @@ touch .swarm || exit $?
 fi
 # download , compile, and install VSEARCH
 if ! test -e .vsearch; then
-wget -c https://github.com/torognes/vsearch/archive/v2.15.1.tar.gz -O vsearch-2.15.1.tar.gz || exit $?
+wget -nv -c https://github.com/torognes/vsearch/archive/v2.15.1.tar.gz -O vsearch-2.15.1.tar.gz || exit $?
 gnutar -xzf vsearch-2.15.1.tar.gz || exit $?
 cd vsearch-2.15.1 || exit $?
 sh ./autogen.sh || exit $?
@@ -59,7 +59,7 @@ touch .vsearch || exit $?
 fi
 # download , compile, and install VSEARCH5D
 if ! test -e .vsearch5d; then
-wget -c https://github.com/astanabe/vsearch5d/archive/v2.15.1.tar.gz -O vsearch5d-2.15.1.tar.gz || exit $?
+wget -nv -c https://github.com/astanabe/vsearch5d/archive/v2.15.1.tar.gz -O vsearch5d-2.15.1.tar.gz || exit $?
 gnutar -xzf vsearch5d-2.15.1.tar.gz || exit $?
 cd vsearch5d-2.15.1 || exit $?
 sh ./autogen.sh || exit $?
@@ -73,7 +73,7 @@ touch .vsearch5d || exit $?
 fi
 # download, and install BLAST+
 if ! test -e .blast; then
-wget -c ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.11.0/ncbi-blast-2.11.0+-x64-macosx.tar.gz || exit $?
+wget -nv -c ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.11.0/ncbi-blast-2.11.0+-x64-macosx.tar.gz || exit $?
 gnutar -xzf ncbi-blast-2.11.0+-x64-macosx.tar.gz || exit $?
 cd ncbi-blast-2.11.0+/bin || exit $?
 mkdir -p $PREFIX/share/claident/bin 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/bin || exit $?
@@ -85,7 +85,7 @@ touch .blast || exit $?
 fi
 # download, compile, and install R and DADA2
 if ! test -e .dada2; then
-wget -c https://cran.r-project.org/src/base/R-4/R-4.0.3.tar.gz || exit $?
+wget -nv -c https://cran.r-project.org/src/base/R-4/R-4.0.3.tar.gz || exit $?
 gnutar -xzf R-4.0.3.tar.gz || exit $?
 cd R-4.0.3 || exit $?
 ./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=no --with-pic --with-x=no || exit $?

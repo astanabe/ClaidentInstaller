@@ -4,7 +4,7 @@ fi
 # download and install RDP UCHIME reference database
 if ! test -e .rdp; then
 mkdir -p $PREFIX/share/claident/uchimedb 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/uchimedb || exit $?
-wget -c http://drive5.com/uchime/rdp_gold.fa || exit $?
+wget -nv -c http://drive5.com/uchime/rdp_gold.fa || exit $?
 mv rdp_gold.fa $PREFIX/share/claident/uchimedb/rdpgoldv9.fasta 2> /dev/null || sudo mv rdp_gold.fa $PREFIX/share/claident/uchimedb/rdpgoldv9.fasta || exit $?
 echo 'The RDP v9 database for UCHIME was installed correctly!'
 touch .rdp || exit $?
@@ -12,7 +12,7 @@ fi
 # download and install DAIRYdb reference database
 if ! test -e .dairydb; then
 mkdir -p $PREFIX/share/claident/uchimedb 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/uchimedb || exit $?
-wget -c https://github.com/marcomeola/DAIRYdb/raw/master/DAIRYdb_v1.2.4_20200604/DAIRYdb_v1.2.4_20200604_blast/DAIRYdb_v1.2.4_20200604_blast.tgz -O DAIRYdb_v1.2.4_20200604_blast.tgz || exit $?
+wget -nv -c https://github.com/marcomeola/DAIRYdb/raw/master/DAIRYdb_v1.2.4_20200604/DAIRYdb_v1.2.4_20200604_blast/DAIRYdb_v1.2.4_20200604_blast.tgz -O DAIRYdb_v1.2.4_20200604_blast.tgz || exit $?
 gtar -xzf DAIRYdb_v1.2.4_20200604_blast.tgz || exit $?
 $PREFIX/share/claident/bin/vsearch --threads 4 --notrunclabels --label_suffix revcomp --fastx_revcomp DAIRYdb_v1.2.4_20200603_blast.fasta --fastaout DAIRYdb_v1.2.4_20200603_blast_rc.fasta || exit $?
 cat DAIRYdb_v1.2.4_20200603_blast.fasta DAIRYdb_v1.2.4_20200603_blast_rc.fasta > dairydb1.2.4.fasta || exit $?
@@ -24,8 +24,8 @@ fi
 # download and install SILVA reference databases
 if ! test -e .silva; then
 mkdir -p $PREFIX/share/claident/uchimedb 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/uchimedb || exit $?
-wget -c https://www.arb-silva.de/fileadmin/silva_databases/release_138_1/Exports/SILVA_138.1_LSURef_tax_silva.fasta.gz || exit $?
-wget -c https://www.arb-silva.de/fileadmin/silva_databases/release_138_1/Exports/SILVA_138.1_LSURef_tax_silva.fasta.gz.md5 || exit $?
+wget -nv -c https://www.arb-silva.de/fileadmin/silva_databases/release_138_1/Exports/SILVA_138.1_LSURef_tax_silva.fasta.gz || exit $?
+wget -nv -c https://www.arb-silva.de/fileadmin/silva_databases/release_138_1/Exports/SILVA_138.1_LSURef_tax_silva.fasta.gz.md5 || exit $?
 gmd5sum -c SILVA_138.1_LSURef_tax_silva.fasta.gz.md5 || exit $?
 rm SILVA_138.1_LSURef_tax_silva.fasta.gz.md5 || exit $?
 gzip -d SILVA_138.1_LSURef_tax_silva.fasta.gz || exit $?
@@ -33,8 +33,8 @@ $PREFIX/share/claident/bin/vsearch --threads 4 --notrunclabels --label_suffix re
 cat SILVA_138.1_LSURef_tax_silva.fasta SILVA_138.1_LSURef_tax_silva_rc.fasta > silva138.1LSUref.fasta || exit $?
 rm -f SILVA_138.1_LSURef_tax_silva.fasta SILVA_138.1_LSURef_tax_silva_rc.fasta || exit $?
 mv silva138.1LSUref.fasta $PREFIX/share/claident/uchimedb/ 2> /dev/null || sudo mv silva138.1LSUref.fasta $PREFIX/share/claident/uchimedb/ || exit $?
-wget -c https://www.arb-silva.de/fileadmin/silva_databases/release_138_1/Exports/SILVA_138.1_SSURef_tax_silva.fasta.gz || exit $?
-wget -c https://www.arb-silva.de/fileadmin/silva_databases/release_138_1/Exports/SILVA_138.1_SSURef_tax_silva.fasta.gz.md5 || exit $?
+wget -nv -c https://www.arb-silva.de/fileadmin/silva_databases/release_138_1/Exports/SILVA_138.1_SSURef_tax_silva.fasta.gz || exit $?
+wget -nv -c https://www.arb-silva.de/fileadmin/silva_databases/release_138_1/Exports/SILVA_138.1_SSURef_tax_silva.fasta.gz.md5 || exit $?
 gmd5sum -c SILVA_138.1_SSURef_tax_silva.fasta.gz.md5 || exit $?
 rm SILVA_138.1_SSURef_tax_silva.fasta.gz.md5 || exit $?
 gzip -d SILVA_138.1_SSURef_tax_silva.fasta.gz || exit $?
@@ -48,7 +48,7 @@ fi
 # download and install UNITE UCHIME reference databases
 if ! test -e .unite; then
 mkdir -p $PREFIX/share/claident/uchimedb 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/uchimedb || exit $?
-wget -c https://unite.ut.ee/sh_files/uchime_reference_dataset_28.06.2017.zip || exit $?
+wget -nv -c https://unite.ut.ee/sh_files/uchime_reference_dataset_28.06.2017.zip || exit $?
 unzip -qq uchime_reference_dataset_28.06.2017.zip || exit $?
 cd uchime_reference_dataset_28.06.2017 || exit $?
 perl -i -npe 's/×/XX/g' uchime_reference_dataset_28.06.2017.fasta
@@ -76,8 +76,8 @@ fi
 # download and install Claident Databases for UCHIME
 if ! test -e .cdu; then
 mkdir -p $PREFIX/share/claident/uchimedb 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/uchimedb || exit $?
-wget -c https://www.claident.org/uchimedb/20201102/cdu_20201102.tar.xz || exit $?
-wget -c https://www.claident.org/uchimedb/20201102/cdu_20201102.tar.xz.sha256 || exit $?
+wget -nv -c https://www.claident.org/uchimedb/20201102/cdu_20201102.tar.xz || exit $?
+wget -nv -c https://www.claident.org/uchimedb/20201102/cdu_20201102.tar.xz.sha256 || exit $?
 gsha256sum -c cdu_20201102.tar.xz.sha256 || exit $?
 rm cdu_20201102.tar.xz.sha256 || exit $?
 gtar -xJf cdu_20201102.tar.xz || exit $?
