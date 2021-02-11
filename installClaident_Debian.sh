@@ -1,4 +1,4 @@
-sudo -E apt-get -y install gcc g++ gfortran make autoconf automake zlib1g-dev libbz2-dev liblzma-dev libreadline-dev libpcre2-dev libjpeg-dev libpng-dev libcairo2-dev libpango1.0-dev libtiff-dev tcl-dev tk-dev tar gzip xz-utils unzip coreutils grep perl libdbi-perl libdbd-sqlite3-perl libwww-perl libfile-copy-recursive-perl libstatistics-distributions-perl libio-compress-lzma-perl libopenblas-serial-dev libopenblas64-serial-dev libcurl4-openssl-dev || exit $?
+sudo -E apt-get -y install gcc g++ gfortran make autoconf automake zlib1g-dev libbz2-dev liblzma-dev libreadline-dev libpcre2-dev libjpeg-dev libpng-dev libcairo2-dev libpango1.0-dev libtiff-dev tcl-dev tk-dev tar gzip xz-utils unzip coreutils grep perl libdbi-perl libdbd-sqlite3-perl libwww-perl libfile-copy-recursive-perl libstatistics-distributions-perl libio-compress-lzma-perl libopenblas-serial-dev libopenblas64-serial-dev libcurl4-openssl-dev libxml2-dev || exit $?
 if test -z $PREFIX; then
 export PREFIX=/usr/local || exit $?
 fi
