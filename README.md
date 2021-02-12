@@ -4,6 +4,13 @@ Automatic installer shell scripts for Claident.
 
 ## Prerequisites
 
+On Debian GNU/Linux compatible distributions, Debian 11 Bullseye, Ubuntu 20.04LTS or Linux Mint 20 or later is required.
+
+On Red Hat Enterprise Linux compatible distributions, Red Hat Enterprise Linux 8 or CentOS 8 is required.
+Red Hat Enterprise Linux users need to enable CodeReady Linux Builder repository before installing Claident.
+CentOS users need to enable PowerTools repository before installing Claident.
+
+On macOS, macOS 10.14 Mojave or later is required.
 Mac users need to install Xcode command line tools before installing Claident.
 Xcode command line tools can install by running the following command in the terminal.
 

@@ -1,7 +1,11 @@
-sudo -E yum install -y binutils gcc gcc-c++ gcc-plugin-devel libstdc++ libgcc glibc-static libstdc++-static bzip2-devel autoconf automake make wget zlib zlib-devel tar gzip xz unzip coreutils grep perl perl-local-lib perl-Time-HiRes perl-CPAN perl-File-Copy-Recursive perl-YAML perl-DBI perl-DBD-SQLite perl-libwww-perl perl-IO-Compress tcsh || exit $?
-sudo -HE sh -c "yes '' | cpan -fi Statistics::Descriptive Statistics::Distributions IO::Compress::Gzip IO::Compress::Bzip2 IO::Compress::Lzma IO::Compress::Xz" || exit $?
+sudo -E yum install -y binutils gcc gcc-c++ gcc-gfortran gcc-plugin-devel libstdc++ libgcc glibc-static libstdc++-static readline-devel bzip2-devel autoconf automake make wget zlib zlib-devel tar gzip xz xz-devel unzip coreutils grep perl perl-local-lib perl-Time-HiRes perl-CPAN perl-File-Copy-Recursive perl-YAML perl-DBI perl-DBD-SQLite perl-libwww-perl perl-IO-Compress tcsh libxml2-devel libcurl-devel pcre2-devel libpng-devel libjpeg-turbo-devel openblas || exit $?
 if test -z $PREFIX; then
 export PREFIX=/usr/local || exit $?
+fi
+# install Perl modules
+if ! test -e .perlmodules; then
+sudo -HE sh -c "yes '' | cpan -fi Statistics::Descriptive Statistics::Distributions IO::Compress::Gzip IO::Compress::Bzip2 IO::Compress::Lzma IO::Compress::Xz" || exit $?
+touch .perlmodules || exit $?
 fi
 # download, and install Claident
 if ! test -e .claident; then

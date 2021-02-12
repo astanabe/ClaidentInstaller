@@ -1,7 +1,11 @@
 brew install make gcc coreutils wget unzip gnu-tar xz zlib bzip2 autoconf automake || exit $?
-sudo -HE sh -c "yes '' | cpan -fi Statistics::Descriptive Statistics::Distributions File::Copy::Recursive DBI DBD::SQLite IO::Compress IO::Compress::Gzip IO::Compress::Bzip2 IO::Compress::Lzma IO::Compress::Xz" || exit $?
 if test -z $PREFIX; then
 export PREFIX=/usr/local || exit $?
+fi
+# download , compile, and install Perl modules
+if ! test -e .perlmodules; then
+sudo -HE sh -c "yes '' | cpan -fi Statistics::Descriptive Statistics::Distributions File::Copy::Recursive DBI DBD::SQLite IO::Compress IO::Compress::Gzip IO::Compress::Bzip2 IO::Compress::Lzma IO::Compress::Xz" || exit $?
+touch .perlmodules || exit $?
 fi
 # download, and install Claident
 if ! test -e .claident; then

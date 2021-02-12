@@ -1,4 +1,9 @@
 sudo -E port install p5-dbi p5-dbd-sqlite p5-file-copy-recursive p5-statistics-descriptive p5-io-compress p5-io-compress-lzma gmake libgcc coreutils wget unzip gnutar xz zlib bzip2 autoconf automake build_arch=x86_64 || exit $?
+if test -z $PREFIX; then
+export PREFIX=/usr/local || exit $?
+fi
+# download , compile, and install Perl modules
+if ! test -e .perlmodules; then
 wget -nv -c https://www.cpan.org/authors/id/M/MI/MIKEK/Statistics-Distributions-1.02.tar.gz -O Statistics-Distributions-1.02.tar.gz || exit $?
 tar -xzf Statistics-Distributions-1.02.tar.gz || exit $?
 cd Statistics-Distributions-1.02 || exit $?
@@ -8,8 +13,7 @@ sudo gmake install || exit $?
 cd .. || exit $?
 rm -rf Statistics-Distributions-1.02 || exit $?
 rm -f Statistics-Distributions-1.02.tar.gz || exit $?
-if test -z $PREFIX; then
-export PREFIX=/usr/local || exit $?
+touch .perlmodules || exit $?
 fi
 # download, and install Claident
 if ! test -e .claident; then
