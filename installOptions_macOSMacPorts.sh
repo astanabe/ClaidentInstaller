@@ -13,24 +13,24 @@ touch .hmmer || exit $?
 fi
 # download and install MAFFT
 if ! test -e .mafft; then
-wget -nv -c http://mafft.cbrc.jp/alignment/software/mafft-7.471-mac.zip || exit $?
-unzip -qq mafft-7.471-mac.zip || exit $?
+wget -nv -c https://mafft.cbrc.jp/alignment/software/mafft-7.475-mac.zip || exit $?
+unzip -qq mafft-7.475-mac.zip || exit $?
 mkdir -p $PREFIX/share/claident/bin 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/bin || exit $?
 mv mafft-mac/mafft.bat $PREFIX/share/claident/bin/mafft 2> /dev/null || sudo mv mafft-mac/mafft.bat $PREFIX/share/claident/bin/mafft || exit $?
 rm -rf $PREFIX/share/claident/bin/mafftdir 2> /dev/null || sudo rm -rf $PREFIX/share/claident/bin/mafftdir || exit $?
 mv mafft-mac/mafftdir $PREFIX/share/claident/bin/ 2> /dev/null || sudo mv mafft-mac/mafftdir $PREFIX/share/claident/bin/ || exit $?
-rm -rf mafft-7.471-mac.zip mafft-mac || exit $?
+rm -rf mafft-7.475-mac.zip mafft-mac || exit $?
 echo 'MAFFT was installed correctly!'
 touch .mafft || exit $?
 fi
 # download and install Metaxa
 if ! test -e .metaxa; then
-wget -nv -c http://microbiology.se/sw/Metaxa2_2.2.tar.gz || exit $?
-gnutar -xzf Metaxa2_2.2.tar.gz || exit $?
+wget -nv -c https://microbiology.se/sw/Metaxa2_2.2.2.tar.gz || exit $?
+gnutar -xzf Metaxa2_2.2.2.tar.gz || exit $?
 mkdir -p $PREFIX/share/claident/bin 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/bin || exit $?
 rm -rf $PREFIX/share/claident/bin/metaxa2_db 2> /dev/null || sudo rm -rf $PREFIX/share/claident/bin/metaxa2_db || exit $?
-mv Metaxa2_2.2/metaxa2 Metaxa2_2.2/metaxa2_* $PREFIX/share/claident/bin/ 2> /dev/null || sudo mv Metaxa2_2.2/metaxa2 Metaxa2_2.2/metaxa2_* $PREFIX/share/claident/bin/ || exit $?
-rm -rf Metaxa2_2.2.tar.gz Metaxa2_2.2 || exit $?
+mv Metaxa2_2.2.2/metaxa2 Metaxa2_2.2.2/metaxa2_* $PREFIX/share/claident/bin/ 2> /dev/null || sudo mv Metaxa2_2.2.2/metaxa2 Metaxa2_2.2.2/metaxa2_* $PREFIX/share/claident/bin/ || exit $?
+rm -rf Metaxa2_2.2.2.tar.gz Metaxa2_2.2.2 || exit $?
 echo '#!/bin/sh' > metaxa2 || exit $?
 echo "export PATH=$PREFIX/share/claident/bin:\$PATH" >> metaxa2 || exit $?
 echo "perl $PREFIX/share/claident/bin/metaxa2 \$*" >> metaxa2 || exit $?
@@ -41,12 +41,12 @@ touch .metaxa || exit $?
 fi
 # download and install ITSx
 if ! test -e .itsx; then
-wget -nv -c http://microbiology.se/sw/ITSx_1.1.2.tar.gz || exit $?
-gnutar -xzf ITSx_1.1.2.tar.gz || exit $?
+wget -nv -c https://microbiology.se/sw/ITSx_1.1.3.tar.gz || exit $?
+gnutar -xzf ITSx_1.1.3.tar.gz || exit $?
 mkdir -p $PREFIX/share/claident/bin 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/bin || exit $?
 rm -rf $PREFIX/share/claident/bin/ITSx_db 2> /dev/null || sudo rm -rf $PREFIX/share/claident/bin/ITSx_db || exit $?
-mv ITSx_1.1.2/ITSx ITSx_1.1.2/ITSx_db $PREFIX/share/claident/bin/ 2> /dev/null || sudo mv ITSx_1.1.2/ITSx ITSx_1.1.2/ITSx_db $PREFIX/share/claident/bin/ || exit $?
-rm -rf ITSx_1.1.2.tar.gz ITSx_1.1.2 || exit $?
+mv ITSx_1.1.3/ITSx ITSx_1.1.3/ITSx_db $PREFIX/share/claident/bin/ 2> /dev/null || sudo mv ITSx_1.1.3/ITSx ITSx_1.1.3/ITSx_db $PREFIX/share/claident/bin/ || exit $?
+rm -rf ITSx_1.1.3.tar.gz ITSx_1.1.3 || exit $?
 echo '#!/bin/sh' > ITSx || exit $?
 echo "export PATH=$PREFIX/share/claident/bin:\$PATH" >> ITSx || exit $?
 echo "perl $PREFIX/share/claident/bin/ITSx \$*" >> ITSx || exit $?
