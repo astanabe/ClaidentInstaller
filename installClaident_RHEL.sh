@@ -87,10 +87,6 @@ cd R-4.0.3 || exit $?
 ./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=no --with-pic --with-x=no || exit $?
 make -j8 || exit $?
 make install-strip 2> /dev/null || sudo make install-strip || exit $?
-if ! test -e $PREFIX/bin/R; then
-ln -sf $PREFIX/share/claident/bin/R $PREFIX/bin/R 2> /dev/null || sudo ln -sf $PREFIX/share/claident/bin/R $PREFIX/bin/R || exit $?
-ln -sf $PREFIX/share/claident/bin/Rscript $PREFIX/bin/Rscript 2> /dev/null || sudo ln -sf $PREFIX/share/claident/bin/Rscript $PREFIX/bin/Rscript || exit $?
-fi
 cd .. || exit $?
 rm -rf R-4.0.3 || exit $?
 if test -w $PREFIX/share/claident/lib/R; then
