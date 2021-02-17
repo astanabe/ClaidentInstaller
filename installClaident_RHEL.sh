@@ -12,7 +12,7 @@ if ! test -e .claident; then
 wget -nv -c https://github.com/astanabe/Claident/archive/v0.9.2020.12.17.tar.gz -O Claident-0.9.2020.12.17.tar.gz || exit $?
 tar -xzf Claident-0.9.2020.12.17.tar.gz || exit $?
 cd Claident-0.9.2020.12.17 || exit $?
-make PREFIX=$PREFIX || exit $?
+make PREFIX=$PREFIX -j8 || exit $?
 make PREFIX=$PREFIX install 2> /dev/null || sudo make PREFIX=$PREFIX install || exit $?
 cp $PREFIX/share/claident/.claident ~/.claident || exit $?
 cd .. || exit $?
@@ -25,7 +25,8 @@ if ! test -e .swarm; then
 wget -nv -c https://github.com/torognes/swarm/archive/v3.0.0.tar.gz -O swarm-3.0.0.tar.gz || exit $?
 tar -xzf swarm-3.0.0.tar.gz || exit $?
 cd swarm-3.0.0/src || exit $?
-make CXXFLAGS="-O3 -mtune=native -fomit-frame-pointer -finline-functions -Icityhash" || exit $?
+perl -i -npe 's/-mtune=generic/-O3 -mtune=native -fomit-frame-pointer -finline-functions/' src/Makefile || exit $?
+make -j8 || exit $?
 mkdir -p $PREFIX/share/claident/bin 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/bin || exit $?
 mv swarm $PREFIX/share/claident/bin/ 2> /dev/null || sudo mv swarm $PREFIX/share/claident/bin/ || exit $?
 cd ../.. || exit $?
@@ -40,7 +41,7 @@ tar -xzf vsearch-2.15.1.tar.gz || exit $?
 cd vsearch-2.15.1 || exit $?
 sh ./autogen.sh || exit $?
 CFLAGS="-O3 -fomit-frame-pointer -finline-functions" CPPFLAGS="-O3 -fomit-frame-pointer -finline-functions" CXXFLAGS="-O3 -fomit-frame-pointer -finline-functions" LDFLAGS="-O3 -fomit-frame-pointer -finline-functions" sh ./configure --prefix=$PREFIX/share/claident --disable-pdfman || exit $?
-make || exit $?
+make -j8 || exit $?
 if test -e $PREFIX/share/claident/bin/vsearch; then
 rm -f $PREFIX/share/claident/bin/vsearch 2> /dev/null || sudo rm -f $PREFIX/share/claident/bin/vsearch || exit $?
 fi
@@ -60,7 +61,7 @@ tar -xzf vsearch5d-2.15.1.tar.gz || exit $?
 cd vsearch5d-2.15.1 || exit $?
 sh ./autogen.sh || exit $?
 CFLAGS="-O3 -fomit-frame-pointer -finline-functions" CPPFLAGS="-O3 -fomit-frame-pointer -finline-functions" CXXFLAGS="-O3 -fomit-frame-pointer -finline-functions" LDFLAGS="-O3 -fomit-frame-pointer -finline-functions" sh ./configure --prefix=$PREFIX/share/claident || exit $?
-make || exit $?
+make -j8 || exit $?
 make install-exec 2> /dev/null || sudo make install-exec || exit $?
 cd .. || exit $?
 rm -rf vsearch5d-2.15.1 || exit $?

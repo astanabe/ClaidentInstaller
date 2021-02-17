@@ -12,7 +12,7 @@ if ! test -e .claident; then
 wget -nv -c https://github.com/astanabe/Claident/archive/v0.9.2020.12.17.tar.gz -O Claident-0.9.2020.12.17.tar.gz || exit $?
 tar -xzf Claident-0.9.2020.12.17.tar.gz || exit $?
 cd Claident-0.9.2020.12.17 || exit $?
-gmake PREFIX=$PREFIX || exit $?
+gmake PREFIX=$PREFIX -j8 || exit $?
 gmake PREFIX=$PREFIX install 2> /dev/null || sudo gmake PREFIX=$PREFIX install || exit $?
 cp $PREFIX/share/claident/.claident ~/.claident || exit $?
 cd .. || exit $?
@@ -25,7 +25,8 @@ if ! test -e .swarm; then
 wget -nv -c https://github.com/torognes/swarm/archive/v3.0.0.tar.gz -O swarm-3.0.0.tar.gz || exit $?
 gtar -xzf swarm-3.0.0.tar.gz || exit $?
 cd swarm-3.0.0/src || exit $?
-gmake CXXFLAGS="-O3 -m64 -mtune=native -fomit-frame-pointer -finline-functions -Icityhash" || exit $?
+perl -i -npe 's/-mtune=generic/-O3 -mtune=native -fomit-frame-pointer -finline-functions/' src/Makefile || exit $?
+gmake -j8 || exit $?
 mkdir -p $PREFIX/share/claident/bin 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/bin || exit $?
 mv swarm $PREFIX/share/claident/bin/ 2> /dev/null || sudo mv swarm $PREFIX/share/claident/bin/ || exit $?
 cd ../.. || exit $?
@@ -39,8 +40,8 @@ wget -nv -c https://github.com/torognes/vsearch/archive/v2.15.1.tar.gz -O vsearc
 gtar -xzf vsearch-2.15.1.tar.gz || exit $?
 cd vsearch-2.15.1 || exit $?
 sh ./autogen.sh || exit $?
-CC=gcc-mp-5 CXX=g++-mp-5 CFLAGS="-O3 -m64 -fomit-frame-pointer -finline-functions" CXXFLAGS="-O3 -m64 -fomit-frame-pointer -finline-functions" CPPFLAGS="-I/opt/local/include" LDFLAGS="-O3 -m64 -L/opt/local/lib" sh ./configure --prefix=$PREFIX/share/claident --disable-pdfman || exit $?
-gmake || exit $?
+CFLAGS="-O3 -fomit-frame-pointer -finline-functions" CPPFLAGS="-O3 -fomit-frame-pointer -finline-functions" CXXFLAGS="-O3 -fomit-frame-pointer -finline-functions" LDFLAGS="-O3 -fomit-frame-pointer -finline-functions" sh ./configure --prefix=$PREFIX/share/claident --disable-pdfman || exit $?
+gmake -j8 || exit $?
 if test -e $PREFIX/share/claident/bin/vsearch; then
 rm -f $PREFIX/share/claident/bin/vsearch 2> /dev/null || sudo rm -f $PREFIX/share/claident/bin/vsearch || exit $?
 fi
@@ -59,8 +60,8 @@ wget -nv -c https://github.com/astanabe/vsearch5d/archive/v2.15.1.tar.gz -O vsea
 gtar -xzf vsearch5d-2.15.1.tar.gz || exit $?
 cd vsearch5d-2.15.1 || exit $?
 sh ./autogen.sh || exit $?
-CC=gcc-mp-5 CXX=g++-mp-5 CFLAGS="-O3 -m64 -fomit-frame-pointer -finline-functions" CXXFLAGS="-O3 -m64 -fomit-frame-pointer -finline-functions" CPPFLAGS="-I/opt/local/include" LDFLAGS="-O3 -m64 -L/opt/local/lib" sh ./configure --prefix=$PREFIX/share/claident || exit $?
-gmake || exit $?
+CFLAGS="-O3 -fomit-frame-pointer -finline-functions" CPPFLAGS="-O3 -fomit-frame-pointer -finline-functions" CXXFLAGS="-O3 -fomit-frame-pointer -finline-functions" LDFLAGS="-O3 -fomit-frame-pointer -finline-functions" sh ./configure --prefix=$PREFIX/share/claident || exit $?
+gmake -j8 || exit $?
 gmake install-exec 2> /dev/null || sudo gmake install-exec || exit $?
 cd .. || exit $?
 rm -rf vsearch5d-2.15.1 || exit $?
