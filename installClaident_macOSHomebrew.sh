@@ -1,4 +1,4 @@
-brew install make gcc coreutils wget unzip gnu-tar xz zlib bzip2 autoconf automake || exit $?
+brew install make gcc coreutils grep wget unzip gnu-tar xz zlib bzip2 autoconf automake readline pcre2 jpeg libpng cairo pango libtiff tcl-tk openblas libxml2 || brew install --build-from-source make gcc coreutils grep wget unzip gnu-tar xz zlib bzip2 autoconf automake readline pcre2 jpeg libpng cairo pango libtiff tcl-tk openblas libxml2 || exit $?
 if test -z $PREFIX; then
 export PREFIX=/usr/local || exit $?
 fi
@@ -85,7 +85,12 @@ if ! test -e .dada2; then
 wget -nv -c https://cran.r-project.org/src/base/R-4/R-4.0.3.tar.gz || exit $?
 gtar -xzf R-4.0.3.tar.gz || exit $?
 cd R-4.0.3 || exit $?
-./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=no --with-pic --with-x=no || exit $?
+export CC=`ls /usr/local/bin/gcc-* | ggrep -P -o 'gcc-\d+' | tail -n 1`
+export CXX=`ls /usr/local/bin/g++-* | ggrep -P -o 'g\+\+-\d+' | tail -n 1`
+export FC=`ls /usr/local/bin/gfortran-* | ggrep -P -o 'gfortran-\d+' | tail -n 1`
+tclconfig=`find /usr/local/Cellar -name tclConfig.sh | tail -n 1`
+tkconfig=`find /usr/local/Cellar -name tkConfig.sh | tail -n 1`
+./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=no --with-pic --with-x=no --with-aqua=no --enable-R-shlib --with-tcl-config=$tclconfig --with-tk-config=$tkconfig || exit $?
 gmake -j8 || exit $?
 gmake install-strip 2> /dev/null || sudo gmake install-strip || exit $?
 cd .. || exit $?
