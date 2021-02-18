@@ -1,19 +1,10 @@
-sudo -E port install pkgconfig p5-dbi p5-dbd-sqlite p5-file-copy-recursive p5-statistics-descriptive p5-io-compress p5-io-compress-lzma gmake gcc10 libgcc10 coreutils grep wget unzip gnutar xz zlib bzip2 autoconf automake OpenBLAS pcre2 readline jpeg libpng cairo pango gettext tiff libxml2 tcl tk build_arch=x86_64 || exit $?
-export PERL=`ls -d /opt/local/bin/perl* | ggrep -P -o 'perl[\d\.]+' | tail -n 1`
+sudo -E port install pkgconfig gmake gcc10 libgcc10 coreutils grep wget unzip gnutar xz zlib bzip2 autoconf automake OpenBLAS pcre2 readline jpeg libpng cairo pango gettext tiff libxml2 tcl tk build_arch=x86_64 || exit $?
 if test -z $PREFIX; then
 export PREFIX=/usr/local || exit $?
 fi
 # download , compile, and install Perl modules
 if ! test -e .perlmodules; then
-wget -nv -c https://www.cpan.org/authors/id/M/MI/MIKEK/Statistics-Distributions-1.02.tar.gz -O Statistics-Distributions-1.02.tar.gz || exit $?
-tar -xzf Statistics-Distributions-1.02.tar.gz || exit $?
-cd Statistics-Distributions-1.02 || exit $?
-$PERL Makefile.PL || exit $?
-gmake -j8 || exit $?
-sudo gmake install || exit $?
-cd .. || exit $?
-rm -rf Statistics-Distributions-1.02 || exit $?
-rm -f Statistics-Distributions-1.02.tar.gz || exit $?
+sudo -HE sh -c "yes '' | cpan -fi Statistics::Descriptive Statistics::Distributions File::Copy::Recursive DBI DBD::SQLite IO::Compress IO::Compress::Gzip IO::Compress::Bzip2 IO::Compress::Lzma IO::Compress::Xz" || exit $?
 touch .perlmodules || exit $?
 fi
 # download, and install Claident
