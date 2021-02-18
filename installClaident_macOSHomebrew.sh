@@ -86,9 +86,9 @@ wget -nv -c https://cran.r-project.org/src/base/R-4/R-4.0.3.tar.gz || exit $?
 gtar -xzf R-4.0.3.tar.gz || exit $?
 cd R-4.0.3 || exit $?
 BREWPATH=`brew --prefix`
-export CC=`ls $BREWPATH/bin/gcc-* | ggrep -P -o 'gcc-\d+' | tail -n 1`
-export CXX=`ls $BREWPATH/bin/g++-* | ggrep -P -o 'g\+\+-\d+' | tail -n 1`
-export FC=`ls $BREWPATH/bin/gfortran-* | ggrep -P -o 'gfortran-\d+' | tail -n 1`
+export CC=`ls -d $BREWPATH/bin/gcc-* | ggrep -P -o 'gcc-\d+' | tail -n 1`
+export CXX=`ls -d $BREWPATH/bin/g++-* | ggrep -P -o 'g\+\+-\d+' | tail -n 1`
+export FC=`ls -d $BREWPATH/bin/gfortran-* | ggrep -P -o 'gfortran-\d+' | tail -n 1`
 tclconfig=`find $BREWPATH/Cellar -name tclConfig.sh | tail -n 1`
 tkconfig=`find $BREWPATH/Cellar -name tkConfig.sh | tail -n 1`
 ./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=no --with-pic --with-x=no --with-aqua=no --enable-R-shlib --with-tcl-config=$tclconfig --with-tk-config=$tkconfig || exit $?

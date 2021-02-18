@@ -1,4 +1,5 @@
-sudo -E port install p5-dbi p5-dbd-sqlite p5-file-copy-recursive p5-statistics-descriptive p5-io-compress p5-io-compress-lzma gmake gcc10 libgcc10 coreutils grep wget unzip gnutar xz zlib bzip2 autoconf automake OpenBLAS pcre2 readline jpeg libpng cairo pango tiff libxml2 tcl tk build_arch=x86_64 || exit $?
+sudo -E port install p5-dbi p5-dbd-sqlite p5-file-copy-recursive p5-statistics-descriptive p5-io-compress p5-io-compress-lzma gmake gcc10 libgcc10 coreutils grep wget unzip gnutar xz zlib bzip2 autoconf automake OpenBLAS pcre2 readline jpeg libpng cairo pango gettext tiff libxml2 tcl tk build_arch=x86_64 || exit $?
+export PERL=`ls -d /opt/local/bin/perl* | ggrep -P -o 'perl[\d\.]+' | tail -n 1`
 if test -z $PREFIX; then
 export PREFIX=/usr/local || exit $?
 fi
@@ -7,7 +8,7 @@ if ! test -e .perlmodules; then
 wget -nv -c https://www.cpan.org/authors/id/M/MI/MIKEK/Statistics-Distributions-1.02.tar.gz -O Statistics-Distributions-1.02.tar.gz || exit $?
 tar -xzf Statistics-Distributions-1.02.tar.gz || exit $?
 cd Statistics-Distributions-1.02 || exit $?
-perl Makefile.PL || exit $?
+$PERL Makefile.PL || exit $?
 gmake -j8 || exit $?
 sudo gmake install || exit $?
 cd .. || exit $?
@@ -93,12 +94,12 @@ if ! test -e .dada2; then
 wget -nv -c https://cran.r-project.org/src/base/R-4/R-4.0.3.tar.gz || exit $?
 gnutar -xzf R-4.0.3.tar.gz || exit $?
 cd R-4.0.3 || exit $?
-export CC=`ls /opt/local/bin/gcc-mp-* | ggrep -P -o 'gcc-mp-\d+' | tail -n 1`
-export CXX=`ls /opt/local/bin/g++-mp-* | ggrep -P -o 'g\+\+-mp-\d+' | tail -n 1`
-export FC=`ls /opt/local/bin/gfortran-mp-* | ggrep -P -o 'gfortran-mp-\d+' | tail -n 1`
+export CC=`ls -d /opt/local/bin/gcc-mp-* | ggrep -P -o 'gcc-mp-\d+' | tail -n 1`
+export CXX=`ls -d /opt/local/bin/g++-mp-* | ggrep -P -o 'g\+\+-mp-\d+' | tail -n 1`
+export FC=`ls -d /opt/local/bin/gfortran-mp-* | ggrep -P -o 'gfortran-mp-\d+' | tail -n 1`
 tclconfig=`find /opt/local -name tclConfig.sh | tail -n 1`
 tkconfig=`find /opt/local -name tkConfig.sh | tail -n 1`
-./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=no --with-pic --with-x=no --with-aqua=no --enable-R-shlib --with-tcl-config=$tclconfig --with-tk-config=$tkconfig || exit $?
+./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=no --with-pic --with-x=no --with-aqua=no --enable-R-shlib --with-tcl-config=$tclconfig --with-tk-config=$tkconfig --with-libintl-prefix=/opt/local || exit $?
 gmake -j8 || exit $?
 gmake install-strip 2> /dev/null || sudo gmake install-strip || exit $?
 cd .. || exit $?
