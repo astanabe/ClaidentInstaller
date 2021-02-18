@@ -85,7 +85,8 @@ if ! test -e .dada2; then
 wget -nv -c https://cran.r-project.org/src/base/R-4/R-4.0.3.tar.gz || exit $?
 tar -xzf R-4.0.3.tar.gz || exit $?
 cd R-4.0.3 || exit $?
-./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=no --with-pic --with-x=no || exit $?
+openblas=`find /usr -name libopenblas.so | tail -n 1 | perl -npe 's/\/libopenblas\.so//'`
+./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=no --with-pic --with-x=no --with-blas="-L$openblas -lopenblas" --with-lapack || exit $?
 make -j8 || exit $?
 make install-strip 2> /dev/null || sudo make install-strip || exit $?
 cd .. || exit $?

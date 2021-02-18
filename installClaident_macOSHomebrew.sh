@@ -1,4 +1,4 @@
-brew install make gcc coreutils grep wget unzip gnu-tar xz zlib bzip2 autoconf automake readline pcre2 jpeg libpng cairo pango libtiff tcl-tk openblas libxml2 || brew install --build-from-source make gcc coreutils grep wget unzip gnu-tar xz zlib bzip2 autoconf automake readline pcre2 jpeg libpng cairo pango libtiff tcl-tk openblas libxml2 || exit $?
+brew install make gcc coreutils grep wget unzip gnu-tar xz zlib bzip2 autoconf automake pkg-config readline pcre2 jpeg libpng cairo pango libtiff tcl-tk openblas libxml2 || brew install --build-from-source make gcc coreutils grep wget unzip gnu-tar xz zlib bzip2 autoconf automake pkg-config readline pcre2 jpeg libpng cairo pango libtiff tcl-tk openblas libxml2 || exit $?
 if test -z $PREFIX; then
 export PREFIX=/usr/local || exit $?
 fi
@@ -91,7 +91,8 @@ export CXX=`ls -d $BREWPATH/bin/g++-* | ggrep -P -o 'g\+\+-\d+' | tail -n 1`
 export FC=`ls -d $BREWPATH/bin/gfortran-* | ggrep -P -o 'gfortran-\d+' | tail -n 1`
 tclconfig=`find $BREWPATH/Cellar -name tclConfig.sh | tail -n 1`
 tkconfig=`find $BREWPATH/Cellar -name tkConfig.sh | tail -n 1`
-./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=no --with-pic --with-x=no --with-aqua=no --enable-R-shlib --with-tcl-config=$tclconfig --with-tk-config=$tkconfig || exit $?
+openblas=`find $BREWPATH/Cellar -name libopenblas.dylib | tail -n 1 | perl -npe 's/\/libopenblas\.dylib//'`
+./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=no --with-pic --with-x=no --with-aqua=no --enable-R-shlib --with-tcl-config=$tclconfig --with-tk-config=$tkconfig --with-blas="-L$openblas -lopenblas" --with-lapack || exit $?
 gmake -j8 || exit $?
 gmake install-strip 2> /dev/null || sudo gmake install-strip || exit $?
 cd .. || exit $?
