@@ -10,7 +10,7 @@ fi
 # download, and install Claident
 if ! test -e .claident; then
 wget -nv -c https://github.com/astanabe/Claident/archive/v0.9.2020.12.17.tar.gz -O Claident-0.9.2020.12.17.tar.gz || exit $?
-tar -xzf Claident-0.9.2020.12.17.tar.gz || exit $?
+gtar -xzf Claident-0.9.2020.12.17.tar.gz || exit $?
 cd Claident-0.9.2020.12.17 || exit $?
 gmake PREFIX=$PREFIX -j8 || exit $?
 gmake PREFIX=$PREFIX install 2> /dev/null || sudo gmake PREFIX=$PREFIX install || exit $?
@@ -92,7 +92,7 @@ export FC=`ls -d $BREWPATH/bin/gfortran-* | ggrep -P -o 'gfortran-\d+' | tail -n
 tclconfig=`find $BREWPATH/Cellar -name tclConfig.sh | tail -n 1`
 tkconfig=`find $BREWPATH/Cellar -name tkConfig.sh | tail -n 1`
 openblas=`find $BREWPATH/Cellar -name libopenblas.dylib | tail -n 1 | perl -npe 's/\/libopenblas\.dylib//'`
-./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=no --with-pic --with-x=no --with-aqua=no --enable-R-shlib --with-tcl-config=$tclconfig --with-tk-config=$tkconfig --with-blas="-L$openblas -lopenblas" --with-lapack || exit $?
+./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=no --with-pic --with-x=no --with-aqua=no --enable-R-shlib=yes --with-tcl-config=$tclconfig --with-tk-config=$tkconfig --with-blas="-L$openblas -lopenblas" --with-lapack || exit $?
 gmake -j8 || exit $?
 gmake install-strip 2> /dev/null || sudo gmake install-strip || exit $?
 cd .. || exit $?

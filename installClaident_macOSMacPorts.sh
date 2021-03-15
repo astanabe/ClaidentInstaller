@@ -10,7 +10,7 @@ fi
 # download, and install Claident
 if ! test -e .claident; then
 wget -nv -c https://github.com/astanabe/Claident/archive/v0.9.2020.12.17.tar.gz -O Claident-0.9.2020.12.17.tar.gz || exit $?
-tar -xzf Claident-0.9.2020.12.17.tar.gz || exit $?
+gnutar -xzf Claident-0.9.2020.12.17.tar.gz || exit $?
 cd Claident-0.9.2020.12.17 || exit $?
 gmake PREFIX=$PREFIX -j8 || exit $?
 gmake PREFIX=$PREFIX install 2> /dev/null || sudo gmake PREFIX=$PREFIX install || exit $?
@@ -90,7 +90,7 @@ export CXX=`ls -d /opt/local/bin/g++-mp-* | ggrep -P -o 'g\+\+-mp-\d+' | tail -n
 export FC=`ls -d /opt/local/bin/gfortran-mp-* | ggrep -P -o 'gfortran-mp-\d+' | tail -n 1`
 tclconfig=`find /opt/local -name tclConfig.sh | tail -n 1`
 tkconfig=`find /opt/local -name tkConfig.sh | tail -n 1`
-./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=no --with-pic --with-x=no --with-aqua=no --enable-R-shlib --with-tcl-config=$tclconfig --with-tk-config=$tkconfig --with-libintl-prefix=/opt/local --with-blas="-L/opt/local/lib -lopenblas" --with-lapack || exit $?
+./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=no --with-pic --with-x=no --with-aqua=no --enable-R-shlib=yes --with-tcl-config=$tclconfig --with-tk-config=$tkconfig --with-libintl-prefix=/opt/local --with-blas="-L/opt/local/lib -lopenblas" --with-lapack || exit $?
 gmake -j8 || exit $?
 gmake install-strip 2> /dev/null || sudo gmake install-strip || exit $?
 cd .. || exit $?
