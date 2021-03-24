@@ -9,15 +9,15 @@ touch .perlmodules || exit $?
 fi
 # download, and install Claident
 if ! test -e .claident; then
-wget -nv -c https://github.com/astanabe/Claident/archive/v0.9.2020.12.17.tar.gz -O Claident-0.9.2020.12.17.tar.gz || exit $?
-gnutar -xzf Claident-0.9.2020.12.17.tar.gz || exit $?
-cd Claident-0.9.2020.12.17 || exit $?
+wget -nv -c https://github.com/astanabe/Claident/archive/v0.9.2021.03.25.tar.gz -O Claident-0.9.2021.03.25.tar.gz || exit $?
+gnutar -xzf Claident-0.9.2021.03.25.tar.gz || exit $?
+cd Claident-0.9.2021.03.25 || exit $?
 gmake PREFIX=$PREFIX -j8 || exit $?
 gmake PREFIX=$PREFIX install 2> /dev/null || sudo gmake PREFIX=$PREFIX install || exit $?
 cp $PREFIX/share/claident/.claident ~/.claident || exit $?
 cd .. || exit $?
-rm -rf Claident-0.9.2020.12.17 || exit $?
-rm -f Claident-0.9.2020.12.17.tar.gz || exit $?
+rm -rf Claident-0.9.2021.03.25 || exit $?
+rm -f Claident-0.9.2021.03.25.tar.gz || exit $?
 touch .claident || exit $?
 fi
 # download , compile, and install Swarm
@@ -85,6 +85,7 @@ if ! test -e .dada2; then
 wget -nv -c https://cran.r-project.org/src/base/R-4/R-4.0.3.tar.gz || exit $?
 gnutar -xzf R-4.0.3.tar.gz || exit $?
 cd R-4.0.3 || exit $?
+perl -i -npe 's/^(\#define NCONNECTIONS) \d+/$1 1050/' src/main/connections.c || exit $?
 export CC=`ls -d /opt/local/bin/gcc-mp-* | ggrep -P -o 'gcc-mp-\d+' | tail -n 1`
 export CXX=`ls -d /opt/local/bin/g++-mp-* | ggrep -P -o 'g\+\+-mp-\d+' | tail -n 1`
 export FC=`ls -d /opt/local/bin/gfortran-mp-* | ggrep -P -o 'gfortran-mp-\d+' | tail -n 1`
