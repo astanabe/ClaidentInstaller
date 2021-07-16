@@ -100,10 +100,10 @@ cd .. || exit $?
 rm -rf R-4.1.0 || exit $?
 compiler=gcc
 if test -w $PREFIX/share/claident/lib/R; then
-$PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");install.packages("RcppParallel",repos="https://cloud.r-project.org/",dependencies=T,clean=T)' || exit $?
+$PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");install.packages("RcppParallel",repos="https://cloud.r-project.org/",dependencies=T,clean=T,Ncpus=detectCores())' || exit $?
 $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");source("https://raw.githubusercontent.com/r-lib/remotes/master/install-github.R")$value("benjjneb/dada2@v1.20",dependencies=T,clean=T,upgrade="never")' || exit $?
 else
-sudo -E $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");install.packages("RcppParallel",repos="https://cloud.r-project.org/",dependencies=T,clean=T)' || exit $?
+sudo -E $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");install.packages("RcppParallel",repos="https://cloud.r-project.org/",dependencies=T,clean=T,Ncpus=detectCores())' || exit $?
 sudo -E $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");source("https://raw.githubusercontent.com/r-lib/remotes/master/install-github.R")$value("benjjneb/dada2@v1.20",dependencies=T,clean=T,upgrade="never")' || exit $?
 fi
 rm -f R-4.1.0.tar.gz || exit $?
