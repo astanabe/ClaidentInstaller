@@ -13,7 +13,7 @@ touch .hmmer || exit $?
 fi
 # download and install MAFFT
 if ! test -e .mafft; then
-wget -nv -c https://mafft.cbrc.jp/alignment/software/mafft-7.481-mac.zip || exit $?
+wget -nv -c https://mafft.cbrc.jp/alignment/software/mafft-7.483-mac.zip || exit $?
 unzip -qq mafft-7.481-mac.zip || exit $?
 mkdir -p $PREFIX/share/claident/bin 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/bin || exit $?
 mv mafft-mac/mafft.bat $PREFIX/share/claident/bin/mafft 2> /dev/null || sudo mv mafft-mac/mafft.bat $PREFIX/share/claident/bin/mafft || exit $?
