@@ -2,6 +2,8 @@
 
 Automatic installer shell scripts for Claident.
 
+To learn how to use Claident, see [ClaidentTutorial](https://github.com/astanabe/ClaidentTutorial)
+
 ## Prerequisites
 
 On Debian GNU/Linux compatible distributions, Debian 11 Bullseye, Ubuntu 20.04LTS or Linux Mint 20 or later is required.
