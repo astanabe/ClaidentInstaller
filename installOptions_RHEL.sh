@@ -14,12 +14,12 @@ fi
 # download and install MAFFT
 if ! test -e .mafft; then
 wget -nv -c https://mafft.cbrc.jp/alignment/software/mafft-7.480-linux.tgz || exit $?
-tar -xzf mafft-7.481-linux.tgz || exit $?
+tar -xzf mafft-7.480-linux.tgz || exit $?
 mkdir -p $PREFIX/share/claident/bin 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/bin || exit $?
 mv mafft-linux64/mafft.bat $PREFIX/share/claident/bin/mafft 2> /dev/null || sudo mv mafft-linux64/mafft.bat $PREFIX/share/claident/bin/mafft || exit $?
 rm -rf $PREFIX/share/claident/bin/mafftdir 2> /dev/null || sudo rm -rf $PREFIX/share/claident/bin/mafftdir || exit $?
 mv mafft-linux64/mafftdir $PREFIX/share/claident/bin/ 2> /dev/null || sudo mv mafft-linux64/mafftdir $PREFIX/share/claident/bin/ || exit $?
-rm -rf mafft-7.481-linux.tgz mafft-linux64 mafft-linux32 || exit $?
+rm -rf mafft-7.480-linux.tgz mafft-linux64 mafft-linux32 || exit $?
 echo 'MAFFT was installed correctly!'
 touch .mafft || exit $?
 fi
