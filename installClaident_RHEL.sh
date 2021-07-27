@@ -9,15 +9,15 @@ touch .perlmodules || exit $?
 fi
 # download, and install Claident
 if ! test -e .claident; then
-wget -nv -c https://github.com/astanabe/Claident/archive/v0.9.2021.07.09.tar.gz -O Claident-0.9.2021.07.09.tar.gz || exit $?
-tar -xzf Claident-0.9.2021.07.09.tar.gz || exit $?
-cd Claident-0.9.2021.07.09 || exit $?
+wget -nv -c https://github.com/astanabe/Claident/archive/v0.9.2021.07.28.tar.gz -O Claident-0.9.2021.07.28.tar.gz || exit $?
+tar -xzf Claident-0.9.2021.07.28.tar.gz || exit $?
+cd Claident-0.9.2021.07.28 || exit $?
 make PREFIX=$PREFIX -j8 || exit $?
 make PREFIX=$PREFIX install 2> /dev/null || sudo make PREFIX=$PREFIX install || exit $?
 cp $PREFIX/share/claident/.claident ~/.claident || exit $?
 cd .. || exit $?
-rm -rf Claident-0.9.2021.07.09 || exit $?
-rm -f Claident-0.9.2021.07.09.tar.gz || exit $?
+rm -rf Claident-0.9.2021.07.28 || exit $?
+rm -f Claident-0.9.2021.07.28.tar.gz || exit $?
 touch .claident || exit $?
 fi
 # download , compile, and install Swarm
