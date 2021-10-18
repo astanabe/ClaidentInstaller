@@ -12,13 +12,12 @@ fi
 # download and install DAIRYdb reference database
 if ! test -e .dairydb; then
 mkdir -p $PREFIX/share/claident/uchimedb 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/uchimedb || exit $?
-wget -nv -c https://github.com/marcomeola/DAIRYdb/raw/master/DAIRYdb_v1.2.4_20200604/DAIRYdb_v1.2.4_20200604_blast/DAIRYdb_v1.2.4_20200604_blast.tgz -O DAIRYdb_v1.2.4_20200604_blast.tgz || exit $?
-tar -xzf DAIRYdb_v1.2.4_20200604_blast.tgz || exit $?
-$PREFIX/share/claident/bin/vsearch --notrunclabels --label_suffix revcomp --fastx_revcomp DAIRYdb_v1.2.4_20200603_blast.fasta --fastaout DAIRYdb_v1.2.4_20200603_blast_rc.fasta || exit $?
-cat DAIRYdb_v1.2.4_20200603_blast.fasta DAIRYdb_v1.2.4_20200603_blast_rc.fasta > dairydb1.2.4.fasta || exit $?
-rm -f DAIRYdb_v1.2.4_20200603_blast.fasta DAIRYdb_v1.2.4_20200603_blast_rc.fasta DAIRYdb_v1.2.4_20200603_blast.fasta.n?? DAIRYdb_v1.2.4_20200604_blast.tgz || exit $?
-mv dairydb1.2.4.fasta $PREFIX/share/claident/uchimedb/ 2> /dev/null || sudo mv dairydb1.2.4.fasta $PREFIX/share/claident/uchimedb/ || exit $?
-echo 'The DAIRYdb v1.2.4 database for UCHIME were installed correctly!'
+wget -nv -c https://nextcloud.inrae.fr/s/5ne3ooAsM7zQtcW/download?path=/DDB_2.0/blast&files=DAIRYdb_v2.0_20210401_blast.fasta -O DAIRYdb_v2.0_20210401_blast.fasta || exit $?
+$PREFIX/share/claident/bin/vsearch --notrunclabels --label_suffix revcomp --fastx_revcomp DAIRYdb_v2.0_20210401_blast.fasta --fastaout DAIRYdb_v2.0_20210401_blast_rc.fasta || exit $?
+cat DAIRYdb_v2.0_20210401_blast.fasta DAIRYdb_v2.0_20210401_blast_rc.fasta > dairydb2.0.fasta || exit $?
+rm -f DAIRYdb_v2.0_20210401_blast.fasta DAIRYdb_v2.0_20210401_blast_rc.fasta || exit $?
+mv dairydb2.0.fasta $PREFIX/share/claident/uchimedb/ 2> /dev/null || sudo mv dairydb2.0.fasta $PREFIX/share/claident/uchimedb/ || exit $?
+echo 'The DAIRYdb v2.0 database for UCHIME were installed correctly!'
 touch .dairydb || exit $?
 fi
 # download and install SILVA reference databases
@@ -76,13 +75,13 @@ fi
 # download and install Claident Databases for UCHIME
 if ! test -e .cdu; then
 mkdir -p $PREFIX/share/claident/uchimedb 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/uchimedb || exit $?
-wget -nv -c https://www.claident.org/uchimedb/20210710/cdu_20210710.tar.xz || exit $?
-wget -nv -c https://www.claident.org/uchimedb/20210710/cdu_20210710.tar.xz.sha256 || exit $?
-sha256sum -c cdu_20210710.tar.xz.sha256 || exit $?
-rm cdu_20210710.tar.xz.sha256 || exit $?
-tar -xJf cdu_20210710.tar.xz || exit $?
+wget -nv -c https://www.claident.org/uchimedb/20211019/cdu_20211019.tar.xz || exit $?
+wget -nv -c https://www.claident.org/uchimedb/20211019/cdu_20211019.tar.xz.sha256 || exit $?
+sha256sum -c cdu_20211019.tar.xz.sha256 || exit $?
+rm cdu_20211019.tar.xz.sha256 || exit $?
+tar -xJf cdu_20211019.tar.xz || exit $?
 mv cdu12s.fasta cdu16s.fasta cducox1.fasta cducytb.fasta cdudloop.fasta cdumatk.fasta cdurbcl.fasta cdutrnhpsba.fasta $PREFIX/share/claident/uchimedb/ 2> /dev/null || sudo mv cdu12s.fasta cdu16s.fasta cducox1.fasta cducytb.fasta cdudloop.fasta cdumatk.fasta cdurbcl.fasta cdutrnhpsba.fasta $PREFIX/share/claident/uchimedb/ || exit $?
-rm -f cdu_20210710.tar.xz || exit $?
+rm -f cdu_20211019.tar.xz || exit $?
 echo 'The Claident Databases for UCHIME were installed correctly!'
 touch .cdu || exit $?
 fi
