@@ -12,7 +12,7 @@ fi
 # download and install DAIRYdb reference database
 if ! test -e .dairydb; then
 mkdir -p $PREFIX/share/claident/uchimedb 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/uchimedb || exit $?
-wget -nv -c https://nextcloud.inrae.fr/s/5ne3ooAsM7zQtcW/download?path=/DDB_2.0/blast&files=DAIRYdb_v2.0_20210401_blast.fasta -O DAIRYdb_v2.0_20210401_blast.fasta || exit $?
+wget -nv -c 'https://nextcloud.inrae.fr/s/5ne3ooAsM7zQtcW/download?path=/DDB_2.0/blast&files=DAIRYdb_v2.0_20210401_blast.fasta' -O DAIRYdb_v2.0_20210401_blast.fasta || exit $?
 $PREFIX/share/claident/bin/vsearch --notrunclabels --label_suffix revcomp --fastx_revcomp DAIRYdb_v2.0_20210401_blast.fasta --fastaout DAIRYdb_v2.0_20210401_blast_rc.fasta || exit $?
 cat DAIRYdb_v2.0_20210401_blast.fasta DAIRYdb_v2.0_20210401_blast_rc.fasta > dairydb2.0.fasta || exit $?
 rm -f DAIRYdb_v2.0_20210401_blast.fasta DAIRYdb_v2.0_20210401_blast_rc.fasta || exit $?
