@@ -2,7 +2,7 @@
 
 Automatic installer shell scripts for Claident.
 
-To learn how to use Claident, see [ClaidentTutorial](https://github.com/astanabe/ClaidentTutorial)
+To learn how to use Claident, see [ClaidentTutorial](https://github.com/astanabe/ClaidentTutorial).
 
 ## Prerequisites
 
