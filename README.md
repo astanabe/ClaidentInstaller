@@ -1,6 +1,6 @@
 # ClaidentInstaller
 
-Automatic installer shell scripts for Claident.
+Automatic installer shell scripts for [Claident](https://github.com/astanabe/Claident).
 
 To learn how to use Claident, see [ClaidentTutorial](https://github.com/astanabe/ClaidentTutorial).
 
