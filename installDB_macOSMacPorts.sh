@@ -125,7 +125,7 @@ rm -f $PREFIX/share/claident/taxdb/overall_genus_man.taxdb 2> /dev/null || sudo 
 rm -f $PREFIX/share/claident/taxdb/overall_species_wsp_man.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/overall_species_wsp_man.taxdb
 rm -f $PREFIX/share/claident/taxdb/overall_species_man.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/overall_species_man.taxdb
 rm -f $PREFIX/share/claident/taxdb/overall_species_wosp_man.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/overall_species_wosp_man.taxdb
-mv *.taxdb $PREFIX/share/claident/taxdb/ 2> /dev/null || sudo mv *.taxdb $PREFIX/share/claident/taxdb/ || exit $?
+mv -f *.taxdb $PREFIX/share/claident/taxdb/ 2> /dev/null || sudo mv -f *.taxdb $PREFIX/share/claident/taxdb/ || exit $?
 rm *.sha256 || exit $?
 rm *.tar.xz || exit $?
 touch .taxdb || exit $?
@@ -251,10 +251,10 @@ rm -f $PREFIX/share/claident/blastdb/overall_genus_man.* 2> /dev/null || sudo rm
 rm -f $PREFIX/share/claident/blastdb/overall_species_wsp_man.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/overall_species_wsp_man.*
 rm -f $PREFIX/share/claident/blastdb/overall_species_man.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/overall_species_man.*
 rm -f $PREFIX/share/claident/blastdb/overall_species_wosp_man.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/overall_species_wosp_man.*
-mv overall_class.??.n?? $PREFIX/share/claident/blastdb/ 2> /dev/null || sudo mv overall_class.??.n?? $PREFIX/share/claident/blastdb/ || exit $?
-mv *.bsl *.nal $PREFIX/share/claident/blastdb/ 2> /dev/null || sudo mv *.bsl *.nal $PREFIX/share/claident/blastdb/ || exit $?
-rm *.sha256 || exit $?
-rm *.tar.xz || exit $?
+mv -f overall_class.??.n?? $PREFIX/share/claident/blastdb/ 2> /dev/null || sudo mv -f overall_class.??.n?? $PREFIX/share/claident/blastdb/ || exit $?
+mv -f *.bsl *.nal $PREFIX/share/claident/blastdb/ 2> /dev/null || sudo mv -f *.bsl *.nal $PREFIX/share/claident/blastdb/ || exit $?
+rm -f *.sha256 || exit $?
+rm -f *.tar.xz || exit $?
 touch .blastdb || exit $?
 echo 'The BLAST databases were installed correctly!'
 fi
