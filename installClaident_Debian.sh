@@ -31,9 +31,9 @@ touch .swarm || exit $?
 fi
 # download , compile, and install VSEARCH
 if ! test -e .vsearch; then
-wget -nv -c https://github.com/torognes/vsearch/archive/v2.20.1.tar.gz -O vsearch-2.20.1.tar.gz || exit $?
-tar -xzf vsearch-2.20.1.tar.gz || exit $?
-cd vsearch-2.20.1 || exit $?
+wget -nv -c https://github.com/torognes/vsearch/archive/v2.21.0.tar.gz -O vsearch-2.21.0.tar.gz || exit $?
+tar -xzf vsearch-2.21.0.tar.gz || exit $?
+cd vsearch-2.21.0 || exit $?
 sh ./autogen.sh || exit $?
 CFLAGS="-O3 -fomit-frame-pointer -finline-functions" CPPFLAGS="-O3 -fomit-frame-pointer -finline-functions" CXXFLAGS="-O3 -fomit-frame-pointer -finline-functions" LDFLAGS="-O3 -fomit-frame-pointer -finline-functions" sh ./configure --prefix=$PREFIX/share/claident --disable-pdfman || exit $?
 make -j8 || exit $?
@@ -45,22 +45,22 @@ if ! test -e $PREFIX/bin/vsearch; then
 ln -sf $PREFIX/share/claident/bin/vsearch $PREFIX/bin/vsearch 2> /dev/null || sudo ln -sf $PREFIX/share/claident/bin/vsearch $PREFIX/bin/vsearch || exit $?
 fi
 cd .. || exit $?
-rm -rf vsearch-2.20.1 || exit $?
-rm -f vsearch-2.20.1.tar.gz || exit $?
+rm -rf vsearch-2.21.0 || exit $?
+rm -f vsearch-2.21.0.tar.gz || exit $?
 touch .vsearch || exit $?
 fi
 # download , compile, and install VSEARCH5D
 if ! test -e .vsearch5d; then
-wget -nv -c https://github.com/astanabe/vsearch5d/archive/v2.20.1.tar.gz -O vsearch5d-2.20.1.tar.gz || exit $?
-tar -xzf vsearch5d-2.20.1.tar.gz || exit $?
-cd vsearch5d-2.20.1 || exit $?
+wget -nv -c https://github.com/astanabe/vsearch5d/archive/v2.21.0.tar.gz -O vsearch5d-2.21.0.tar.gz || exit $?
+tar -xzf vsearch5d-2.21.0.tar.gz || exit $?
+cd vsearch5d-2.21.0 || exit $?
 sh ./autogen.sh || exit $?
 CFLAGS="-O3 -fomit-frame-pointer -finline-functions" CPPFLAGS="-O3 -fomit-frame-pointer -finline-functions" CXXFLAGS="-O3 -fomit-frame-pointer -finline-functions" LDFLAGS="-O3 -fomit-frame-pointer -finline-functions" sh ./configure --prefix=$PREFIX/share/claident || exit $?
 make -j8 || exit $?
 make install-exec 2> /dev/null || sudo make install-exec || exit $?
 cd .. || exit $?
-rm -rf vsearch5d-2.20.1 || exit $?
-rm -f vsearch5d-2.20.1.tar.gz || exit $?
+rm -rf vsearch5d-2.21.0 || exit $?
+rm -f vsearch5d-2.21.0.tar.gz || exit $?
 touch .vsearch5d || exit $?
 fi
 # download, and install BLAST+
