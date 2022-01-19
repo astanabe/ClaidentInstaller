@@ -125,6 +125,7 @@ rm -f $PREFIX/share/claident/taxdb/overall_genus_man.taxdb 2> /dev/null || sudo 
 rm -f $PREFIX/share/claident/taxdb/overall_species_wsp_man.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/overall_species_wsp_man.taxdb
 rm -f $PREFIX/share/claident/taxdb/overall_species_man.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/overall_species_man.taxdb
 rm -f $PREFIX/share/claident/taxdb/overall_species_wosp_man.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/overall_species_wosp_man.taxdb
+chmod 666 *.taxdb 2> /dev/null || sudo chmod 666 *.taxdb || exit $?
 mv -f *.taxdb $PREFIX/share/claident/taxdb/ 2> /dev/null || sudo mv -f *.taxdb $PREFIX/share/claident/taxdb/ || exit $?
 rm *.sha256 || exit $?
 rm *.tar.xz || exit $?
