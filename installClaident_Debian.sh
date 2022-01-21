@@ -1,4 +1,4 @@
-sudo -E apt-get -y install gcc g++ gfortran make autoconf automake zlib1g-dev libbz2-dev liblzma-dev libreadline-dev libpcre2-dev libjpeg-dev libpng-dev libcairo2-dev libpango1.0-dev libtiff-dev tcl-dev tk-dev tar gzip xz-utils unzip coreutils grep perl libdbi-perl libdbd-sqlite3-perl libwww-perl libfile-copy-recursive-perl libstatistics-distributions-perl libio-compress-lzma-perl libmath-basecnv-perl libopenblas-serial-dev libopenblas64-serial-dev libcurl4-openssl-dev libxml2-dev git || exit $?
+sudo -E apt-get -y install gcc g++ gfortran make autoconf automake zlib1g-dev libbz2-dev liblzma-dev libreadline-dev libpcre2-dev libjpeg-dev libpng-dev libcairo2-dev libpango1.0-dev libtiff-dev tcl-dev tk-dev tar gzip xz-utils unzip coreutils grep perl libdbi-perl libdbd-sqlite3-perl libwww-perl libfile-copy-recursive-perl libstatistics-distributions-perl libio-compress-lzma-perl libmath-basecnv-perl libopenblas-serial-dev libopenblas64-serial-dev libcurl4-openssl-dev libxml2-dev imagemagick git || exit $?
 if test -z $PREFIX; then
 export PREFIX=/usr/local || exit $?
 fi
@@ -88,10 +88,10 @@ make install-strip 2> /dev/null || sudo make install-strip || exit $?
 cd .. || exit $?
 rm -rf R-4.1.2 || exit $?
 if test -w $PREFIX/share/claident/lib/R; then
-$PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages(c("RcppParallel","foreach","doParallel"),repos="https://cloud.r-project.org/",dependencies=T,clean=T,Ncpus=detectCores())' || exit $?
+$PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages(c("RcppParallel","foreach","doParallel","htmlwidgets","wordcloud2"),repos="https://cloud.r-project.org/",dependencies=T,clean=T,Ncpus=detectCores())' || exit $?
 $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);source("https://raw.githubusercontent.com/r-lib/remotes/master/install-github.R")$value("benjjneb/dada2@v1.20",dependencies=T,clean=T,Ncpus=detectCores(),upgrade="never")' || exit $?
 else
-sudo -E $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages(c("RcppParallel","foreach","doParallel"),repos="https://cloud.r-project.org/",dependencies=T,clean=T,Ncpus=detectCores())' || exit $?
+sudo -E $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages(c("RcppParallel","foreach","doParallel","htmlwidgets","wordcloud2"),repos="https://cloud.r-project.org/",dependencies=T,clean=T,Ncpus=detectCores())' || exit $?
 sudo -E $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);source("https://raw.githubusercontent.com/r-lib/remotes/master/install-github.R")$value("benjjneb/dada2@v1.20",dependencies=T,clean=T,Ncpus=detectCores(),upgrade="never")' || exit $?
 fi
 rm -f R-4.1.2.tar.gz || exit $?
