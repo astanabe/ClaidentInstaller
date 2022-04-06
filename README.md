@@ -15,7 +15,7 @@ CentOS, AlmaLinux or Rocky Linux users need to enable PowerTools repository.
 
 On macOS, macOS 10.14 Mojave or later is required.
 Mac users need to install Xcode command line tools before installing Claident.
-Xcode command line tools can install by running the following command in the terminal.
+Xcode command line tools can be installed by running the following command in the terminal.
 
 ```
 xcode-select --install
