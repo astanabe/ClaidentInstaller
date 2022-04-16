@@ -1,4 +1,4 @@
-sudo -E dnf install -y --skip-broken which binutils gcc gcc-c++ gcc-gfortran gcc-plugin-devel libstdc++ libgcc glibc-static libstdc++-static readline-devel bzip2-devel autoconf automake make wget zlib zlib-devel tar gzip xz xz-devel pigz lbzip2 unzip coreutils grep perl perl-local-lib perl-Time-HiRes perl-CPAN perl-File-Copy-Recursive perl-YAML perl-DBI perl-DBD-SQLite perl-libwww-perl tcsh libxml2-devel libcurl-devel pcre2-devel libpng-devel libjpeg-turbo-devel cairo-devel pango-devel libtiff-devel tcl-devel tk-devel openblas-devel ImageMagick git-core || exit $?
+sudo -E dnf install -y --skip-broken which binutils gcc gcc-c++ gcc-gfortran gcc-plugin-devel libstdc++ libgcc glibc-static libstdc++-static readline-devel bzip2-devel autoconf automake make wget zlib zlib-devel tar gzip xz xz-devel pigz lbzip2 unzip coreutils grep perl perl-local-lib perl-Time-HiRes perl-CPAN perl-File-Copy-Recursive perl-YAML perl-DBI perl-DBD-SQLite perl-libwww-perl tcsh libxml2-devel libcurl-devel pcre2-devel libpng-devel libjpeg-turbo-devel cairo-devel pango-devel libtiff-devel tcl-devel tk-devel openblas-devel ImageMagick git-core google-noto-fonts-common || exit $?
 if test -z $PREFIX; then
 export PREFIX=/usr/local || exit $?
 fi
@@ -9,15 +9,15 @@ touch .perlmodules || exit $?
 fi
 # download, and install Claident
 if ! test -e .claident; then
-wget -nv -c https://github.com/astanabe/Claident/archive/v0.9.2022.04.12.tar.gz -O Claident-0.9.2022.04.12.tar.gz || exit $?
-tar -xzf Claident-0.9.2022.04.12.tar.gz || exit $?
-cd Claident-0.9.2022.04.12 || exit $?
+wget -nv -c https://github.com/astanabe/Claident/archive/v0.9.2022.04.16.tar.gz -O Claident-0.9.2022.04.16.tar.gz || exit $?
+tar -xzf Claident-0.9.2022.04.16.tar.gz || exit $?
+cd Claident-0.9.2022.04.16 || exit $?
 make PREFIX=$PREFIX -j8 || exit $?
 make PREFIX=$PREFIX install 2> /dev/null || sudo make PREFIX=$PREFIX install || exit $?
 cp $PREFIX/share/claident/.claident ~/.claident || exit $?
 cd .. || exit $?
-rm -rf Claident-0.9.2022.04.12 || exit $?
-rm -f Claident-0.9.2022.04.12.tar.gz || exit $?
+rm -rf Claident-0.9.2022.04.16 || exit $?
+rm -f Claident-0.9.2022.04.16.tar.gz || exit $?
 touch .claident || exit $?
 fi
 # download , compile, and install Swarm

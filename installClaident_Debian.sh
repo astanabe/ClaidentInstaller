@@ -1,4 +1,4 @@
-sudo -E apt-get -y install gcc g++ gfortran make autoconf automake zlib1g-dev libbz2-dev liblzma-dev libreadline-dev libpcre2-dev libjpeg-dev libpng-dev libcairo2-dev libpango1.0-dev libtiff-dev tcl-dev tk-dev tar gzip bzip2 xz-utils pigz lbzip2 unzip coreutils grep perl libdbi-perl libdbd-sqlite3-perl libwww-perl libfile-copy-recursive-perl libmath-basecnv-perl libopenblas-dev libopenblas64-dev libcurl4-openssl-dev libxml2-dev imagemagick git || exit $?
+sudo -E apt-get -y install gcc g++ gfortran make autoconf automake zlib1g-dev libbz2-dev liblzma-dev libreadline-dev libpcre2-dev libjpeg-dev libpng-dev libcairo2-dev libpango1.0-dev libtiff-dev tcl-dev tk-dev tar gzip bzip2 xz-utils pigz lbzip2 unzip coreutils grep perl libdbi-perl libdbd-sqlite3-perl libwww-perl libfile-copy-recursive-perl libmath-basecnv-perl libopenblas-dev libopenblas64-dev libcurl4-openssl-dev libxml2-dev imagemagick git fonts-noto || exit $?
 if test -z $PREFIX; then
 export PREFIX=/usr/local || exit $?
 fi
@@ -9,15 +9,15 @@ touch .perlmodules || exit $?
 fi
 # download, and install Claident
 if ! test -e .claident; then
-wget -nv -c https://github.com/astanabe/Claident/archive/v0.9.2022.04.12.tar.gz -O Claident-0.9.2022.04.12.tar.gz || exit $?
-tar -xzf Claident-0.9.2022.04.12.tar.gz || exit $?
-cd Claident-0.9.2022.04.12 || exit $?
+wget -nv -c https://github.com/astanabe/Claident/archive/v0.9.2022.04.16.tar.gz -O Claident-0.9.2022.04.16.tar.gz || exit $?
+tar -xzf Claident-0.9.2022.04.16.tar.gz || exit $?
+cd Claident-0.9.2022.04.16 || exit $?
 make PREFIX=$PREFIX -j8 || exit $?
 make PREFIX=$PREFIX install 2> /dev/null || sudo make PREFIX=$PREFIX install || exit $?
 cp $PREFIX/share/claident/.claident ~/.claident || exit $?
 cd .. || exit $?
-rm -rf Claident-0.9.2022.04.12 || exit $?
-rm -f Claident-0.9.2022.04.12.tar.gz || exit $?
+rm -rf Claident-0.9.2022.04.16 || exit $?
+rm -f Claident-0.9.2022.04.16.tar.gz || exit $?
 touch .claident || exit $?
 fi
 # download , compile, and install Swarm
