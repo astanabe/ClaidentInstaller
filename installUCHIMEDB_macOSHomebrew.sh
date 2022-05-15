@@ -14,14 +14,14 @@ fi
 # download and install DAIRYdb reference database
 if ! test -e .dairydb; then
 mkdir -p $PREFIX/share/claident/uchimedb 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/uchimedb || exit $?
-wget -nv -c 'https://nextcloud.inrae.fr/s/5ne3ooAsM7zQtcW/download?path=/DDB_2.0/blast&files=DAIRYdb_v2.0_20210401_blast.fasta' -O DAIRYdb_v2.0_20210401_blast.fasta || exit $?
-$PREFIX/share/claident/bin/vsearch --notrunclabels --label_suffix revcomp --fastx_revcomp DAIRYdb_v2.0_20210401_blast.fasta --fastaout DAIRYdb_v2.0_20210401_blast_rc.fasta || exit $?
-cat DAIRYdb_v2.0_20210401_blast.fasta DAIRYdb_v2.0_20210401_blast_rc.fasta > dairydb2.0.fasta || exit $?
-$PREFIX/share/claident/bin/vsearch --dbmask none --makeudb_usearch dairydb2.0.fasta --output dairydb2.0.udb || exit $?
-chmod 644 dairydb2.0.fasta dairydb2.0.udb || exit $?
-mv -f dairydb2.0.fasta dairydb2.0.udb $PREFIX/share/claident/uchimedb/ 2> /dev/null || sudo mv -f dairydb2.0.fasta dairydb2.0.udb $PREFIX/share/claident/uchimedb/ || exit $?
-rm -f DAIRYdb_v2.0_20210401_blast.fasta DAIRYdb_v2.0_20210401_blast_rc.fasta || exit $?
-echo 'The DAIRYdb v2.0 database for UCHIME were installed correctly!'
+wget -nv -c 'https://nextcloud.inrae.fr/s/5ne3ooAsM7zQtcW/download?path=%2FDDB_2.1%2Fblast&files=DAIRYdb_v2.1_20220411_blast.fasta' -O DAIRYdb_v2.1_20220411_blast.fasta || exit $?
+$PREFIX/share/claident/bin/vsearch --notrunclabels --label_suffix revcomp --fastx_revcomp DAIRYdb_v2.1_20220411_blast.fasta --fastaout DAIRYdb_v2.1_20220411_blast_rc.fasta || exit $?
+cat DAIRYdb_v2.1_20220411_blast.fasta DAIRYdb_v2.1_20220411_blast_rc.fasta > dairydb2.1.fasta || exit $?
+$PREFIX/share/claident/bin/vsearch --dbmask none --makeudb_usearch dairydb2.1.fasta --output dairydb2.1.udb || exit $?
+chmod 644 dairydb2.1.fasta dairydb2.1.udb || exit $?
+mv -f dairydb2.1.fasta dairydb2.1.udb $PREFIX/share/claident/uchimedb/ 2> /dev/null || sudo mv -f dairydb2.1.fasta dairydb2.1.udb $PREFIX/share/claident/uchimedb/ || exit $?
+rm -f DAIRYdb_v2.1_20220411_blast.fasta DAIRYdb_v2.1_20220411_blast_rc.fasta || exit $?
+echo 'The DAIRYdb v2.1 database for UCHIME were installed correctly!'
 touch .dairydb || exit $?
 fi
 # download and install SILVA reference databases
