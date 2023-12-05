@@ -11,7 +11,7 @@ On Debian GNU/Linux compatible distributions, Debian 11 Bullseye, Ubuntu 20.04LT
 On Red Hat Enterprise Linux compatible distributions, Red Hat Enterprise Linux 8, CentOS 8, AlmaLinux 8 or Rocky Linux 8 is required.
 Those users need to enable Extra Packages for Enterprise Linux (EPEL) repository before installing Claident.
 Red Hat Enterprise Linux users also need to enable CodeReady Linux Builder repository.
-CentOS, AlmaLinux or Rocky Linux users need to enable PowerTools repository.
+CentOS, AlmaLinux or Rocky Linux users need to enable PowerTools (for v8) / CRB (for v9) repository.
 
 On macOS, macOS 10.14 Mojave or later is required.
 Mac users need to install Xcode command line tools before installing Claident.
