@@ -25,45 +25,45 @@ echo 'The DAIRYdb v3.0.0 database for UCHIME were installed correctly!'
 touch .dairydb || exit $?
 fi
 # download and install SILVA reference databases
-if ! test -e .silva; then
-mkdir -p $PREFIX/share/claident/uchimedb 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/uchimedb || exit $?
-wget -nv -c https://www.arb-silva.de/fileadmin/silva_databases/release_138_1/Exports/SILVA_138.1_LSURef_tax_silva.fasta.gz || exit $?
-wget -nv -c https://www.arb-silva.de/fileadmin/silva_databases/release_138_1/Exports/SILVA_138.1_LSURef_tax_silva.fasta.gz.md5 || exit $?
-gmd5sum -c SILVA_138.1_LSURef_tax_silva.fasta.gz.md5 || exit $?
-rm -f SILVA_138.1_LSURef_tax_silva.fasta.gz.md5 || exit $?
-gzip -d SILVA_138.1_LSURef_tax_silva.fasta.gz || exit $?
-$PREFIX/share/claident/bin/vsearch --notrunclabels --label_suffix revcomp --fastx_revcomp SILVA_138.1_LSURef_tax_silva.fasta --fastaout SILVA_138.1_LSURef_tax_silva_rc.fasta || exit $?
-cat SILVA_138.1_LSURef_tax_silva.fasta SILVA_138.1_LSURef_tax_silva_rc.fasta > silva138.1LSUref.fasta || exit $?
-$PREFIX/share/claident/bin/vsearch --dbmask none --makeudb_usearch silva138.1LSUref.fasta --output silva138.1LSUref.udb
-if test -s silva138.1LSUref.udb; then
-chmod 644 silva138.1LSUref.fasta silva138.1LSUref.udb || exit $?
-mv -f silva138.1LSUref.fasta silva138.1LSUref.udb $PREFIX/share/claident/uchimedb/ 2> /dev/null || sudo mv -f silva138.1LSUref.fasta silva138.1LSUref.udb $PREFIX/share/claident/uchimedb/ || exit $?
-else
-rm -f silva138.1LSUref.udb || exit $?
-chmod 644 silva138.1LSUref.fasta || exit $?
-mv -f silva138.1LSUref.fasta $PREFIX/share/claident/uchimedb/ 2> /dev/null || sudo mv -f silva138.1LSUref.fasta $PREFIX/share/claident/uchimedb/ || exit $?
-fi
-rm -f SILVA_138.1_LSURef_tax_silva.fasta SILVA_138.1_LSURef_tax_silva_rc.fasta || exit $?
-wget -nv -c https://www.arb-silva.de/fileadmin/silva_databases/release_138_1/Exports/SILVA_138.1_SSURef_tax_silva.fasta.gz || exit $?
-wget -nv -c https://www.arb-silva.de/fileadmin/silva_databases/release_138_1/Exports/SILVA_138.1_SSURef_tax_silva.fasta.gz.md5 || exit $?
-gmd5sum -c SILVA_138.1_SSURef_tax_silva.fasta.gz.md5 || exit $?
-rm -f SILVA_138.1_SSURef_tax_silva.fasta.gz.md5 || exit $?
-gzip -d SILVA_138.1_SSURef_tax_silva.fasta.gz || exit $?
-$PREFIX/share/claident/bin/vsearch --notrunclabels --label_suffix revcomp --fastx_revcomp SILVA_138.1_SSURef_tax_silva.fasta --fastaout SILVA_138.1_SSURef_tax_silva_rc.fasta || exit $?
-cat SILVA_138.1_SSURef_tax_silva.fasta SILVA_138.1_SSURef_tax_silva_rc.fasta > silva138.1SSUref.fasta || exit $?
-$PREFIX/share/claident/bin/vsearch --dbmask none --makeudb_usearch silva138.1SSUref.fasta --output silva138.1SSUref.udb
-if test -s silva138.1SSUref.udb; then
-chmod 644 silva138.1SSUref.fasta silva138.1SSUref.udb || exit $?
-mv -f silva138.1SSUref.fasta silva138.1SSUref.udb $PREFIX/share/claident/uchimedb/ 2> /dev/null || sudo mv -f silva138.1SSUref.fasta silva138.1SSUref.udb $PREFIX/share/claident/uchimedb/ || exit $?
-else
-rm -f silva138.1SSUref.udb || exit $?
-chmod 644 silva138.1SSUref.fasta || exit $?
-mv -f silva138.1SSUref.fasta $PREFIX/share/claident/uchimedb/ 2> /dev/null || sudo mv -f silva138.1SSUref.fasta $PREFIX/share/claident/uchimedb/ || exit $?
-fi
-rm -f SILVA_138.1_SSURef_tax_silva.fasta SILVA_138.1_SSURef_tax_silva_rc.fasta || exit $?
-echo 'The SILVA release 138.1 database for UCHIME were installed correctly!'
-touch .silva || exit $?
-fi
+#if ! test -e .silva; then
+#mkdir -p $PREFIX/share/claident/uchimedb 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/uchimedb || exit $?
+#wget -nv -c https://www.arb-silva.de/fileadmin/silva_databases/release_138_1/Exports/SILVA_138.1_LSURef_tax_silva.fasta.gz || exit $?
+#wget -nv -c https://www.arb-silva.de/fileadmin/silva_databases/release_138_1/Exports/SILVA_138.1_LSURef_tax_silva.fasta.gz.md5 || exit $?
+#gmd5sum -c SILVA_138.1_LSURef_tax_silva.fasta.gz.md5 || exit $?
+#rm -f SILVA_138.1_LSURef_tax_silva.fasta.gz.md5 || exit $?
+#gzip -d SILVA_138.1_LSURef_tax_silva.fasta.gz || exit $?
+#$PREFIX/share/claident/bin/vsearch --notrunclabels --label_suffix revcomp --fastx_revcomp SILVA_138.1_LSURef_tax_silva.fasta --fastaout SILVA_138.1_LSURef_tax_silva_rc.fasta || exit $?
+#cat SILVA_138.1_LSURef_tax_silva.fasta SILVA_138.1_LSURef_tax_silva_rc.fasta > silva138.1LSUref.fasta || exit $?
+#$PREFIX/share/claident/bin/vsearch --dbmask none --makeudb_usearch silva138.1LSUref.fasta --output silva138.1LSUref.udb
+#if test -s silva138.1LSUref.udb; then
+#chmod 644 silva138.1LSUref.fasta silva138.1LSUref.udb || exit $?
+#mv -f silva138.1LSUref.fasta silva138.1LSUref.udb $PREFIX/share/claident/uchimedb/ 2> /dev/null || sudo mv -f silva138.1LSUref.fasta silva138.1LSUref.udb $PREFIX/share/claident/uchimedb/ || exit $?
+#else
+#rm -f silva138.1LSUref.udb || exit $?
+#chmod 644 silva138.1LSUref.fasta || exit $?
+#mv -f silva138.1LSUref.fasta $PREFIX/share/claident/uchimedb/ 2> /dev/null || sudo mv -f silva138.1LSUref.fasta $PREFIX/share/claident/uchimedb/ || exit $?
+#fi
+#rm -f SILVA_138.1_LSURef_tax_silva.fasta SILVA_138.1_LSURef_tax_silva_rc.fasta || exit $?
+#wget -nv -c https://www.arb-silva.de/fileadmin/silva_databases/release_138_1/Exports/SILVA_138.1_SSURef_tax_silva.fasta.gz || exit $?
+#wget -nv -c https://www.arb-silva.de/fileadmin/silva_databases/release_138_1/Exports/SILVA_138.1_SSURef_tax_silva.fasta.gz.md5 || exit $?
+#gmd5sum -c SILVA_138.1_SSURef_tax_silva.fasta.gz.md5 || exit $?
+#rm -f SILVA_138.1_SSURef_tax_silva.fasta.gz.md5 || exit $?
+#gzip -d SILVA_138.1_SSURef_tax_silva.fasta.gz || exit $?
+#$PREFIX/share/claident/bin/vsearch --notrunclabels --label_suffix revcomp --fastx_revcomp SILVA_138.1_SSURef_tax_silva.fasta --fastaout SILVA_138.1_SSURef_tax_silva_rc.fasta || exit $?
+#cat SILVA_138.1_SSURef_tax_silva.fasta SILVA_138.1_SSURef_tax_silva_rc.fasta > silva138.1SSUref.fasta || exit $?
+#$PREFIX/share/claident/bin/vsearch --dbmask none --makeudb_usearch silva138.1SSUref.fasta --output silva138.1SSUref.udb
+#if test -s silva138.1SSUref.udb; then
+#chmod 644 silva138.1SSUref.fasta silva138.1SSUref.udb || exit $?
+#mv -f silva138.1SSUref.fasta silva138.1SSUref.udb $PREFIX/share/claident/uchimedb/ 2> /dev/null || sudo mv -f silva138.1SSUref.fasta silva138.1SSUref.udb $PREFIX/share/claident/uchimedb/ || exit $?
+#else
+#rm -f silva138.1SSUref.udb || exit $?
+#chmod 644 silva138.1SSUref.fasta || exit $?
+#mv -f silva138.1SSUref.fasta $PREFIX/share/claident/uchimedb/ 2> /dev/null || sudo mv -f silva138.1SSUref.fasta $PREFIX/share/claident/uchimedb/ || exit $?
+#fi
+#rm -f SILVA_138.1_SSURef_tax_silva.fasta SILVA_138.1_SSURef_tax_silva_rc.fasta || exit $?
+#echo 'The SILVA release 138.1 database for UCHIME were installed correctly!'
+#touch .silva || exit $?
+#fi
 # download and install UNITE UCHIME reference databases
 if ! test -e .unite; then
 mkdir -p $PREFIX/share/claident/uchimedb 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/uchimedb || exit $?
