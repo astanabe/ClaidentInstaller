@@ -9,15 +9,15 @@ touch .perlmodules || exit $?
 fi
 # download, and install Claident
 if ! test -e .claident; then
-wget -nv -c https://github.com/astanabe/Claident/archive/v0.9.2023.12.05.tar.gz -O Claident-0.9.2023.12.05.tar.gz || exit $?
-tar -xzf Claident-0.9.2023.12.05.tar.gz || exit $?
-cd Claident-0.9.2023.12.05 || exit $?
+wget -nv -c https://github.com/astanabe/Claident/archive/v0.9.2024.02.11.tar.gz -O Claident-0.9.2024.02.11.tar.gz || exit $?
+tar -xzf Claident-0.9.2024.02.11.tar.gz || exit $?
+cd Claident-0.9.2024.02.11 || exit $?
 make PREFIX=$PREFIX -j8 || exit $?
 make PREFIX=$PREFIX install 2> /dev/null || sudo make PREFIX=$PREFIX install || exit $?
 cp $PREFIX/share/claident/.claident ~/.claident || exit $?
 cd .. || exit $?
-rm -rf Claident-0.9.2023.12.05 || exit $?
-rm -f Claident-0.9.2023.12.05.tar.gz || exit $?
+rm -rf Claident-0.9.2024.02.11 || exit $?
+rm -f Claident-0.9.2024.02.11.tar.gz || exit $?
 touch .claident || exit $?
 fi
 # download, compile, and install Swarm
@@ -93,10 +93,10 @@ make install-strip 2> /dev/null || sudo make install-strip || exit $?
 cd .. || exit $?
 rm -rf R-4.2.3 || exit $?
 if test -w $PREFIX/share/claident/lib/R; then
-$PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages(c("RcppParallel","foreach","doParallel","htmlwidgets","wordcloud2"),repos="https://cloud.r-project.org/",dependencies=T,clean=T,Ncpus=detectCores())' || exit $?
+$PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages(c("RcppParallel","foreach","doParallel","htmlwidgets","wordcloud2","vegan"),repos="https://cloud.r-project.org/",dependencies=T,clean=T,Ncpus=detectCores())' || exit $?
 $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);source("https://raw.githubusercontent.com/r-lib/remotes/master/install-github.R")$value("benjjneb/dada2@v1.26",dependencies=T,clean=T,Ncpus=detectCores(),upgrade="never")' || exit $?
 else
-sudo -E $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages(c("RcppParallel","foreach","doParallel","htmlwidgets","wordcloud2"),repos="https://cloud.r-project.org/",dependencies=T,clean=T,Ncpus=detectCores())' || exit $?
+sudo -E $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages(c("RcppParallel","foreach","doParallel","htmlwidgets","wordcloud2","vegan"),repos="https://cloud.r-project.org/",dependencies=T,clean=T,Ncpus=detectCores())' || exit $?
 sudo -E $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);source("https://raw.githubusercontent.com/r-lib/remotes/master/install-github.R")$value("benjjneb/dada2@v1.26",dependencies=T,clean=T,Ncpus=detectCores(),upgrade="never")' || exit $?
 fi
 rm -f R-4.2.3.tar.gz || exit $?
