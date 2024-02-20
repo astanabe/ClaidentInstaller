@@ -4,6 +4,11 @@ Automatic installer shell scripts for [Claident](https://github.com/astanabe/Cla
 
 To learn how to use Claident, see [ClaidentTutorial](https://github.com/astanabe/ClaidentTutorial).
 
+## Notice about conda (Anaconda/Miniconda)
+
+Because conda (or the other environment-modifying packages) interferes these installer scripts, conda need to be disabled temporarily when running these installer scripts.
+Running these installer scripts as newly created user is the best solution.
+
 ## Prerequisites
 
 On Debian GNU/Linux compatible distributions, Debian 11 Bullseye, Ubuntu 20.04LTS or Linux Mint 20 or later is required.
