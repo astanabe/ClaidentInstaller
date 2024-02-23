@@ -111,7 +111,7 @@ jpeginclude=`find $BREWPATH/Cellar -name jpeglib.h | sort | tail -n 1 | perl -np
 pcre2lib=`find $BREWPATH/Cellar -name libpcre2-8.dylib | sort | tail -n 1 | perl -npe 's/\/libpcre2-8\.dylib$//'`
 pcre2include=`find $BREWPATH/Cellar -name pcre2.h | sort | tail -n 1 | perl -npe 's/\/pcre2\.h$//'`
 export CURL_CONFIG=`find $BREWPATH/Cellar -name curl-config | sort | tail -n 1`
-LDFLAGS="-L$lzmalib" CPPFLAGS="-I$lzmainclude -I$jpeginclude -I$pcre2include" FCFLAGS="-static-libgfortran -static-libquadmath" ./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=no --with-pic --with-x=no --with-aqua=no --enable-R-shlib=yes --with-tcl-config=$tclconfig --with-tk-config=$tkconfig --with-jpeglib="-L$jpeglib -ljpeg" --with-pcre2="-L$pcre2lib -lpcre2-8" --with-blas="-L$openblas -lopenblas" --with-lapack r_cv_have_curl728=yes || exit $?
+LDFLAGS="-L$lzmalib -L$jpeglib -L$pcre2lib" CPPFLAGS="-I$lzmainclude -I$jpeginclude -I$pcre2include" FCFLAGS="-static-libgfortran -static-libquadmath" ./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=no --with-pic --with-x=no --with-aqua=no --enable-R-shlib=yes --with-tcl-config=$tclconfig --with-tk-config=$tkconfig --with-blas="-L$openblas -lopenblas" --with-lapack r_cv_have_curl728=yes || exit $?
 gmake -j$NCPU || exit $?
 gmake install-strip 2> /dev/null || sudo gmake install-strip || exit $?
 cd .. || exit $?
