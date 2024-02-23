@@ -26,7 +26,7 @@ if ! test -e .swarm; then
 wget -nv -c https://github.com/torognes/swarm/archive/v3.1.4.tar.gz -O swarm-3.1.4.tar.gz || exit $?
 tar -xzf swarm-3.1.4.tar.gz || exit $?
 cd swarm-3.1.4/src || exit $?
-perl -i -npe 's/-mtune=generic/-O3 -mtune=native -fomit-frame-pointer -finline-functions/' src/Makefile || exit $?
+perl -i -npe 's/-mtune=generic/-O3 -mtune=native -fomit-frame-pointer -finline-functions/' Makefile || exit $?
 make -j$NCPU || exit $?
 mkdir -p $PREFIX/share/claident/bin 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/bin || exit $?
 mv -f swarm $PREFIX/share/claident/bin/ 2> /dev/null || sudo mv -f swarm $PREFIX/share/claident/bin/ || exit $?

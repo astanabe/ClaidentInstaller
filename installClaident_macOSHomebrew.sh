@@ -31,8 +31,8 @@ if ! test -e .swarm; then
 wget -nv -c https://github.com/torognes/swarm/archive/v3.1.4.tar.gz -O swarm-3.1.4.tar.gz || exit $?
 gtar -xzf swarm-3.1.4.tar.gz || exit $?
 cd swarm-3.1.4/src || exit $?
-perl -i -npe 's/-mtune=generic/-O3 -mtune=native -fomit-frame-pointer -finline-functions/' src/Makefile || exit $?
-gmake -j$NCPU || exit $?
+perl -i -npe 's/-mtune=generic/-O3 -mtune=native -fomit-frame-pointer -finline-functions/' Makefile || exit $?
+gmake -j$NCPU CC=clang CXX=clang++ || exit $?
 mkdir -p $PREFIX/share/claident/bin 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/bin || exit $?
 mv -f swarm $PREFIX/share/claident/bin/ 2> /dev/null || sudo mv -f swarm $PREFIX/share/claident/bin/ || exit $?
 cd ../.. || exit $?
@@ -80,7 +80,7 @@ wget -nv -c https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.15.0/ncbi-bl
 gtar -xzf ncbi-blast-2.15.0+-src.tar.gz || exit $?
 cd ncbi-blast-2.15.0+-src/c++ || exit $?
 BREWPATH=`brew --prefix`
-./configure --prefix=$PREFIX/share/claident --with-bin-release --with-dll --with-mt --with-openmp --with-64 --with-lfs --without-debug --without-boost --without-gbench --without-gui --without-ctools || exit $?
+./configure --prefix=$PREFIX/share/claident --with-bin-release --without-strip --with-dll --with-mt --with-openmp --with-64 --with-lfs --without-debug --without-boost --without-gbench --without-gui --without-ctools || exit $?
 gmake -j$NCPU || exit $?
 gmake install 2> /dev/null || sudo gmake install || exit $?
 cd ../.. || exit $?
