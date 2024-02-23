@@ -3,8 +3,10 @@ if test -z $PREFIX; then
 export PREFIX=/usr/local || exit $?
 fi
 export SDKROOT="$(xcrun --sdk macosx --show-sdk-path)"
-export CC=`ls -d $BREWPATH/bin/gcc-* | ggrep -P -o 'gcc-\d+' | tail -n 1`
-export CXX=`ls -d $BREWPATH/bin/g++-* | ggrep -P -o 'g\+\+-\d+' | tail -n 1`
+BREWPATH=`brew --prefix`
+export CC=`ls -d $BREWPATH/bin/gcc-* | ggrep -P '\/gcc-\d+$' | sort | tail -n 1`
+export CXX=`ls -d $BREWPATH/bin/g++-* | ggrep -P '\/g\+\+-\d+$' | sort | tail -n 1`
+export FC=`ls -d $BREWPATH/bin/gfortran-* | ggrep -P '\/gfortran-\d+$' | sort | tail -n 1`
 # download, compile, and install Perl modules
 if ! test -e .perlmodules; then
 sudo -HE sh -c "yes '' | cpan -fi File::Copy::Recursive DBI DBD::SQLite Math::BaseCnv Math::CDF" || exit $?
@@ -94,12 +96,11 @@ perl -i -npe 's/^(\#define NCONNECTIONS) \d+/$1 1050/' src/main/connections.c ||
 BREWPATH=`brew --prefix`
 export CC=clang
 export CXX=clang++
-export FC=`ls -d $BREWPATH/bin/gfortran-* | ggrep -P -o 'gfortran-\d+' | tail -n 1`
-tclconfig=`find $BREWPATH/Cellar -name tclConfig.sh | tail -n 1`
-tkconfig=`find $BREWPATH/Cellar -name tkConfig.sh | tail -n 1`
-openblas=`find $BREWPATH/Cellar -name libopenblas.dylib | tail -n 1 | perl -npe 's/\/libopenblas\.dylib//'`
-#lzma=`find $BREWPATH/Cellar -name liblzma.dylib | tail -n 1 | perl -npe 's/\/liblzma\.dylib//'`
-export CURL_CONFIG=`find $BREWPATH/Cellar -name curl-config | tail -n 1`
+tclconfig=`find $BREWPATH/Cellar -name tclConfig.sh | sort | tail -n 1`
+tkconfig=`find $BREWPATH/Cellar -name tkConfig.sh | sort | tail -n 1`
+openblas=`find $BREWPATH/Cellar -name libopenblas.dylib | sort | tail -n 1 | perl -npe 's/\/libopenblas\.dylib//'`
+#lzma=`find $BREWPATH/Cellar -name liblzma.dylib | sort | tail -n 1 | perl -npe 's/\/liblzma\.dylib//'`
+export CURL_CONFIG=`find $BREWPATH/Cellar -name curl-config | sort | tail -n 1`
 #LDFLAGS="-L$lzma"
 ./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=no --with-pic --with-x=no --with-aqua=no --enable-R-shlib=yes --with-tcl-config=$tclconfig --with-tk-config=$tkconfig --with-blas="-L$openblas -lopenblas" --with-lapack r_cv_have_curl728=yes || exit $?
 gmake -j8 || exit $?

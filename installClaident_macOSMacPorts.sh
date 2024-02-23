@@ -3,8 +3,9 @@ if test -z $PREFIX; then
 export PREFIX=/usr/local || exit $?
 fi
 export SDKROOT="$(xcrun --sdk macosx --show-sdk-path)"
-export CC=`ls -d /opt/local/bin/gcc-mp-* | ggrep -P -o 'gcc-mp-\d+' | tail -n 1`
-export CXX=`ls -d /opt/local/bin/g++-mp-* | ggrep -P -o 'g\+\+-mp-\d+' | tail -n 1`
+export CC=`ls -d /opt/local/bin/gcc-mp-* | ggrep -P '\/gcc-mp-\d+$' | sort | tail -n 1`
+export CXX=`ls -d /opt/local/bin/g++-mp-* | ggrep -P '\/g\+\+-mp-\d+$' | sort | tail -n 1`
+export FC=`ls -d /opt/local/bin/gfortran-mp-* | ggrep -P '\/gfortran-mp-\d+$' | sort | tail -n 1`
 # download, compile, and install Perl modules
 if ! test -e .perlmodules; then
 sudo -HE sh -c "yes '' | cpan -fi File::Copy::Recursive DBI DBD::SQLite Math::BaseCnv Math::CDF" || exit $?
@@ -93,10 +94,9 @@ cd R-4.2.3 || exit $?
 perl -i -npe 's/^(\#define NCONNECTIONS) \d+/$1 1050/' src/main/connections.c || exit $?
 export CC=clang
 export CXX=clang++
-export FC=`ls -d /opt/local/bin/gfortran-mp-* | ggrep -P -o 'gfortran-mp-\d+' | tail -n 1`
-tclconfig=`find /opt/local -name tclConfig.sh | tail -n 1`
-tkconfig=`find /opt/local -name tkConfig.sh | tail -n 1`
-export CURL_CONFIG=`find /opt/local -name curl-config | tail -n 1`
+tclconfig=`find /opt/local -name tclConfig.sh | sort | tail -n 1`
+tkconfig=`find /opt/local -name tkConfig.sh | sort | tail -n 1`
+export CURL_CONFIG=`find /opt/local -name curl-config | sort | tail -n 1`
 LDFLAGS=-L/opt/local/lib CPPFLAGS=-I/opt/local/include ./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=no --with-pic --with-x=no --with-aqua=no --enable-R-shlib=yes --with-tcl-config=$tclconfig --with-tk-config=$tkconfig --with-libintl-prefix=/opt/local --with-blas="-L/opt/local/lib -lopenblas" --with-lapack r_cv_have_curl728=yes || exit $?
 gmake -j8 || exit $?
 gmake install-strip 2> /dev/null || sudo gmake install-strip || exit $?
