@@ -1,7 +1,8 @@
-brew install make gcc coreutils grep wget unzip gnu-tar gzip xz zlib bzip2 pigz lbzip2 autoconf automake pkg-config readline pcre2 jpeg libpng cairo pango libtiff tcl-tk openblas libxml2 imagemagick git || brew install --build-from-source make gcc coreutils grep wget unzip gnu-tar xz zlib bzip2 autoconf automake pkg-config readline pcre2 jpeg libpng cairo pango libtiff tcl-tk openblas libxml2 imagemagick git || exit $?
+brew install make gcc coreutils grep wget unzip gnu-tar gzip xz zlib bzip2 pigz lbzip2 autoconf automake pkg-config readline pcre2 jpeg libpng cairo pango libtiff tcl-tk openblas libxml2 imagemagick git curl || brew install --build-from-source make gcc coreutils grep wget unzip gnu-tar xz zlib bzip2 autoconf automake pkg-config readline pcre2 jpeg libpng cairo pango libtiff tcl-tk openblas libxml2 imagemagick git curl || exit $?
 if test -z $PREFIX; then
 export PREFIX=/usr/local || exit $?
 fi
+export SDKROOT="$(xcrun --sdk macosx --show-sdk-path)"
 # download, compile, and install Perl modules
 if ! test -e .perlmodules; then
 sudo -HE sh -c "yes '' | cpan -fi File::Copy::Recursive DBI DBD::SQLite Math::BaseCnv Math::CDF" || exit $?
@@ -70,14 +71,18 @@ touch .vsearch5d || exit $?
 fi
 # download, and install BLAST+
 if ! test -e .blast; then
-wget -nv -c https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.15.0/ncbi-blast-2.15.0+-x64-macosx.tar.gz || exit $?
-gtar -xzf ncbi-blast-2.15.0+-x64-macosx.tar.gz || exit $?
-cd ncbi-blast-2.15.0+/bin || exit $?
-mkdir -p $PREFIX/share/claident/bin 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/bin || exit $?
-mv -f * $PREFIX/share/claident/bin/ 2> /dev/null || sudo mv -f * $PREFIX/share/claident/bin/ || exit $?
+wget -nv -c https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.15.0/ncbi-blast-2.15.0+-src.tar.gz || exit $?
+gtar -xzf ncbi-blast-2.15.0+-src.tar.gz || exit $?
+cd ncbi-blast-2.15.0+-src/c++ || exit $?
+BREWPATH=`brew --prefix`
+export CC=clang
+export CXX=clang++
+./configure --prefix=$PREFIX/share/claident --with-bin-release --with-dll --with-mt --with-openmp --with-64 --with-lfs --without-debug --without-boost --without-gbench --without-gui --without-ctools || exit $?
+gmake -j8 || exit $?
+gmake install 2> /dev/null || sudo gmake install || exit $?
 cd ../.. || exit $?
-rm -rf ncbi-blast-2.15.0+ || exit $?
-rm -f ncbi-blast-2.15.0+-x64-macosx.tar.gz || exit $?
+rm -rf ncbi-blast-2.15.0+-src || exit $?
+rm -f ncbi-blast-2.15.0+-src.tar.gz || exit $?
 touch .blast || exit $?
 fi
 # download, compile, and install R and DADA2
@@ -87,23 +92,25 @@ gtar -xzf R-4.2.3.tar.gz || exit $?
 cd R-4.2.3 || exit $?
 perl -i -npe 's/^(\#define NCONNECTIONS) \d+/$1 1050/' src/main/connections.c || exit $?
 BREWPATH=`brew --prefix`
-export CC=`ls -d $BREWPATH/bin/gcc-* | ggrep -P -o 'gcc-\d+' | tail -n 1`
-export CXX=`ls -d $BREWPATH/bin/g++-* | ggrep -P -o 'g\+\+-\d+' | tail -n 1`
+export CC=clang
+export CXX=clang++
 export FC=`ls -d $BREWPATH/bin/gfortran-* | ggrep -P -o 'gfortran-\d+' | tail -n 1`
 tclconfig=`find $BREWPATH/Cellar -name tclConfig.sh | tail -n 1`
 tkconfig=`find $BREWPATH/Cellar -name tkConfig.sh | tail -n 1`
 openblas=`find $BREWPATH/Cellar -name libopenblas.dylib | tail -n 1 | perl -npe 's/\/libopenblas\.dylib//'`
-./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=no --with-pic --with-x=no --with-aqua=no --enable-R-shlib=yes --with-tcl-config=$tclconfig --with-tk-config=$tkconfig --with-blas="-L$openblas -lopenblas" --with-lapack || exit $?
+#lzma=`find $BREWPATH/Cellar -name liblzma.dylib | tail -n 1 | perl -npe 's/\/liblzma\.dylib//'`
+export CURL_CONFIG=`find $BREWPATH/Cellar -name curl-config | tail -n 1`
+#LDFLAGS="-L$lzma"
+./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=no --with-pic --with-x=no --with-aqua=no --enable-R-shlib=yes --with-tcl-config=$tclconfig --with-tk-config=$tkconfig --with-blas="-L$openblas -lopenblas" --with-lapack r_cv_have_curl728=yes || exit $?
 gmake -j8 || exit $?
 gmake install-strip 2> /dev/null || sudo gmake install-strip || exit $?
 cd .. || exit $?
 rm -rf R-4.2.3 || exit $?
-export compiler=gcc
 if test -w $PREFIX/share/claident/lib/R; then
-$PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages(c("RcppParallel","foreach","doParallel","htmlwidgets","wordcloud2"),repos="https://cloud.r-project.org/",dependencies=T,clean=T,Ncpus=detectCores())' || exit $?
+$PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages(c("RcppParallel","foreach","doParallel","htmlwidgets","wordcloud2","vegan"),repos="https://cloud.r-project.org/",dependencies=T,clean=T,Ncpus=detectCores())' || exit $?
 $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);source("https://raw.githubusercontent.com/r-lib/remotes/master/install-github.R")$value("benjjneb/dada2@v1.26",dependencies=T,clean=T,Ncpus=detectCores(),upgrade="never")' || exit $?
 else
-sudo -E $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages(c("RcppParallel","foreach","doParallel","htmlwidgets","wordcloud2"),repos="https://cloud.r-project.org/",dependencies=T,clean=T,Ncpus=detectCores())' || exit $?
+sudo -E $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages(c("RcppParallel","foreach","doParallel","htmlwidgets","wordcloud2","vegan"),repos="https://cloud.r-project.org/",dependencies=T,clean=T,Ncpus=detectCores())' || exit $?
 sudo -E $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);source("https://raw.githubusercontent.com/r-lib/remotes/master/install-github.R")$value("benjjneb/dada2@v1.26",dependencies=T,clean=T,Ncpus=detectCores(),upgrade="never")' || exit $?
 fi
 rm -f R-4.2.3.tar.gz || exit $?

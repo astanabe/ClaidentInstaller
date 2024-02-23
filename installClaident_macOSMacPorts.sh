@@ -1,7 +1,8 @@
-sudo -E port -N install pkgconfig gmake gcc10 libgcc10 coreutils grep wget unzip gnutar xz zlib gzip bzip2 pigz lbzip2 autoconf automake OpenBLAS pcre2 readline jpeg libpng cairo pango gettext tiff libxml2 tcl tk ImageMagick git || exit $?
+sudo -E port -N install pkgconfig gmake gcc10 libgcc10 coreutils grep wget unzip gnutar xz zlib gzip bzip2 pigz lbzip2 autoconf automake OpenBLAS pcre2 readline jpeg libpng cairo pango gettext tiff libxml2 tcl tk ImageMagick git curl || exit $?
 if test -z $PREFIX; then
 export PREFIX=/usr/local || exit $?
 fi
+export SDKROOT="$(xcrun --sdk macosx --show-sdk-path)"
 # download, compile, and install Perl modules
 if ! test -e .perlmodules; then
 sudo -HE sh -c "yes '' | cpan -fi File::Copy::Recursive DBI DBD::SQLite Math::BaseCnv Math::CDF" || exit $?
@@ -70,14 +71,18 @@ touch .vsearch5d || exit $?
 fi
 # download, and install BLAST+
 if ! test -e .blast; then
-wget -nv -c https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.15.0/ncbi-blast-2.15.0+-x64-macosx.tar.gz || exit $?
-gnutar -xzf ncbi-blast-2.15.0+-x64-macosx.tar.gz || exit $?
-cd ncbi-blast-2.15.0+/bin || exit $?
-mkdir -p $PREFIX/share/claident/bin 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/bin || exit $?
-mv -f * $PREFIX/share/claident/bin/ 2> /dev/null || sudo mv -f * $PREFIX/share/claident/bin/ || exit $?
+wget -nv -c https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.15.0/ncbi-blast-2.15.0+-src.tar.gz || exit $?
+gnutar -xzf ncbi-blast-2.15.0+-src.tar.gz || exit $?
+cd ncbi-blast-2.15.0+-src/c++ || exit $?
+BREWPATH=`brew --prefix`
+export CC=clang
+export CXX=clang++
+./configure --prefix=$PREFIX/share/claident --with-bin-release --with-dll --with-mt --with-openmp --with-64 --with-lfs --without-debug --without-boost --without-gbench --without-gui --without-ctools || exit $?
+gmake -j8 || exit $?
+gmake install 2> /dev/null || sudo gmake install || exit $?
 cd ../.. || exit $?
-rm -rf ncbi-blast-2.15.0+ || exit $?
-rm -f ncbi-blast-2.15.0+-x64-macosx.tar.gz || exit $?
+rm -rf ncbi-blast-2.15.0+-src || exit $?
+rm -f ncbi-blast-2.15.0+-src.tar.gz || exit $?
 touch .blast || exit $?
 fi
 # download, compile, and install R and DADA2
@@ -86,22 +91,22 @@ wget -nv -c https://cran.r-project.org/src/base/R-4/R-4.2.3.tar.gz || exit $?
 gnutar -xzf R-4.2.3.tar.gz || exit $?
 cd R-4.2.3 || exit $?
 perl -i -npe 's/^(\#define NCONNECTIONS) \d+/$1 1050/' src/main/connections.c || exit $?
-export CC=`ls -d /opt/local/bin/gcc-mp-* | ggrep -P -o 'gcc-mp-\d+' | tail -n 1`
-export CXX=`ls -d /opt/local/bin/g++-mp-* | ggrep -P -o 'g\+\+-mp-\d+' | tail -n 1`
+export CC=clang
+export CXX=clang++
 export FC=`ls -d /opt/local/bin/gfortran-mp-* | ggrep -P -o 'gfortran-mp-\d+' | tail -n 1`
 tclconfig=`find /opt/local -name tclConfig.sh | tail -n 1`
 tkconfig=`find /opt/local -name tkConfig.sh | tail -n 1`
-LDFLAGS=-L/opt/local/lib CPPFLAGS=-I/opt/local/include ./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=no --with-pic --with-x=no --with-aqua=no --enable-R-shlib=yes --with-tcl-config=$tclconfig --with-tk-config=$tkconfig --with-libintl-prefix=/opt/local --with-blas="-L/opt/local/lib -lopenblas" --with-lapack || exit $?
+export CURL_CONFIG=`find /opt/local -name curl-config | tail -n 1`
+LDFLAGS=-L/opt/local/lib CPPFLAGS=-I/opt/local/include ./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=no --with-pic --with-x=no --with-aqua=no --enable-R-shlib=yes --with-tcl-config=$tclconfig --with-tk-config=$tkconfig --with-libintl-prefix=/opt/local --with-blas="-L/opt/local/lib -lopenblas" --with-lapack r_cv_have_curl728=yes || exit $?
 gmake -j8 || exit $?
 gmake install-strip 2> /dev/null || sudo gmake install-strip || exit $?
 cd .. || exit $?
 rm -rf R-4.2.3 || exit $?
-export compiler=gcc
 if test -w $PREFIX/share/claident/lib/R; then
-$PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages(c("RcppParallel","foreach","doParallel","htmlwidgets","wordcloud2"),repos="https://cloud.r-project.org/",dependencies=T,clean=T,Ncpus=detectCores())' || exit $?
+$PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages(c("RcppParallel","foreach","doParallel","htmlwidgets","wordcloud2","vegan"),repos="https://cloud.r-project.org/",dependencies=T,clean=T,Ncpus=detectCores())' || exit $?
 $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);source("https://raw.githubusercontent.com/r-lib/remotes/master/install-github.R")$value("benjjneb/dada2@v1.26",dependencies=T,clean=T,Ncpus=detectCores(),upgrade="never")' || exit $?
 else
-sudo -E $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages(c("RcppParallel","foreach","doParallel","htmlwidgets","wordcloud2"),repos="https://cloud.r-project.org/",dependencies=T,clean=T,Ncpus=detectCores())' || exit $?
+sudo -E $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages(c("RcppParallel","foreach","doParallel","htmlwidgets","wordcloud2","vegan"),repos="https://cloud.r-project.org/",dependencies=T,clean=T,Ncpus=detectCores())' || exit $?
 sudo -E $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);source("https://raw.githubusercontent.com/r-lib/remotes/master/install-github.R")$value("benjjneb/dada2@v1.26",dependencies=T,clean=T,Ncpus=detectCores(),upgrade="never")' || exit $?
 fi
 rm -f R-4.2.3.tar.gz || exit $?

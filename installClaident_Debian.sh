@@ -87,7 +87,7 @@ tar -xzf R-4.2.3.tar.gz || exit $?
 cd R-4.2.3 || exit $?
 perl -i -npe 's/^(\#define NCONNECTIONS) \d+/$1 1050/' src/main/connections.c || exit $?
 openblas=`find /usr -name libopenblas.so | tail -n 1 | perl -npe 's/\/libopenblas\.so//'`
-./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=no --with-pic --with-x=no --enable-R-shlib=yes --with-blas="-L$openblas -lopenblas" --with-lapack || exit $?
+./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=no --with-pic --with-x=no --enable-R-shlib=yes --with-blas="-L$openblas -lopenblas" --with-lapack r_cv_have_curl728=yes || exit $?
 make -j8 || exit $?
 make install-strip 2> /dev/null || sudo make install-strip || exit $?
 cd .. || exit $?
