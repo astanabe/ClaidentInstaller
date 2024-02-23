@@ -1,7 +1,8 @@
 sudo -E dnf install -y --skip-broken which binutils gcc gcc-c++ gcc-gfortran gcc-plugin-devel libstdc++ libgcc glibc-static libstdc++-static readline-devel bzip2-devel autoconf automake make wget zlib zlib-devel tar gzip xz xz-devel pigz lbzip2 unzip coreutils grep perl perl-local-lib perl-Time-HiRes perl-CPAN perl-File-Copy-Recursive perl-YAML perl-DBI perl-DBD-SQLite perl-libwww-perl tcsh libxml2-devel libcurl-devel pcre2-devel libpng-devel libjpeg-turbo-devel cairo-devel pango-devel libtiff-devel tcl-devel tk-devel openblas-devel ImageMagick git-core google-noto-fonts-common || exit $?
 if test -z $PREFIX; then
-export PREFIX=/usr/local || exit $?
+PREFIX=/usr/local || exit $?
 fi
+NCPU=`grep -c processor /proc/cpuinfo`
 # install Perl modules
 if ! test -e .perlmodules; then
 sudo -HE sh -c "yes '' | cpan -fi Math::BaseCnv Math::CDF" || exit $?
@@ -12,7 +13,7 @@ if ! test -e .claident; then
 wget -nv -c https://github.com/astanabe/Claident/archive/v0.9.2024.02.21.tar.gz -O Claident-0.9.2024.02.21.tar.gz || exit $?
 tar -xzf Claident-0.9.2024.02.21.tar.gz || exit $?
 cd Claident-0.9.2024.02.21 || exit $?
-make PREFIX=$PREFIX -j8 || exit $?
+make PREFIX=$PREFIX -j$NCPU || exit $?
 make PREFIX=$PREFIX install 2> /dev/null || sudo make PREFIX=$PREFIX install || exit $?
 cp $PREFIX/share/claident/.claident ~/.claident || exit $?
 cd .. || exit $?
@@ -26,7 +27,7 @@ wget -nv -c https://github.com/torognes/swarm/archive/v3.1.4.tar.gz -O swarm-3.1
 tar -xzf swarm-3.1.4.tar.gz || exit $?
 cd swarm-3.1.4/src || exit $?
 perl -i -npe 's/-mtune=generic/-O3 -mtune=native -fomit-frame-pointer -finline-functions/' src/Makefile || exit $?
-make -j8 || exit $?
+make -j$NCPU || exit $?
 mkdir -p $PREFIX/share/claident/bin 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/bin || exit $?
 mv -f swarm $PREFIX/share/claident/bin/ 2> /dev/null || sudo mv -f swarm $PREFIX/share/claident/bin/ || exit $?
 cd ../.. || exit $?
@@ -41,7 +42,7 @@ tar -xzf vsearch-2.26.1.tar.gz || exit $?
 cd vsearch-2.26.1 || exit $?
 sh ./autogen.sh || exit $?
 CFLAGS="-O3 -fomit-frame-pointer -finline-functions" CPPFLAGS="-O3 -fomit-frame-pointer -finline-functions" CXXFLAGS="-O3 -fomit-frame-pointer -finline-functions" LDFLAGS="-O3 -fomit-frame-pointer -finline-functions" sh ./configure --prefix=$PREFIX/share/claident --disable-pdfman || exit $?
-make -j8 || exit $?
+make -j$NCPU || exit $?
 if test -e $PREFIX/share/claident/bin/vsearch; then
 rm -f $PREFIX/share/claident/bin/vsearch 2> /dev/null || sudo rm -f $PREFIX/share/claident/bin/vsearch || exit $?
 fi
@@ -61,7 +62,7 @@ tar -xzf vsearch5d-2.26.1.tar.gz || exit $?
 cd vsearch5d-2.26.1 || exit $?
 sh ./autogen.sh || exit $?
 CFLAGS="-O3 -fomit-frame-pointer -finline-functions" CPPFLAGS="-O3 -fomit-frame-pointer -finline-functions" CXXFLAGS="-O3 -fomit-frame-pointer -finline-functions" LDFLAGS="-O3 -fomit-frame-pointer -finline-functions" sh ./configure --prefix=$PREFIX/share/claident || exit $?
-make -j8 || exit $?
+make -j$NCPU || exit $?
 make install-exec 2> /dev/null || sudo make install-exec || exit $?
 cd .. || exit $?
 rm -rf vsearch5d-2.26.1 || exit $?
@@ -87,7 +88,7 @@ tar -xzf R-4.2.3.tar.gz || exit $?
 cd R-4.2.3 || exit $?
 perl -i -npe 's/^(\#define NCONNECTIONS) \d+/$1 1050/' src/main/connections.c || exit $?
 ./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=no --with-pic --with-x=no --enable-R-shlib=yes --with-blas=-lopenblas --with-lapack r_cv_have_curl728=yes || exit $?
-make -j8 || exit $?
+make -j$NCPU || exit $?
 make install-strip 2> /dev/null || sudo make install-strip || exit $?
 cd .. || exit $?
 rm -rf R-4.2.3 || exit $?

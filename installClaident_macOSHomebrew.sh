@@ -1,7 +1,8 @@
 brew install make gcc coreutils grep wget unzip gnu-tar gzip xz zlib bzip2 pigz lbzip2 autoconf automake pkg-config readline pcre2 jpeg libpng cairo pango libtiff tcl-tk openblas libxml2 imagemagick git curl || brew install --build-from-source make gcc coreutils grep wget unzip gnu-tar xz zlib bzip2 autoconf automake pkg-config readline pcre2 jpeg libpng cairo pango libtiff tcl-tk openblas libxml2 imagemagick git curl || exit $?
 if test -z $PREFIX; then
-export PREFIX=/usr/local || exit $?
+PREFIX=/usr/local || exit $?
 fi
+NCPU=`sysctl -n hw.logicalcpu_max`
 export SDKROOT="$(xcrun --sdk macosx --show-sdk-path)"
 BREWPATH=`brew --prefix`
 export CC=`ls -d $BREWPATH/bin/gcc-* | ggrep -P '\/gcc-\d+$' | sort | tail -n 1`
@@ -17,7 +18,7 @@ if ! test -e .claident; then
 wget -nv -c https://github.com/astanabe/Claident/archive/v0.9.2024.02.21.tar.gz -O Claident-0.9.2024.02.21.tar.gz || exit $?
 gtar -xzf Claident-0.9.2024.02.21.tar.gz || exit $?
 cd Claident-0.9.2024.02.21 || exit $?
-gmake PREFIX=$PREFIX -j8 || exit $?
+gmake PREFIX=$PREFIX -j$NCPU || exit $?
 gmake PREFIX=$PREFIX install 2> /dev/null || sudo gmake PREFIX=$PREFIX install || exit $?
 cp $PREFIX/share/claident/.claident ~/.claident || exit $?
 cd .. || exit $?
@@ -31,7 +32,7 @@ wget -nv -c https://github.com/torognes/swarm/archive/v3.1.4.tar.gz -O swarm-3.1
 gtar -xzf swarm-3.1.4.tar.gz || exit $?
 cd swarm-3.1.4/src || exit $?
 perl -i -npe 's/-mtune=generic/-O3 -mtune=native -fomit-frame-pointer -finline-functions/' src/Makefile || exit $?
-gmake -j8 || exit $?
+gmake -j$NCPU || exit $?
 mkdir -p $PREFIX/share/claident/bin 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/bin || exit $?
 mv -f swarm $PREFIX/share/claident/bin/ 2> /dev/null || sudo mv -f swarm $PREFIX/share/claident/bin/ || exit $?
 cd ../.. || exit $?
@@ -46,7 +47,7 @@ gtar -xzf vsearch-2.26.1.tar.gz || exit $?
 cd vsearch-2.26.1 || exit $?
 sh ./autogen.sh || exit $?
 CFLAGS="-O3 -fomit-frame-pointer -finline-functions" CPPFLAGS="-O3 -fomit-frame-pointer -finline-functions" CXXFLAGS="-O3 -fomit-frame-pointer -finline-functions" LDFLAGS="-O3 -fomit-frame-pointer -finline-functions" sh ./configure --prefix=$PREFIX/share/claident --disable-pdfman || exit $?
-gmake -j8 || exit $?
+gmake -j$NCPU || exit $?
 if test -e $PREFIX/share/claident/bin/vsearch; then
 rm -f $PREFIX/share/claident/bin/vsearch 2> /dev/null || sudo rm -f $PREFIX/share/claident/bin/vsearch || exit $?
 fi
@@ -66,7 +67,7 @@ gtar -xzf vsearch5d-2.26.1.tar.gz || exit $?
 cd vsearch5d-2.26.1 || exit $?
 sh ./autogen.sh || exit $?
 CFLAGS="-O3 -fomit-frame-pointer -finline-functions" CPPFLAGS="-O3 -fomit-frame-pointer -finline-functions" CXXFLAGS="-O3 -fomit-frame-pointer -finline-functions" LDFLAGS="-O3 -fomit-frame-pointer -finline-functions" sh ./configure --prefix=$PREFIX/share/claident || exit $?
-gmake -j8 || exit $?
+gmake -j$NCPU || exit $?
 gmake install-exec 2> /dev/null || sudo gmake install-exec || exit $?
 cd .. || exit $?
 rm -rf vsearch5d-2.26.1 || exit $?
@@ -80,7 +81,7 @@ gtar -xzf ncbi-blast-2.15.0+-src.tar.gz || exit $?
 cd ncbi-blast-2.15.0+-src/c++ || exit $?
 BREWPATH=`brew --prefix`
 ./configure --prefix=$PREFIX/share/claident --with-bin-release --with-dll --with-mt --with-openmp --with-64 --with-lfs --without-debug --without-boost --without-gbench --without-gui --without-ctools || exit $?
-gmake -j8 || exit $?
+gmake -j$NCPU || exit $?
 gmake install 2> /dev/null || sudo gmake install || exit $?
 cd ../.. || exit $?
 rm -rf ncbi-blast-2.15.0+-src || exit $?
@@ -103,7 +104,7 @@ openblas=`find $BREWPATH/Cellar -name libopenblas.dylib | sort | tail -n 1 | per
 export CURL_CONFIG=`find $BREWPATH/Cellar -name curl-config | sort | tail -n 1`
 #LDFLAGS="-L$lzma"
 ./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=no --with-pic --with-x=no --with-aqua=no --enable-R-shlib=yes --with-tcl-config=$tclconfig --with-tk-config=$tkconfig --with-blas="-L$openblas -lopenblas" --with-lapack r_cv_have_curl728=yes || exit $?
-gmake -j8 || exit $?
+gmake -j$NCPU || exit $?
 gmake install-strip 2> /dev/null || sudo gmake install-strip || exit $?
 cd .. || exit $?
 rm -rf R-4.2.3 || exit $?
