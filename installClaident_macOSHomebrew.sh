@@ -3,6 +3,8 @@ if test -z $PREFIX; then
 export PREFIX=/usr/local || exit $?
 fi
 export SDKROOT="$(xcrun --sdk macosx --show-sdk-path)"
+export CC=`ls -d $BREWPATH/bin/gcc-* | ggrep -P -o 'gcc-\d+' | tail -n 1`
+export CXX=`ls -d $BREWPATH/bin/g++-* | ggrep -P -o 'g\+\+-\d+' | tail -n 1`
 # download, compile, and install Perl modules
 if ! test -e .perlmodules; then
 sudo -HE sh -c "yes '' | cpan -fi File::Copy::Recursive DBI DBD::SQLite Math::BaseCnv Math::CDF" || exit $?
@@ -75,8 +77,6 @@ wget -nv -c https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.15.0/ncbi-bl
 gtar -xzf ncbi-blast-2.15.0+-src.tar.gz || exit $?
 cd ncbi-blast-2.15.0+-src/c++ || exit $?
 BREWPATH=`brew --prefix`
-export CC=clang
-export CXX=clang++
 ./configure --prefix=$PREFIX/share/claident --with-bin-release --with-dll --with-mt --with-openmp --with-64 --with-lfs --without-debug --without-boost --without-gbench --without-gui --without-ctools || exit $?
 gmake -j8 || exit $?
 gmake install 2> /dev/null || sudo gmake install || exit $?
