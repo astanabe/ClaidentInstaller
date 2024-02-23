@@ -109,7 +109,7 @@ lzmainclude=`find $BREWPATH/Cellar -name lzma.h | sort | tail -n 1 | perl -npe '
 jpeglib=`find $BREWPATH/Cellar -name libjpeg.dylib | sort | tail -n 1 | perl -npe 's/\/libjpeg\.dylib$//'`
 jpeginclude=`find $BREWPATH/Cellar -name jpeglib.h | sort | tail -n 1 | perl -npe 's/\/jpeglib\.h$//'`
 export CURL_CONFIG=`find $BREWPATH/Cellar -name curl-config | sort | tail -n 1`
-LDFLAGS="-L$lzmalib" CPPFLAGS="-I$lzmainclude -I$jpeginclude" ./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=no --with-pic --with-x=no --with-aqua=no --enable-R-shlib=yes --with-tcl-config=$tclconfig --with-tk-config=$tkconfig --with-jpeglib="-L$jpeglib -ljpeg" --with-blas="-L$openblas -lopenblas" --with-lapack r_cv_have_curl728=yes || exit $?
+LDFLAGS="-L$lzmalib" CPPFLAGS="-I$lzmainclude -I$jpeginclude" FCFLAGS="-static-libgfortran -static-libquadmath" ./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=no --with-pic --with-x=no --with-aqua=no --enable-R-shlib=yes --with-tcl-config=$tclconfig --with-tk-config=$tkconfig --with-jpeglib="-L$jpeglib -ljpeg" --with-blas="-L$openblas -lopenblas" --with-lapack r_cv_have_curl728=yes || exit $?
 gmake -j$NCPU || exit $?
 gmake install-strip 2> /dev/null || sudo gmake install-strip || exit $?
 cd .. || exit $?

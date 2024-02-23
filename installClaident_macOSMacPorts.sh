@@ -99,7 +99,7 @@ export CXX=clang++
 tclconfig=`find /opt/local -name tclConfig.sh | sort | tail -n 1`
 tkconfig=`find /opt/local -name tkConfig.sh | sort | tail -n 1`
 export CURL_CONFIG=`find /opt/local -name curl-config | sort | tail -n 1`
-LDFLAGS=-L/opt/local/lib CPPFLAGS=-I/opt/local/include ./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=no --with-pic --with-x=no --with-aqua=no --enable-R-shlib=yes --with-tcl-config=$tclconfig --with-tk-config=$tkconfig --with-libintl-prefix=/opt/local --with-blas="-L/opt/local/lib -lopenblas" --with-lapack r_cv_have_curl728=yes || exit $?
+LDFLAGS=-L/opt/local/lib CPPFLAGS=-I/opt/local/include FCFLAGS="-static-libgfortran -static-libquadmath" ./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=no --with-pic --with-x=no --with-aqua=no --enable-R-shlib=yes --with-tcl-config=$tclconfig --with-tk-config=$tkconfig --with-libintl-prefix=/opt/local --with-blas="-L/opt/local/lib -lopenblas" --with-lapack r_cv_have_curl728=yes || exit $?
 gmake -j$NCPU || exit $?
 gmake install-strip 2> /dev/null || sudo gmake install-strip || exit $?
 cd .. || exit $?
