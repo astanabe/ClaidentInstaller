@@ -102,11 +102,11 @@ export CXX=clang++
 BREWPATH=`brew --prefix`
 tclconfig=`find $BREWPATH/Cellar -name tclConfig.sh | sort | tail -n 1`
 tkconfig=`find $BREWPATH/Cellar -name tkConfig.sh | sort | tail -n 1`
-openblas=`find $BREWPATH/Cellar -name libopenblas.dylib | sort | tail -n 1 | perl -npe 's/\/libopenblas\.dylib//'`
-#lzma=`find $BREWPATH/Cellar -name liblzma.dylib | sort | tail -n 1 | perl -npe 's/\/liblzma\.dylib//'`
+openblas=`find $BREWPATH/Cellar -name libopenblas.dylib | sort | tail -n 1 | perl -npe 's/\/libopenblas\.dylib$//'`
+lzmalib=`find $BREWPATH/Cellar -name liblzma.dylib | sort | tail -n 1 | perl -npe 's/\/liblzma\.dylib$//'`
+lzmainclude=`find $BREWPATH/Cellar -name lzma.h | sort | tail -n 1 | perl -npe 's/\/lzma\.h$//'`
 export CURL_CONFIG=`find $BREWPATH/Cellar -name curl-config | sort | tail -n 1`
-#LDFLAGS="-L$lzma"
-./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=no --with-pic --with-x=no --with-aqua=no --enable-R-shlib=yes --with-tcl-config=$tclconfig --with-tk-config=$tkconfig --with-blas="-L$openblas -lopenblas" --with-lapack r_cv_have_curl728=yes || exit $?
+LDFLAGS="-L$lzmalib" CPPFLAGS="-I$lzmainclude" ./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=no --with-pic --with-x=no --with-aqua=no --enable-R-shlib=yes --with-tcl-config=$tclconfig --with-tk-config=$tkconfig --with-blas="-L$openblas -lopenblas" --with-lapack r_cv_have_curl728=yes || exit $?
 gmake -j$NCPU || exit $?
 gmake install-strip 2> /dev/null || sudo gmake install-strip || exit $?
 cd .. || exit $?
