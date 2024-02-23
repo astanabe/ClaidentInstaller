@@ -81,8 +81,7 @@ cd ncbi-blast-2.15.0+-src/c++ || exit $?
 export CC=clang
 export CXX=clang++
 export OPENMP_FLAGS="-Xpreprocessor -fopenmp"
-export LDFLAGS=-lomp
-./configure --prefix=$PREFIX/share/claident --with-bin-release --without-strip --with-experimental=Int8GI --without-libunwind --with-mt --with-openmp --with-64 --with-lfs --without-debug --without-boost --without-gbench --without-gui --without-ctools || exit $?
+LDFLAGS="-L/opt/local/lib -lomp" ./configure --prefix=$PREFIX/share/claident --with-bin-release --without-strip --with-experimental=Int8GI --without-libunwind --with-mt --with-64 --with-lfs --without-debug --without-boost --without-gbench --without-gui --without-ctools || exit $?
 gmake -j$NCPU || exit $?
 gmake install 2> /dev/null || sudo gmake install || exit $?
 cd ../.. || exit $?
