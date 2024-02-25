@@ -119,7 +119,7 @@ gmake -j$NCPU || exit $?
 gmake install-strip 2> /dev/null || sudo gmake install-strip || exit $?
 cd .. || exit $?
 rm -rf R-4.2.3 || exit $?
-echo -e 'CC='`ls -d $BREWPATH/bin/gcc-* | ggrep -P '\/gcc-\d+$' | sort | tail -n 1`"\nLDFLAGS=-L$lzmalib -L$jpeglib -L$pcre2lib -L$omplib\nCPPFLAGS=-I$lzmainclude -I$jpeginclude -I$pcre2include -I$ompinclude -fopenmp" > Makevars.vegan
+gecho -e 'CC='`ls -d $BREWPATH/bin/gcc-* | ggrep -P '\/gcc-\d+$' | sort | tail -n 1`"\nLDFLAGS=-L$lzmalib -L$jpeglib -L$pcre2lib -L$omplib\nCPPFLAGS=-I$lzmainclude -I$jpeginclude -I$pcre2include -I$ompinclude -fopenmp" > Makevars.vegan
 if test -w $PREFIX/share/claident/lib/R; then
 $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages(c("RcppParallel","foreach","doParallel","htmlwidgets","wordcloud2"),repos="https://cloud.r-project.org/",dependencies=T,clean=T,Ncpus=detectCores())' || exit $?
 R_MAKEVARS_USER=`pwd`/Makevars.vegan $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages("vegan",repos="https://cloud.r-project.org/",dependencies=T,clean=T,Ncpus=detectCores())' || exit $?
