@@ -3,7 +3,7 @@ export PREFIX=/usr/local || exit $?
 fi
 # download and install HMMer
 if ! test -e .hmmer; then
-wget -nv -c http://eddylab.org/software/hmmer3/3.1b2/hmmer-3.1b2-linux-intel-x86_64.tar.gz || exit $?
+wget -c http://eddylab.org/software/hmmer3/3.1b2/hmmer-3.1b2-linux-intel-x86_64.tar.gz || exit $?
 tar -xzf hmmer-3.1b2-linux-intel-x86_64.tar.gz || exit $?
 mkdir -p $PREFIX/share/claident/bin 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/bin || exit $?
 mv hmmer-3.1b2-linux-intel-x86_64/binaries/* $PREFIX/share/claident/bin/ 2> /dev/null || sudo mv hmmer-3.1b2-linux-intel-x86_64/binaries/* $PREFIX/share/claident/bin/ || exit $?
@@ -13,7 +13,7 @@ touch .hmmer || exit $?
 fi
 # download and install MAFFT
 if ! test -e .mafft; then
-wget -nv -c https://mafft.cbrc.jp/alignment/software/mafft-7.520-linux.tgz || exit $?
+wget -c https://mafft.cbrc.jp/alignment/software/mafft-7.520-linux.tgz || exit $?
 tar -xzf mafft-7.520-linux.tgz || exit $?
 mkdir -p $PREFIX/share/claident/bin 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/bin || exit $?
 mv mafft-linux64/mafft.bat $PREFIX/share/claident/bin/mafft 2> /dev/null || sudo mv mafft-linux64/mafft.bat $PREFIX/share/claident/bin/mafft || exit $?
@@ -25,7 +25,7 @@ touch .mafft || exit $?
 fi
 # download and install Metaxa
 if ! test -e .metaxa; then
-wget -nv -c https://microbiology.se/sw/Metaxa2_2.2.3.tar.gz || exit $?
+wget -c https://microbiology.se/sw/Metaxa2_2.2.3.tar.gz || exit $?
 tar -xzf Metaxa2_2.2.3.tar.gz || exit $?
 mkdir -p $PREFIX/share/claident/bin 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/bin || exit $?
 rm -rf $PREFIX/share/claident/bin/metaxa2_db 2> /dev/null || sudo rm -rf $PREFIX/share/claident/bin/metaxa2_db || exit $?
@@ -41,7 +41,7 @@ touch .metaxa || exit $?
 fi
 # download and install ITSx
 if ! test -e .itsx; then
-wget -nv -c https://microbiology.se/sw/ITSx_1.1.3.tar.gz || exit $?
+wget -c https://microbiology.se/sw/ITSx_1.1.3.tar.gz || exit $?
 tar -xzf ITSx_1.1.3.tar.gz || exit $?
 mkdir -p $PREFIX/share/claident/bin 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/bin || exit $?
 rm -rf $PREFIX/share/claident/bin/ITSx_db 2> /dev/null || sudo rm -rf $PREFIX/share/claident/bin/ITSx_db || exit $?
