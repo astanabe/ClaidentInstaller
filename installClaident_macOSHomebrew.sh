@@ -114,8 +114,9 @@ pcre2include=`find $BREWPATH/Cellar -name pcre2.h | sort | tail -n 1 | perl -npe
 export CURL_CONFIG=`find $BREWPATH/Cellar -name curl-config | sort | tail -n 1`
 omplib=`find $BREWPATH/Cellar -name libomp.dylib | sort | tail -n 1 | perl -npe 's/\/libomp\.dylib$//'`
 ompinclude=`find $BREWPATH/Cellar -name omp.h | sort | tail -n 1 | perl -npe 's/\/omp\.h$//'`
-LDFLAGS="-L$lzmalib -L$jpeglib -L$pcre2lib -L$omplib" LIBS=-lomp CPPFLAGS="-I$lzmainclude -I$jpeginclude -I$pcre2include -I$ompinclude -Xpreprocessor -fopenmp" FCFLAGS="-static-libgfortran -static-libquadmath" ./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=no --with-pic --with-x=no --with-aqua=no --enable-R-shlib=yes --with-tcl-config=$tclconfig --with-tk-config=$tkconfig --with-blas="-L$openblas -lopenblas" --with-lapack r_cv_have_curl728=yes || exit $?
+LDFLAGS="-L$lzmalib -L$jpeglib -L$pcre2lib -L$omplib" LIBS=-lomp CPPFLAGS="-I$lzmainclude -I$jpeginclude -I$pcre2include -I$ompinclude -Xpreprocessor -fopenmp" FCFLAGS="-static-libgfortran -static-libquadmath" ./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=no --with-pic --with-x=no --with-aqua=no --enable-R-shlib=no --with-tcl-config=$tclconfig --with-tk-config=$tkconfig --with-blas="-L$openblas -lopenblas" --with-lapack r_cv_have_curl728=yes || exit $?
 gmake -j$NCPU || exit $?
+rm -rf $PREFIX/share/claident/lib || sudo rm -rf $PREFIX/share/claident/lib || exit $?
 gmake install-strip 2> /dev/null || sudo gmake install-strip || exit $?
 cd .. || exit $?
 rm -rf R-4.2.3 || exit $?
