@@ -5,6 +5,7 @@ fi
 NCPU=`grep -c processor /proc/cpuinfo`
 # install Perl modules
 if ! test -e .perlmodules; then
+sudo -HE sh -c "yes '' | cpan -v" || exit $?
 sudo -HE sh -c "yes '' | cpan -fi Math::BaseCnv Math::CDF" || exit $?
 perl -e 'use Math::BaseCnv;use Math::CDF' || exit $?
 touch .perlmodules || exit $?

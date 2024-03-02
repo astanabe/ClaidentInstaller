@@ -10,6 +10,7 @@ export CXX=`ls -d $BREWPATH/bin/g++-* | ggrep -P '\/g\+\+-\d+$' | sort | tail -n
 export FC=`ls -d $BREWPATH/bin/gfortran-* | ggrep -P '\/gfortran-\d+$' | sort | tail -n 1`
 # download, compile, and install Perl modules
 if ! test -e .perlmodules; then
+sudo -HE sh -c "yes '' | cpan -v" || exit $?
 sudo -HE sh -c "yes '' | cpan -fi File::Copy::Recursive DBI DBD::SQLite Math::BaseCnv Math::CDF" || exit $?
 perl -e 'use File::Copy::Recursive;use DBD::SQLite;use Math::BaseCnv;use Math::CDF' || exit $?
 touch .perlmodules || exit $?

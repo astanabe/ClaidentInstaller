@@ -9,6 +9,7 @@ export CXX=`ls -d /opt/local/bin/g++-mp-* | ggrep -P '\/g\+\+-mp-\d+$' | sort | 
 export FC=`ls -d /opt/local/bin/gfortran-mp-* | ggrep -P '\/gfortran-mp-\d+$' | sort | tail -n 1`
 # download, compile, and install Perl modules
 if ! test -e .perlmodules; then
+sudo -HE sh -c "yes '' | cpan -v" || exit $?
 sudo -HE sh -c "yes '' | cpan -fi File::Copy::Recursive DBI DBD::SQLite Math::BaseCnv Math::CDF" || exit $?
 perl -e 'use File::Copy::Recursive;use DBD::SQLite;use Math::BaseCnv;use Math::CDF' || exit $?
 touch .perlmodules || exit $?
