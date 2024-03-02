@@ -2,7 +2,6 @@ sudo -E dnf install -y --skip-broken which binutils gcc gcc-c++ gcc-gfortran gcc
 if test -z $PREFIX; then
 PREFIX=/usr/local || exit $?
 fi
-NCPU=`grep -c processor /proc/cpuinfo`
 # install Perl modules
 if ! test -e .perlmodules; then
 sudo -HE sh -c "yes '' | cpan -v" || exit $?
@@ -10,6 +9,8 @@ sudo -HE sh -c "yes '' | cpan -fi Math::BaseCnv Math::CDF" || exit $?
 perl -e 'use Math::BaseCnv;use Math::CDF' || exit $?
 touch .perlmodules || exit $?
 fi
+# set variables
+NCPU=`grep -c processor /proc/cpuinfo`
 # download, and install Claident
 if ! test -e .claident; then
 wget -c https://github.com/astanabe/Claident/archive/v0.9.2024.02.21.tar.gz -O Claident-0.9.2024.02.21.tar.gz || exit $?

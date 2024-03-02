@@ -2,11 +2,6 @@ sudo -E port -N install pkgconfig gmake gcc13 libgcc13 coreutils grep wget unzip
 if test -z $PREFIX; then
 PREFIX=/usr/local || exit $?
 fi
-NCPU=`sysctl -n hw.logicalcpu_max`
-export SDKROOT="$(xcrun --sdk macosx --show-sdk-path)"
-export CC=`ls -d /opt/local/bin/gcc-mp-* | ggrep -P '\/gcc-mp-\d+$' | sort | tail -n 1`
-export CXX=`ls -d /opt/local/bin/g++-mp-* | ggrep -P '\/g\+\+-mp-\d+$' | sort | tail -n 1`
-export FC=`ls -d /opt/local/bin/gfortran-mp-* | ggrep -P '\/gfortran-mp-\d+$' | sort | tail -n 1`
 # download, compile, and install Perl modules
 if ! test -e .perlmodules; then
 sudo -HE sh -c "yes '' | cpan -v" || exit $?
@@ -14,6 +9,12 @@ sudo -HE sh -c "yes '' | cpan -fi File::Copy::Recursive DBI DBD::SQLite Math::Ba
 perl -e 'use File::Copy::Recursive;use DBD::SQLite;use Math::BaseCnv;use Math::CDF' || exit $?
 touch .perlmodules || exit $?
 fi
+# set variables
+NCPU=`sysctl -n hw.logicalcpu_max`
+export SDKROOT="$(xcrun --sdk macosx --show-sdk-path)"
+export CC=`ls -d /opt/local/bin/gcc-mp-* | ggrep -P '\/gcc-mp-\d+$' | sort | tail -n 1`
+export CXX=`ls -d /opt/local/bin/g++-mp-* | ggrep -P '\/g\+\+-mp-\d+$' | sort | tail -n 1`
+export FC=`ls -d /opt/local/bin/gfortran-mp-* | ggrep -P '\/gfortran-mp-\d+$' | sort | tail -n 1`
 # download, and install Claident
 if ! test -e .claident; then
 wget -c https://github.com/astanabe/Claident/archive/v0.9.2024.02.21.tar.gz -O Claident-0.9.2024.02.21.tar.gz || exit $?
