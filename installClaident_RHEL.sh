@@ -88,7 +88,7 @@ wget -c https://cran.r-project.org/src/base/R-4/R-4.2.3.tar.gz || exit $?
 tar -xzf R-4.2.3.tar.gz || exit $?
 cd R-4.2.3 || exit $?
 perl -i -npe 's/^(\#define NCONNECTIONS) \d+/$1 1050/' src/main/connections.c || exit $?
-./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=no --with-pic --with-x=no --enable-R-shlib=no --with-blas=-lopenblas --with-lapack r_cv_have_curl728=yes || exit $?
+./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=no --with-pic --with-x=no --enable-R-shlib=yes --with-blas=-lopenblas --with-lapack r_cv_have_curl728=yes || exit $?
 make -j$NCPU || exit $?
 rm -rf $PREFIX/share/claident/lib || sudo rm -rf $PREFIX/share/claident/lib || exit $?
 make install-strip 2> /dev/null || sudo make install-strip || exit $?
