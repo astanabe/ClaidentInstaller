@@ -18,15 +18,15 @@ export CXX=`ls -d $BREWPATH/bin/g++-* | ggrep -P '\/g\+\+-\d+$' | sort | tail -n
 export FC=`ls -d $BREWPATH/bin/gfortran-* | ggrep -P '\/gfortran-\d+$' | sort | tail -n 1`
 # download, and install Claident
 if ! test -e .claident; then
-wget -c https://github.com/astanabe/Claident/archive/v0.9.2024.02.21.tar.gz -O Claident-0.9.2024.02.21.tar.gz || exit $?
-gtar -xzf Claident-0.9.2024.02.21.tar.gz || exit $?
-cd Claident-0.9.2024.02.21 || exit $?
+wget -c https://github.com/astanabe/Claident/archive/v0.9.2024.03.04.tar.gz -O Claident-0.9.2024.03.04.tar.gz || exit $?
+gtar -xzf Claident-0.9.2024.03.04.tar.gz || exit $?
+cd Claident-0.9.2024.03.04 || exit $?
 gmake PREFIX=$PREFIX -j$NCPU || exit $?
 gmake PREFIX=$PREFIX install 2> /dev/null || sudo gmake PREFIX=$PREFIX install || exit $?
 cp $PREFIX/share/claident/.claident ~/.claident || exit $?
 cd .. || exit $?
-rm -rf Claident-0.9.2024.02.21 || exit $?
-rm -f Claident-0.9.2024.02.21.tar.gz || exit $?
+rm -rf Claident-0.9.2024.03.04 || exit $?
+rm -f Claident-0.9.2024.03.04.tar.gz || exit $?
 touch .claident || exit $?
 fi
 # download, compile, and install Swarm
