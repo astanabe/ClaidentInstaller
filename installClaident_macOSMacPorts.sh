@@ -99,9 +99,9 @@ cd R-4.2.3 || exit $?
 perl -i -npe 's/^(\#define NCONNECTIONS) \d+/$1 1050/' src/main/connections.c || exit $?
 export CC=clang
 export CXX=clang++
-tclconfig=`find /opt/local -name tclConfig.sh | sort | tail -n 1`
-tkconfig=`find /opt/local -name tkConfig.sh | sort | tail -n 1`
-export CURL_CONFIG=`find /opt/local -name curl-config | sort | tail -n 1`
+tclconfig=`find /opt/local -path /opt/local/var -prune -o -type f -name tclConfig.sh -print | sort | tail -n 1`
+tkconfig=`find /opt/local -path /opt/local/var -prune -o -type f -name tkConfig.sh -print | sort | tail -n 1`
+export CURL_CONFIG=`find /opt/local -path /opt/local/var -prune -o -type f -name curl-config -print | sort | tail -n 1`
 LDFLAGS="-L/opt/local/lib -L/opt/local/lib/libomp" LIBS=-lomp CPPFLAGS="-I/opt/local/include -I/opt/local/include/libomp -Xpreprocessor -fopenmp" FCFLAGS="-static-libgfortran -static-libquadmath" ./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=no --with-pic --with-x=no --with-aqua=no --enable-R-shlib=yes --with-tcl-config=$tclconfig --with-tk-config=$tkconfig --with-libintl-prefix=/opt/local --with-blas="-L/opt/local/lib -lopenblas" --with-lapack r_cv_have_curl728=yes || exit $?
 gmake -j$NCPU || exit $?
 rm -rf $PREFIX/share/claident/lib || sudo rm -rf $PREFIX/share/claident/lib || exit $?
