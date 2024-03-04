@@ -85,8 +85,8 @@ cd ncbi-blast-2.15.0+-src/c++ || exit $?
 export CC=clang
 export CXX=clang++
 BREWPATH=`brew --prefix`
-omplib=`find $BREWPATH/Cellar -name libomp.dylib | sort | tail -n 1 | perl -npe 's/\/libomp\.dylib$//'`
-ompinclude=`find $BREWPATH/Cellar -name omp.h | sort | tail -n 1 | perl -npe 's/\/omp\.h$//'`
+omplib=`find $BREWPATH/Cellar -type f -name libomp.dylib | sort | tail -n 1 | perl -npe 's/\/libomp\.dylib$//'`
+ompinclude=`find $BREWPATH/Cellar -type f -name omp.h | sort | tail -n 1 | perl -npe 's/\/omp\.h$//'`
 LDFLAGS="-L$omplib -lomp" CPPFLAGS="-I$ompinclude -Xpreprocessor -fopenmp" ./configure --prefix=$PREFIX/share/claident --with-bin-release --without-strip --with-experimental=Int8GI --without-libunwind --with-mt --with-openmp --with-64 --with-lfs --without-debug --without-boost --without-gbench --without-gui --without-ctools || exit $?
 gmake -j$NCPU || exit $?
 gmake install 2> /dev/null || sudo gmake install || exit $?
@@ -104,19 +104,19 @@ perl -i -npe 's/^(\#define NCONNECTIONS) \d+/$1 1050/' src/main/connections.c ||
 export CC=clang
 export CXX=clang++
 BREWPATH=`brew --prefix`
-tclconfig=`find $BREWPATH/Cellar -name tclConfig.sh | sort | tail -n 1`
-tkconfig=`find $BREWPATH/Cellar -name tkConfig.sh | sort | tail -n 1`
-openblas=`find $BREWPATH/Cellar -name libopenblas.dylib | sort | tail -n 1 | perl -npe 's/\/libopenblas\.dylib$//'`
-lzmalib=`find $BREWPATH/Cellar -name liblzma.dylib | sort | tail -n 1 | perl -npe 's/\/liblzma\.dylib$//'`
-lzmainclude=`find $BREWPATH/Cellar -name lzma.h | sort | tail -n 1 | perl -npe 's/\/lzma\.h$//'`
-jpeglib=`find $BREWPATH/Cellar -name libjpeg.dylib | sort | tail -n 1 | perl -npe 's/\/libjpeg\.dylib$//'`
-jpeginclude=`find $BREWPATH/Cellar -name jpeglib.h | sort | tail -n 1 | perl -npe 's/\/jpeglib\.h$//'`
-pcre2lib=`find $BREWPATH/Cellar -name libpcre2-8.dylib | sort | tail -n 1 | perl -npe 's/\/libpcre2-8\.dylib$//'`
-pcre2include=`find $BREWPATH/Cellar -name pcre2.h | sort | tail -n 1 | perl -npe 's/\/pcre2\.h$//'`
-export CURL_CONFIG=`find $BREWPATH/Cellar -name curl-config | sort | tail -n 1`
-omplib=`find $BREWPATH/Cellar -name libomp.dylib | sort | tail -n 1 | perl -npe 's/\/libomp\.dylib$//'`
-ompinclude=`find $BREWPATH/Cellar -name omp.h | sort | tail -n 1 | perl -npe 's/\/omp\.h$//'`
-quadmathlib=`find $BREWPATH/Cellar -name libquadmath.dylib | sort | tail -n 1 | perl -npe 's/\/libquadmath\.dylib$//'`
+tclconfig=`find $BREWPATH/Cellar -type f -name tclConfig.sh | sort | tail -n 1`
+tkconfig=`find $BREWPATH/Cellar -type f -name tkConfig.sh | sort | tail -n 1`
+openblas=`find $BREWPATH/Cellar -type f -name libopenblas.dylib | sort | tail -n 1 | perl -npe 's/\/libopenblas\.dylib$//'`
+lzmalib=`find $BREWPATH/Cellar -type f -name liblzma.dylib | sort | tail -n 1 | perl -npe 's/\/liblzma\.dylib$//'`
+lzmainclude=`find $BREWPATH/Cellar -type f -name lzma.h | sort | tail -n 1 | perl -npe 's/\/lzma\.h$//'`
+jpeglib=`find $BREWPATH/Cellar -type f -name libjpeg.dylib | sort | tail -n 1 | perl -npe 's/\/libjpeg\.dylib$//'`
+jpeginclude=`find $BREWPATH/Cellar -type f -name jpeglib.h | sort | tail -n 1 | perl -npe 's/\/jpeglib\.h$//'`
+pcre2lib=`find $BREWPATH/Cellar -type f -name libpcre2-8.dylib | sort | tail -n 1 | perl -npe 's/\/libpcre2-8\.dylib$//'`
+pcre2include=`find $BREWPATH/Cellar -type f -name pcre2.h | sort | tail -n 1 | perl -npe 's/\/pcre2\.h$//'`
+export CURL_CONFIG=`find $BREWPATH/Cellar -type f -name curl-config | sort | tail -n 1`
+omplib=`find $BREWPATH/Cellar -type f -name libomp.dylib | sort | tail -n 1 | perl -npe 's/\/libomp\.dylib$//'`
+ompinclude=`find $BREWPATH/Cellar -type f -name omp.h | sort | tail -n 1 | perl -npe 's/\/omp\.h$//'`
+quadmathlib=`find $BREWPATH/Cellar -type f -name libquadmath.dylib | sort | tail -n 1 | perl -npe 's/\/libquadmath\.dylib$//'`
 LDFLAGS="-L$lzmalib -L$jpeglib -L$pcre2lib -L$omplib -L$quadmathlib" LIBS=-lomp CPPFLAGS="-I$lzmainclude -I$jpeginclude -I$pcre2include -I$ompinclude -Xpreprocessor -fopenmp" FCFLAGS="-static-libgfortran -static-libquadmath" ./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=no --with-pic --with-x=no --with-aqua=no --enable-R-shlib=yes --with-tcl-config=$tclconfig --with-tk-config=$tkconfig --with-blas="-L$openblas -lopenblas" --with-lapack r_cv_have_curl728=yes || exit $?
 gmake -j$NCPU || exit $?
 rm -rf $PREFIX/share/claident/lib || sudo rm -rf $PREFIX/share/claident/lib || exit $?
