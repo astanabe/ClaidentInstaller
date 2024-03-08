@@ -3,13 +3,13 @@ export PREFIX=/usr/local || exit $?
 fi
 # download, check, and install BLAST and taxonomy databases
 if ! test -e .taxdb; then
-wget -c https://www.claident.org/TAXDBURL.txt.xz || exit $?
+aria2c -c https://www.claident.org/TAXDBURL.txt.xz || exit $?
 rm -f TAXDBURL.txt || exit $?
 xz -d TAXDBURL.txt.xz || exit $?
-wget --limit-rate=10m -c -i TAXDBURL.txt || exit $?
+aria2c -c -i TAXDBURL.txt -j 3 -x 1 --max-overall-download-limit=50M || exit $?
 rm -f TAXDBURL.txt || exit $?
-ls *.sha256 | xargs -L 1 -P 4 -I {} sh -c 'gsha256sum -c {} || exit $?' || exit $?
-ls *.tar.xz | xargs -L 1 -P 4 -I {} sh -c 'gnutar -xJf {} || exit $?' || exit $?
+ls *.sha256 | xargs -P 4 -I {} sh -c 'gsha256sum -c {} || exit $?' || exit $?
+ls *.tar.xz | xargs -P 4 -I {} sh -c 'gnutar -xJf {} || exit $?' || exit $?
 mkdir -p $PREFIX/share/claident/taxdb 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/taxdb || exit $?
 rm -f $PREFIX/share/claident/taxdb/animals_COX1_genus.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_COX1_genus.taxdb
 rm -f $PREFIX/share/claident/taxdb/animals_COX1_species_wsp.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_COX1_species_wsp.taxdb
@@ -134,13 +134,13 @@ echo 'The taxonomy databases were installed correctly!'
 fi
 # download, check, and install BLAST databases
 if ! test -e .blastdb; then
-wget -c https://www.claident.org/BLASTDBURL.txt.xz || exit $?
+aria2c -c https://www.claident.org/BLASTDBURL.txt.xz || exit $?
 rm -f BLASTDBURL.txt || exit $?
 xz -d BLASTDBURL.txt.xz || exit $?
-wget --limit-rate=10m -c -i BLASTDBURL.txt || exit $?
+aria2c -c -i BLASTDBURL.txt -j 3 -x 1 --max-overall-download-limit=50M || exit $?
 rm -f BLASTDBURL.txt || exit $?
-ls *.sha256 | xargs -L 1 -P 4 -I {} sh -c 'gsha256sum -c {} || exit $?' || exit $?
-ls *.tar.xz | xargs -L 1 -P 4 -I {} sh -c 'gnutar -xJf {} || exit $?' || exit $?
+ls *.sha256 | xargs -P 4 -I {} sh -c 'gsha256sum -c {} || exit $?' || exit $?
+ls *.tar.xz | xargs -P 4 -I {} sh -c 'gnutar -xJf {} || exit $?' || exit $?
 mkdir -p $PREFIX/share/claident/blastdb 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/blastdb || exit $?
 rm -f $PREFIX/share/claident/blastdb/animals_COX1_genus.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/animals_COX1_genus.*
 rm -f $PREFIX/share/claident/blastdb/animals_COX1_species_wsp.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/animals_COX1_species_wsp.*

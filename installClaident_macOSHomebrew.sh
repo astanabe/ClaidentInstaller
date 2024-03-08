@@ -1,4 +1,4 @@
-brew install make gcc coreutils grep wget unzip gnu-tar gzip xz zlib bzip2 pigz lbzip2 lmdb libomp autoconf automake pkg-config readline pcre2 jpeg libpng cairo pango libtiff tcl-tk openblas libxml2 imagemagick git curl || brew install --build-from-source make gcc coreutils grep wget unzip gnu-tar gzip xz zlib bzip2 pigz lbzip2 lmdb libomp autoconf automake pkg-config readline pcre2 jpeg libpng cairo pango libtiff tcl-tk openblas libxml2 imagemagick git curl || exit $?
+brew install make gcc coreutils grep wget unzip gnu-tar gzip xz zlib bzip2 pigz lbzip2 lmdb libomp autoconf automake pkg-config readline pcre2 jpeg libpng cairo pango libtiff tcl-tk openblas libxml2 imagemagick git curl || brew install --build-from-source make gcc coreutils grep wget unzip gnu-tar gzip xz zlib bzip2 pigz lbzip2 lmdb libomp autoconf automake pkg-config readline pcre2 jpeg libpng cairo pango libtiff tcl-tk openblas libxml2 imagemagick git curl aria2 || exit $?
 if test -z $PREFIX; then
 PREFIX=/usr/local || exit $?
 fi

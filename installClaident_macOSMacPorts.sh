@@ -1,4 +1,4 @@
-sudo -E port -N install pkgconfig gmake gcc13 libgcc13 coreutils grep wget unzip gnutar xz zlib gzip bzip2 pigz lbzip2 lmdb libomp autoconf automake OpenBLAS pcre2 readline jpeg libpng cairo pango gettext tiff libxml2 tcl tk ImageMagick git curl || exit $?
+sudo -E port -N install pkgconfig gmake gcc13 libgcc13 coreutils grep wget unzip gnutar xz zlib gzip bzip2 pigz lbzip2 lmdb libomp autoconf automake OpenBLAS pcre2 readline jpeg libpng cairo pango gettext tiff libxml2 tcl tk ImageMagick git curl aria2 || exit $?
 if test -z $PREFIX; then
 PREFIX=/usr/local || exit $?
 fi
