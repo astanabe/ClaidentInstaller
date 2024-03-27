@@ -3,30 +3,14 @@ export PREFIX=/usr/local || exit $?
 fi
 # download, check, and install BLAST and taxonomy databases
 if ! test -e .taxdb; then
-aria2c -c https://www.claident.org/TAXDBURL.txt.xz || exit $?
-rm -f TAXDBURL.txt || exit $?
-xz -d TAXDBURL.txt.xz || exit $?
-aria2c -c -i TAXDBURL.txt -j 3 -x 1 --max-overall-download-limit=50M || exit $?
-rm -f TAXDBURL.txt || exit $?
-ls *.sha256 | xargs -P 4 -I {} sh -c 'gsha256sum -c {} || exit $?' || exit $?
-ls *.tar.xz | xargs -P 4 -I {} sh -c 'gtar -xJf {} || exit $?' || exit $?
+aria2c -c https://www.claident.org/TAXDBURL_20211014.txt.xz || exit $?
+rm -f TAXDBURL_20211014.txt || exit $?
+xz -d TAXDBURL_20211014.txt.xz || exit $?
+aria2c -c -i TAXDBURL_20211014.txt -j 3 -x 1 --max-overall-download-limit=50M || exit $?
+rm -f TAXDBURL_20211014.txt || exit $?
+ls *.sha256 | xargs -P 4 -I {} sh -c 'sha256sum -c {} || exit $?' || exit $?
+ls *.tar.xz | xargs -P 4 -I {} sh -c 'tar -xJf {} || exit $?' || exit $?
 mkdir -p $PREFIX/share/claident/taxdb 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/taxdb || exit $?
-rm -f $PREFIX/share/claident/taxdb/animals_12S_genus.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_12S_genus.taxdb
-rm -f $PREFIX/share/claident/taxdb/animals_12S_species_wsp.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_12S_species_wsp.taxdb
-rm -f $PREFIX/share/claident/taxdb/animals_12S_species.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_12S_species.taxdb
-rm -f $PREFIX/share/claident/taxdb/animals_12S_species_wosp.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_12S_species_wosp.taxdb
-rm -f $PREFIX/share/claident/taxdb/animals_12S_genus_man.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_12S_genus_man.taxdb
-rm -f $PREFIX/share/claident/taxdb/animals_12S_species_wsp_man.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_12S_species_wsp_man.taxdb
-rm -f $PREFIX/share/claident/taxdb/animals_12S_species_man.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_12S_species_man.taxdb
-rm -f $PREFIX/share/claident/taxdb/animals_12S_species_wosp_man.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_12S_species_wosp_man.taxdb
-rm -f $PREFIX/share/claident/taxdb/animals_16S_genus.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_16S_genus.taxdb
-rm -f $PREFIX/share/claident/taxdb/animals_16S_species_wsp.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_16S_species_wsp.taxdb
-rm -f $PREFIX/share/claident/taxdb/animals_16S_species.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_16S_species.taxdb
-rm -f $PREFIX/share/claident/taxdb/animals_16S_species_wosp.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_16S_species_wosp.taxdb
-rm -f $PREFIX/share/claident/taxdb/animals_16S_genus_man.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_16S_genus_man.taxdb
-rm -f $PREFIX/share/claident/taxdb/animals_16S_species_wsp_man.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_16S_species_wsp_man.taxdb
-rm -f $PREFIX/share/claident/taxdb/animals_16S_species_man.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_16S_species_man.taxdb
-rm -f $PREFIX/share/claident/taxdb/animals_16S_species_wosp_man.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_16S_species_wosp_man.taxdb
 rm -f $PREFIX/share/claident/taxdb/animals_COX1_genus.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_COX1_genus.taxdb
 rm -f $PREFIX/share/claident/taxdb/animals_COX1_species_wsp.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_COX1_species_wsp.taxdb
 rm -f $PREFIX/share/claident/taxdb/animals_COX1_species.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_COX1_species.taxdb
@@ -35,22 +19,6 @@ rm -f $PREFIX/share/claident/taxdb/animals_COX1_genus_man.taxdb 2> /dev/null || 
 rm -f $PREFIX/share/claident/taxdb/animals_COX1_species_wsp_man.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_COX1_species_wsp_man.taxdb
 rm -f $PREFIX/share/claident/taxdb/animals_COX1_species_man.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_COX1_species_man.taxdb
 rm -f $PREFIX/share/claident/taxdb/animals_COX1_species_wosp_man.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_COX1_species_wosp_man.taxdb
-rm -f $PREFIX/share/claident/taxdb/animals_CytB_genus.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_CytB_genus.taxdb
-rm -f $PREFIX/share/claident/taxdb/animals_CytB_species_wsp.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_CytB_species_wsp.taxdb
-rm -f $PREFIX/share/claident/taxdb/animals_CytB_species.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_CytB_species.taxdb
-rm -f $PREFIX/share/claident/taxdb/animals_CytB_species_wosp.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_CytB_species_wosp.taxdb
-rm -f $PREFIX/share/claident/taxdb/animals_CytB_genus_man.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_CytB_genus_man.taxdb
-rm -f $PREFIX/share/claident/taxdb/animals_CytB_species_wsp_man.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_CytB_species_wsp_man.taxdb
-rm -f $PREFIX/share/claident/taxdb/animals_CytB_species_man.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_CytB_species_man.taxdb
-rm -f $PREFIX/share/claident/taxdb/animals_CytB_species_wosp_man.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_CytB_species_wosp_man.taxdb
-rm -f $PREFIX/share/claident/taxdb/animals_D-loop_genus.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_D-loop_genus.taxdb
-rm -f $PREFIX/share/claident/taxdb/animals_D-loop_species_wsp.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_D-loop_species_wsp.taxdb
-rm -f $PREFIX/share/claident/taxdb/animals_D-loop_species.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_D-loop_species.taxdb
-rm -f $PREFIX/share/claident/taxdb/animals_D-loop_species_wosp.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_D-loop_species_wosp.taxdb
-rm -f $PREFIX/share/claident/taxdb/animals_D-loop_genus_man.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_D-loop_genus_man.taxdb
-rm -f $PREFIX/share/claident/taxdb/animals_D-loop_species_wsp_man.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_D-loop_species_wsp_man.taxdb
-rm -f $PREFIX/share/claident/taxdb/animals_D-loop_species_man.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_D-loop_species_man.taxdb
-rm -f $PREFIX/share/claident/taxdb/animals_D-loop_species_wosp_man.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_D-loop_species_wosp_man.taxdb
 rm -f $PREFIX/share/claident/taxdb/animals_mt_genus.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_mt_genus.taxdb
 rm -f $PREFIX/share/claident/taxdb/animals_mt_species_wsp.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_mt_species_wsp.taxdb
 rm -f $PREFIX/share/claident/taxdb/animals_mt_species.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_mt_species.taxdb
@@ -166,30 +134,14 @@ echo 'The taxonomy databases were installed correctly!'
 fi
 # download, check, and install BLAST databases
 if ! test -e .blastdb; then
-aria2c -c https://www.claident.org/BLASTDBURL.txt.xz || exit $?
-rm -f BLASTDBURL.txt || exit $?
-xz -d BLASTDBURL.txt.xz || exit $?
-aria2c -c -i BLASTDBURL.txt -j 3 -x 1 --max-overall-download-limit=50M || exit $?
-rm -f BLASTDBURL.txt || exit $?
-ls *.sha256 | xargs -P 4 -I {} sh -c 'gsha256sum -c {} || exit $?' || exit $?
-ls *.tar.xz | xargs -P 4 -I {} sh -c 'gtar -xJf {} || exit $?' || exit $?
+aria2c -c https://www.claident.org/BLASTDBURL_20211014.txt.xz || exit $?
+rm -f BLASTDBURL_20211014.txt || exit $?
+xz -d BLASTDBURL_20211014.txt.xz || exit $?
+aria2c -c -i BLASTDBURL_20211014.txt -j 3 -x 1 --max-overall-download-limit=50M || exit $?
+rm -f BLASTDBURL_20211014.txt || exit $?
+ls *.sha256 | xargs -P 4 -I {} sh -c 'sha256sum -c {} || exit $?' || exit $?
+ls *.tar.xz | xargs -P 4 -I {} sh -c 'tar -xJf {} || exit $?' || exit $?
 mkdir -p $PREFIX/share/claident/blastdb 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/blastdb || exit $?
-rm -f $PREFIX/share/claident/blastdb/animals_12S_genus.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/animals_12S_genus.*
-rm -f $PREFIX/share/claident/blastdb/animals_12S_species_wsp.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/animals_12S_species_wsp.*
-rm -f $PREFIX/share/claident/blastdb/animals_12S_species.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/animals_12S_species.*
-rm -f $PREFIX/share/claident/blastdb/animals_12S_species_wosp.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/animals_12S_species_wosp.*
-rm -f $PREFIX/share/claident/blastdb/animals_12S_genus_man.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/animals_12S_genus_man.*
-rm -f $PREFIX/share/claident/blastdb/animals_12S_species_wsp_man.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/animals_12S_species_wsp_man.*
-rm -f $PREFIX/share/claident/blastdb/animals_12S_species_man.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/animals_12S_species_man.*
-rm -f $PREFIX/share/claident/blastdb/animals_12S_species_wosp_man.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/animals_12S_species_wosp_man.*
-rm -f $PREFIX/share/claident/blastdb/animals_16S_genus.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/animals_16S_genus.*
-rm -f $PREFIX/share/claident/blastdb/animals_16S_species_wsp.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/animals_16S_species_wsp.*
-rm -f $PREFIX/share/claident/blastdb/animals_16S_species.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/animals_16S_species.*
-rm -f $PREFIX/share/claident/blastdb/animals_16S_species_wosp.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/animals_16S_species_wosp.*
-rm -f $PREFIX/share/claident/blastdb/animals_16S_genus_man.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/animals_16S_genus_man.*
-rm -f $PREFIX/share/claident/blastdb/animals_16S_species_wsp_man.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/animals_16S_species_wsp_man.*
-rm -f $PREFIX/share/claident/blastdb/animals_16S_species_man.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/animals_16S_species_man.*
-rm -f $PREFIX/share/claident/blastdb/animals_16S_species_wosp_man.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/animals_16S_species_wosp_man.*
 rm -f $PREFIX/share/claident/blastdb/animals_COX1_genus.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/animals_COX1_genus.*
 rm -f $PREFIX/share/claident/blastdb/animals_COX1_species_wsp.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/animals_COX1_species_wsp.*
 rm -f $PREFIX/share/claident/blastdb/animals_COX1_species.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/animals_COX1_species.*
@@ -198,22 +150,6 @@ rm -f $PREFIX/share/claident/blastdb/animals_COX1_genus_man.* 2> /dev/null || su
 rm -f $PREFIX/share/claident/blastdb/animals_COX1_species_wsp_man.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/animals_COX1_species_wsp_man.*
 rm -f $PREFIX/share/claident/blastdb/animals_COX1_species_man.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/animals_COX1_species_man.*
 rm -f $PREFIX/share/claident/blastdb/animals_COX1_species_wosp_man.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/animals_COX1_species_wosp_man.*
-rm -f $PREFIX/share/claident/blastdb/animals_CytB_genus.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/animals_CytB_genus.*
-rm -f $PREFIX/share/claident/blastdb/animals_CytB_species_wsp.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/animals_CytB_species_wsp.*
-rm -f $PREFIX/share/claident/blastdb/animals_CytB_species.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/animals_CytB_species.*
-rm -f $PREFIX/share/claident/blastdb/animals_CytB_species_wosp.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/animals_CytB_species_wosp.*
-rm -f $PREFIX/share/claident/blastdb/animals_CytB_genus_man.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/animals_CytB_genus_man.*
-rm -f $PREFIX/share/claident/blastdb/animals_CytB_species_wsp_man.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/animals_CytB_species_wsp_man.*
-rm -f $PREFIX/share/claident/blastdb/animals_CytB_species_man.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/animals_CytB_species_man.*
-rm -f $PREFIX/share/claident/blastdb/animals_CytB_species_wosp_man.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/animals_CytB_species_wosp_man.*
-rm -f $PREFIX/share/claident/blastdb/animals_D-loop_genus.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/animals_D-loop_genus.*
-rm -f $PREFIX/share/claident/blastdb/animals_D-loop_species_wsp.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/animals_D-loop_species_wsp.*
-rm -f $PREFIX/share/claident/blastdb/animals_D-loop_species.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/animals_D-loop_species.*
-rm -f $PREFIX/share/claident/blastdb/animals_D-loop_species_wosp.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/animals_D-loop_species_wosp.*
-rm -f $PREFIX/share/claident/blastdb/animals_D-loop_genus_man.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/animals_D-loop_genus_man.*
-rm -f $PREFIX/share/claident/blastdb/animals_D-loop_species_wsp_man.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/animals_D-loop_species_wsp_man.*
-rm -f $PREFIX/share/claident/blastdb/animals_D-loop_species_man.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/animals_D-loop_species_man.*
-rm -f $PREFIX/share/claident/blastdb/animals_D-loop_species_wosp_man.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/animals_D-loop_species_wosp_man.*
 rm -f $PREFIX/share/claident/blastdb/animals_mt_genus.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/animals_mt_genus.*
 rm -f $PREFIX/share/claident/blastdb/animals_mt_species_wsp.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/animals_mt_species_wsp.*
 rm -f $PREFIX/share/claident/blastdb/animals_mt_species.* 2> /dev/null || sudo rm -f $PREFIX/share/claident/blastdb/animals_mt_species.*
