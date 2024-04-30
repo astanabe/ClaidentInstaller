@@ -1,4 +1,4 @@
-sudo -E port -N install openssl pkgconfig gmake gcc13 libgcc13 coreutils grep wget unzip gnutar xz zlib gzip bzip2 pigz lbzip2 lmdb libomp autoconf automake OpenBLAS pcre2 readline jpeg libpng cairo pango gettext tiff libxml2 tcl tk ImageMagick git curl aria2 || exit $?
+sudo -E port -N install gdal udunits2 openssl pkgconfig gmake gcc13 libgcc13 coreutils grep wget unzip gnutar xz zlib gzip bzip2 pigz lbzip2 lmdb libomp autoconf automake OpenBLAS pcre2 readline jpeg libpng cairo pango gettext tiff libxml2 tcl tk ImageMagick git curl aria2 || exit $?
 if test -z $PREFIX; then
 PREFIX=/usr/local || exit $?
 fi
@@ -93,21 +93,21 @@ touch .blast || exit $?
 fi
 # download, compile, and install R and DADA2
 if ! test -e .dada2; then
-wget -c https://cran.r-project.org/src/base/R-4/R-4.2.3.tar.gz || exit $?
-gnutar -xzf R-4.2.3.tar.gz || exit $?
-cd R-4.2.3 || exit $?
+wget -c https://cran.r-project.org/src/base/R-4/R-4.3.3.tar.gz || exit $?
+gnutar -xzf R-4.3.3.tar.gz || exit $?
+cd R-4.3.3 || exit $?
 perl -i -npe 's/^(\#define NCONNECTIONS) \d+/$1 1050/' src/main/connections.c || exit $?
 export CC=clang
 export CXX=clang++
 tclconfig=`find /opt/local -path /opt/local/var -prune -o -type f -name tclConfig.sh -print | sort | tail -n 1`
 tkconfig=`find /opt/local -path /opt/local/var -prune -o -type f -name tkConfig.sh -print | sort | tail -n 1`
 export CURL_CONFIG=`find /opt/local -path /opt/local/var -prune -o -type f -name curl-config -print | sort | tail -n 1`
-LDFLAGS="-L/opt/local/lib -L/opt/local/lib/libomp" LIBS=-lomp CPPFLAGS="-I/opt/local/include -I/opt/local/include/libomp -Xpreprocessor -fopenmp" FCFLAGS="-static-libgfortran -static-libquadmath" ./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=no --with-pic --with-x=no --with-aqua=no --enable-R-shlib=yes --with-tcl-config=$tclconfig --with-tk-config=$tkconfig --with-libintl-prefix=/opt/local --with-blas="-L/opt/local/lib -lopenblas" --with-lapack r_cv_have_curl728=yes || exit $?
+LDFLAGS="-L/opt/local/lib -L/opt/local/lib/libomp" LIBS=-lomp CPPFLAGS="-I/opt/local/include -I/opt/local/include/libomp -Xpreprocessor -fopenmp" FCFLAGS="-static-libgfortran -static-libquadmath" ./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=yes --with-pic --with-x=no --with-aqua=no --enable-R-shlib=yes --with-tcl-config=$tclconfig --with-tk-config=$tkconfig --with-libintl-prefix=/opt/local --with-blas="-L/opt/local/lib -lopenblas" --with-lapack || exit $?
 gmake -j$NCPU || exit $?
 rm -rf $PREFIX/share/claident/lib || sudo rm -rf $PREFIX/share/claident/lib || exit $?
 gmake install-strip 2> /dev/null || sudo gmake install-strip || exit $?
 cd .. || exit $?
-rm -rf R-4.2.3 || exit $?
+rm -rf R-4.3.3 || exit $?
 gecho -e 'CC='`ls -d /opt/local/bin/gcc-mp-* | ggrep -P '\/gcc-mp-\d+$' | sort | tail -n 1`"\nLDFLAGS=-L/opt/local/lib -L/opt/local/lib/libomp\nCPPFLAGS=-I/opt/local/include -I/opt/local/include/libomp -fopenmp" > Makevars.vegan
 if test -w $PREFIX/share/claident/lib/R; then
 $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages(c("RcppParallel","foreach","doParallel","htmlwidgets","wordcloud2","ggplot2"),repos="https://cloud.r-project.org/",dependencies=T,clean=T,Ncpus=detectCores())' || exit $?
@@ -120,7 +120,7 @@ sudo -E $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method=
 fi
 $PREFIX/share/claident/bin/R --vanilla -e 'library(RcppParallel);library(foreach);library(doParallel);library(htmlwidgets);library(wordcloud2);library(ggplot2);library(vegan);library(dada2)' || exit $?
 rm Makevars.vegan || exit $?
-rm -f R-4.2.3.tar.gz || exit $?
+rm -f R-4.3.3.tar.gz || exit $?
 touch .dada2 || exit $?
 fi
 echo 'Installation finished correctly!'

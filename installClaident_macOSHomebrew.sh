@@ -1,4 +1,4 @@
-brew install openssl make gcc coreutils grep wget unzip gnu-tar gzip xz zlib bzip2 pigz lbzip2 lmdb libomp autoconf automake pkg-config readline pcre2 jpeg libpng cairo pango libtiff tcl-tk openblas libxml2 imagemagick git curl || brew install --build-from-source openssl make gcc coreutils grep wget unzip gnu-tar gzip xz zlib bzip2 pigz lbzip2 lmdb libomp autoconf automake pkg-config readline pcre2 jpeg libpng cairo pango libtiff tcl-tk openblas libxml2 imagemagick git curl aria2 || exit $?
+brew install gdal udunits openssl make gcc coreutils grep wget unzip gnu-tar gzip xz zlib bzip2 pigz lbzip2 lmdb libomp autoconf automake pkg-config readline pcre2 jpeg libpng cairo pango libtiff tcl-tk openblas libxml2 imagemagick git curl || brew install --build-from-source gdal udunits openssl make gcc coreutils grep wget unzip gnu-tar gzip xz zlib bzip2 pigz lbzip2 lmdb libomp autoconf automake pkg-config readline pcre2 jpeg libpng cairo pango libtiff tcl-tk openblas libxml2 imagemagick git curl aria2 || exit $?
 if test -z $PREFIX; then
 PREFIX=/usr/local || exit $?
 fi
@@ -97,9 +97,9 @@ touch .blast || exit $?
 fi
 # download, compile, and install R and DADA2
 if ! test -e .dada2; then
-wget -c https://cran.r-project.org/src/base/R-4/R-4.2.3.tar.gz || exit $?
-gtar -xzf R-4.2.3.tar.gz || exit $?
-cd R-4.2.3 || exit $?
+wget -c https://cran.r-project.org/src/base/R-4/R-4.3.3.tar.gz || exit $?
+gtar -xzf R-4.3.3.tar.gz || exit $?
+cd R-4.3.3 || exit $?
 perl -i -npe 's/^(\#define NCONNECTIONS) \d+/$1 1050/' src/main/connections.c || exit $?
 export CC=clang
 export CXX=clang++
@@ -117,12 +117,12 @@ export CURL_CONFIG=`find $BREWPATH/Cellar -type f -name curl-config | sort | tai
 omplib=`find $BREWPATH/Cellar -type f -name libomp.dylib | sort | tail -n 1 | perl -npe 's/\/libomp\.dylib$//'`
 ompinclude=`find $BREWPATH/Cellar -type f -name omp.h | sort | tail -n 1 | perl -npe 's/\/omp\.h$//'`
 quadmathlib=`find $BREWPATH/Cellar -type f -name libquadmath.dylib | sort | tail -n 1 | perl -npe 's/\/libquadmath\.dylib$//'`
-LDFLAGS="-L$lzmalib -L$jpeglib -L$pcre2lib -L$omplib -L$quadmathlib" LIBS=-lomp CPPFLAGS="-I$lzmainclude -I$jpeginclude -I$pcre2include -I$ompinclude -Xpreprocessor -fopenmp" FCFLAGS="-static-libgfortran -static-libquadmath" ./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=no --with-pic --with-x=no --with-aqua=no --enable-R-shlib=yes --with-tcl-config=$tclconfig --with-tk-config=$tkconfig --with-blas="-L$openblas -lopenblas" --with-lapack r_cv_have_curl728=yes || exit $?
+LDFLAGS="-L$lzmalib -L$jpeglib -L$pcre2lib -L$omplib -L$quadmathlib" LIBS=-lomp CPPFLAGS="-I$lzmainclude -I$jpeginclude -I$pcre2include -I$ompinclude -Xpreprocessor -fopenmp" FCFLAGS="-static-libgfortran -static-libquadmath" ./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=yes --with-pic --with-x=no --with-aqua=no --enable-R-shlib=yes --with-tcl-config=$tclconfig --with-tk-config=$tkconfig --with-blas="-L$openblas -lopenblas" --with-lapack || exit $?
 gmake -j$NCPU || exit $?
 rm -rf $PREFIX/share/claident/lib || sudo rm -rf $PREFIX/share/claident/lib || exit $?
 gmake install-strip 2> /dev/null || sudo gmake install-strip || exit $?
 cd .. || exit $?
-rm -rf R-4.2.3 || exit $?
+rm -rf R-4.3.3 || exit $?
 gecho -e 'CC='`ls -d $BREWPATH/bin/gcc-* | ggrep -P '\/gcc-\d+$' | sort | tail -n 1`"\nLDFLAGS=-L$lzmalib -L$jpeglib -L$pcre2lib -L$omplib\nCPPFLAGS=-I$lzmainclude -I$jpeginclude -I$pcre2include -I$ompinclude -fopenmp" > Makevars.vegan
 if test -w $PREFIX/share/claident/lib/R; then
 $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages(c("RcppParallel","foreach","doParallel","htmlwidgets","wordcloud2","ggplot2"),repos="https://cloud.r-project.org/",dependencies=T,clean=T,Ncpus=detectCores())' || exit $?
@@ -135,7 +135,7 @@ sudo -E $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method=
 fi
 $PREFIX/share/claident/bin/R --vanilla -e 'library(RcppParallel);library(foreach);library(doParallel);library(htmlwidgets);library(wordcloud2);library(ggplot2);library(vegan);library(dada2)' || exit $?
 rm Makevars.vegan || exit $?
-rm -f R-4.2.3.tar.gz || exit $?
+rm -f R-4.3.3.tar.gz || exit $?
 touch .dada2 || exit $?
 fi
 echo 'Installation finished correctly!'
