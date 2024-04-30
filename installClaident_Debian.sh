@@ -1,4 +1,4 @@
-sudo -E apt -y install gcc g++ gfortran make autoconf automake zlib1g-dev libbz2-dev liblzma-dev libreadline-dev libpcre2-dev libjpeg-dev libpng-dev libcairo2-dev libpango1.0-dev libtiff-dev tcl-dev tk-dev tar gzip bzip2 xz-utils pigz lbzip2 unzip coreutils grep perl libdbi-perl libdbd-sqlite3-perl libwww-perl libfile-copy-recursive-perl libmath-basecnv-perl libopenblas-serial-dev libopenblas64-serial-dev libcurl4-openssl-dev libxml2-dev imagemagick git fonts-noto aria2 || exit $?
+sudo -E apt -y install libssl-dev gcc g++ gfortran make autoconf automake zlib1g-dev libbz2-dev liblzma-dev libreadline-dev libpcre2-dev libjpeg-dev libpng-dev libcairo2-dev libpango1.0-dev libtiff-dev tcl-dev tk-dev tar gzip bzip2 xz-utils pigz lbzip2 unzip coreutils grep perl libdbi-perl libdbd-sqlite3-perl libwww-perl libfile-copy-recursive-perl libmath-basecnv-perl libopenblas-serial-dev libopenblas64-serial-dev libcurl4-openssl-dev libxml2-dev imagemagick git fonts-noto aria2 || exit $?
 if test -z $PREFIX; then
 PREFIX=/usr/local || exit $?
 fi
@@ -91,7 +91,7 @@ tar -xzf R-4.2.3.tar.gz || exit $?
 cd R-4.2.3 || exit $?
 perl -i -npe 's/^(\#define NCONNECTIONS) \d+/$1 1050/' src/main/connections.c || exit $?
 openblas=`find /usr -type l -name libopenblas.so | sort | tail -n 1 | perl -npe 's/\/libopenblas\.so$//'`
-./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=yes --with-pic --with-x=no --enable-R-shlib=yes --with-blas="-L$openblas -lopenblas" --with-lapack r_cv_have_curl728=yes || exit $?
+./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=no --with-pic --with-x=no --enable-R-shlib=yes --with-blas="-L$openblas -lopenblas" --with-lapack r_cv_have_curl728=yes || exit $?
 make -j$NCPU || exit $?
 rm -rf $PREFIX/share/claident/lib || sudo rm -rf $PREFIX/share/claident/lib || exit $?
 make install-strip 2> /dev/null || sudo make install-strip || exit $?
