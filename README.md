@@ -9,6 +9,30 @@ To learn how to use Claident, see [ClaidentTutorial](https://github.com/astanabe
 Because conda (or the other environment-modifying packages) interferes these installer scripts, conda need to be disabled temporarily when running these installer scripts.
 Running these installer scripts as newly created user is the best solution.
 
+## Notice about UCHIMEDB
+
+This installer no longer install SILVA, RDP Gold, DAIRYdb and UNITE databases because their server often down or require manual registration.
+Still, I recommend SILVA SSUParc for prokaryotic 16S, eukaryotic mitochondrial 16S and eukaryotic nuclear 18S (SSU), SILVA LSUParc for prokaryotic 23S and eukaryotic nuclear 28S (LSU), Full UNITE+INSD of all eukaryotes for nuclear ITS.
+In order to install FASTA file as UCHIMEDB to your machine, run the following commands AFTER INSTALLATION OF CLAIDENT.
+
+```
+#set install prefix (/usr/local by default)
+#this must be the same as Claident install prefix (see below)
+PREFIX=/usr/local
+#set number of processor cores
+NCPU=8
+#dereplicate sequences
+$PREFIX/share/claident/bin/vsearch --fasta_width 0 --notrunclabels --threads $NCPU --strand both --derep_fulllength input.fasta --output input_dereplicated.fasta
+#cluster
+$PREFIX/share/claident/bin/vsearch --fasta_width 0 --notrunclabels --threads $NCPU --strand both --cluster_fast input_dereplicated.fasta --id 1.0 --qmask none --centroids input_nr100.fasta
+#make reverse-complement sequences
+$PREFIX/share/claident/bin/vsearch --fasta_width 0 --notrunclabels --threads $NCPU --label_suffix revcomp --fastx_revcomp input_nr100.fasta --fastaout input_nr100_revcomp.fasta
+#join FASTA files
+cat input_nr100.fasta input_nr100_revcomp.fasta > DBNAME.fasta
+#install FASTA file to UCHIMEDB path
+mv DBNAME.fasta $PREFIX/share/claident/uchimedb/ || sudo mv DBNAME.fasta $PREFIX/share/claident/uchimedb/
+```
+
 ## Prerequisites
 
 On Debian GNU/Linux compatible distributions, Debian 11 Bullseye, Ubuntu 20.04LTS or Linux Mint 20 or later is required.
