@@ -23,12 +23,10 @@ PREFIX=/usr/local
 NCPU=8
 #dereplicate sequences
 $PREFIX/share/claident/bin/vsearch --fasta_width 0 --notrunclabels --threads $NCPU --strand both --derep_fulllength input.fasta --output input_dereplicated.fasta
-#cluster
-$PREFIX/share/claident/bin/vsearch --fasta_width 0 --notrunclabels --threads $NCPU --strand both --cluster_fast input_dereplicated.fasta --id 1.0 --qmask none --centroids input_nr100.fasta
 #make reverse-complement sequences
-$PREFIX/share/claident/bin/vsearch --fasta_width 0 --notrunclabels --threads $NCPU --label_suffix revcomp --fastx_revcomp input_nr100.fasta --fastaout input_nr100_revcomp.fasta
+$PREFIX/share/claident/bin/vsearch --fasta_width 0 --notrunclabels --threads $NCPU --label_suffix revcomp --fastx_revcomp input_dereplicated.fasta --fastaout input_dereplicated_revcomp.fasta
 #join FASTA files
-cat input_nr100.fasta input_nr100_revcomp.fasta > DBNAME.fasta
+cat input_dereplicated.fasta input_dereplicated_revcomp.fasta > DBNAME.fasta
 #install FASTA file to UCHIMEDB path
 mv DBNAME.fasta $PREFIX/share/claident/uchimedb/ || sudo mv DBNAME.fasta $PREFIX/share/claident/uchimedb/
 ```
