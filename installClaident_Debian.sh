@@ -13,15 +13,15 @@ fi
 NCPU=`grep -c processor /proc/cpuinfo`
 # download, and install Claident
 if ! test -e .claident; then
-wget -c https://github.com/astanabe/Claident/archive/v0.9.2024.03.04.tar.gz -O Claident-0.9.2024.03.04.tar.gz || exit $?
-tar -xzf Claident-0.9.2024.03.04.tar.gz || exit $?
-cd Claident-0.9.2024.03.04 || exit $?
+wget -c https://github.com/astanabe/Claident/archive/v0.9.2024.06.10.tar.gz -O Claident-0.9.2024.06.10.tar.gz || exit $?
+tar -xzf Claident-0.9.2024.06.10.tar.gz || exit $?
+cd Claident-0.9.2024.06.10 || exit $?
 make PREFIX=$PREFIX -j$NCPU || exit $?
 make PREFIX=$PREFIX install 2> /dev/null || sudo make PREFIX=$PREFIX install || exit $?
 cp $PREFIX/share/claident/.claident ~/.claident || exit $?
 cd .. || exit $?
-rm -rf Claident-0.9.2024.03.04 || exit $?
-rm -f Claident-0.9.2024.03.04.tar.gz || exit $?
+rm -rf Claident-0.9.2024.06.10 || exit $?
+rm -f Claident-0.9.2024.06.10.tar.gz || exit $?
 touch .claident || exit $?
 fi
 # download, compile, and install Swarm
@@ -40,9 +40,9 @@ touch .swarm || exit $?
 fi
 # download, compile, and install VSEARCH
 if ! test -e .vsearch; then
-wget -c https://github.com/torognes/vsearch/archive/v2.26.1.tar.gz -O vsearch-2.26.1.tar.gz || exit $?
-tar -xzf vsearch-2.26.1.tar.gz || exit $?
-cd vsearch-2.26.1 || exit $?
+wget -c https://github.com/torognes/vsearch/archive/v2.28.1.tar.gz -O vsearch-2.28.1.tar.gz || exit $?
+tar -xzf vsearch-2.28.1.tar.gz || exit $?
+cd vsearch-2.28.1 || exit $?
 sh ./autogen.sh || exit $?
 CFLAGS="-O3 -mtune=native -fomit-frame-pointer -finline-functions" CPPFLAGS="-O3 -mtune=native -fomit-frame-pointer -finline-functions" CXXFLAGS="-O3 -mtune=native -fomit-frame-pointer -finline-functions" LDFLAGS="-O3 -mtune=native -fomit-frame-pointer -finline-functions" sh ./configure --prefix=$PREFIX/share/claident --disable-pdfman || exit $?
 make -j$NCPU || exit $?
@@ -54,22 +54,22 @@ if ! test -e $PREFIX/bin/vsearch; then
 ln -sf $PREFIX/share/claident/bin/vsearch $PREFIX/bin/vsearch 2> /dev/null || sudo ln -sf $PREFIX/share/claident/bin/vsearch $PREFIX/bin/vsearch || exit $?
 fi
 cd .. || exit $?
-rm -rf vsearch-2.26.1 || exit $?
-rm -f vsearch-2.26.1.tar.gz || exit $?
+rm -rf vsearch-2.28.1 || exit $?
+rm -f vsearch-2.28.1.tar.gz || exit $?
 touch .vsearch || exit $?
 fi
 # download, compile, and install VSEARCH5D
 if ! test -e .vsearch5d; then
-wget -c https://github.com/astanabe/vsearch5d/archive/v2.26.1.tar.gz -O vsearch5d-2.26.1.tar.gz || exit $?
-tar -xzf vsearch5d-2.26.1.tar.gz || exit $?
-cd vsearch5d-2.26.1 || exit $?
+wget -c https://github.com/astanabe/vsearch5d/archive/v2.28.1.tar.gz -O vsearch5d-2.28.1.tar.gz || exit $?
+tar -xzf vsearch5d-2.28.1.tar.gz || exit $?
+cd vsearch5d-2.28.1 || exit $?
 sh ./autogen.sh || exit $?
 CFLAGS="-O3 -mtune=native -fomit-frame-pointer -finline-functions" CPPFLAGS="-O3 -mtune=native -fomit-frame-pointer -finline-functions" CXXFLAGS="-O3 -mtune=native -fomit-frame-pointer -finline-functions" LDFLAGS="-O3 -mtune=native -fomit-frame-pointer -finline-functions" sh ./configure --prefix=$PREFIX/share/claident || exit $?
 make -j$NCPU || exit $?
 make install-exec 2> /dev/null || sudo make install-exec || exit $?
 cd .. || exit $?
-rm -rf vsearch5d-2.26.1 || exit $?
-rm -f vsearch5d-2.26.1.tar.gz || exit $?
+rm -rf vsearch5d-2.28.1 || exit $?
+rm -f vsearch5d-2.28.1.tar.gz || exit $?
 touch .vsearch5d || exit $?
 fi
 # download, and install BLAST+
