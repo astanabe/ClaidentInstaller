@@ -81,8 +81,7 @@ if ! test -e .blast; then
 wget -c https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.15.0/ncbi-blast-2.15.0+-src.tar.gz || exit $?
 gnutar -xzf ncbi-blast-2.15.0+-src.tar.gz || exit $?
 cd ncbi-blast-2.15.0+-src/c++ || exit $?
-#LDFLAGS="-L/opt/local/lib/libomp -lomp" CPPFLAGS="-I/opt/local/include/libomp -fopenmp" 
-LDFLAGS="-L/opt/local/lib" CPPFLAGS="-I/opt/local/include" ./configure --prefix=$PREFIX/share/claident --with-bin-release --without-strip --with-experimental=Int8GI --without-libunwind --with-mt --with-openmp --with-64 --with-lfs --without-debug --without-boost --without-gbench --without-gui --without-ctools || exit $?
+./configure --prefix=$PREFIX/share/claident --with-bin-release --without-strip --with-experimental=Int8GI --without-libunwind --with-mt --with-openmp --with-64 --with-lfs --without-debug --without-boost --without-gbench --without-gui --without-ctools || exit $?
 gmake -j$NCPU || exit $?
 gmake install 2> /dev/null || sudo gmake install || exit $?
 cd ../.. || exit $?
@@ -98,9 +97,12 @@ cd R-4.3.3 || exit $?
 perl -i -npe 's/^(\#define NCONNECTIONS) \d+/$1 1050/' src/main/connections.c || exit $?
 tclconfig=`find /opt/local -path /opt/local/var -prune -o -name tclConfig.sh -print | sort | tail -n 1`
 tkconfig=`find /opt/local -path /opt/local/var -prune -o -name tkConfig.sh -print | sort | tail -n 1`
+#projlib=`find /opt/local -path /opt/local/var -prune -o -name libproj.dylib -print | sort | tail -n 1 | perl -npe 's/\/libproj\.dylib$//'`
+#projinclude=`find /opt/local -path /opt/local/var -prune -o -name proj.h -print | sort | tail -n 1 | perl -npe 's/\/proj\.h$//'`
+quadmathlib=`find /opt/local -path /opt/local/var -prune -o -name libquadmath.dylib -print | grep gcc12 | sort | tail -n 1 | perl -npe 's/\/libquadmath\.dylib$//'`
 export CURL_CONFIG=`find /opt/local -path /opt/local/var -prune -o -name curl-config -print | sort | tail -n 1`
 export compiler=gcc
-LDFLAGS="-L/opt/local/lib" CPPFLAGS="-I/opt/local/include" FCFLAGS="-static-libgfortran -static-libquadmath" ./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=yes --with-pic --with-x=no --with-aqua=no --enable-R-shlib=yes --with-tcl-config=$tclconfig --with-tk-config=$tkconfig --with-libintl-prefix=/opt/local --with-blas="-L/opt/local/lib -lopenblas" --with-lapack || exit $?
+LDFLAGS="-L/opt/local/lib -L$quadmathlib" CPPFLAGS="-I/opt/local/include" ./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=yes --with-pic --with-x=no --with-aqua=no --enable-R-shlib=yes --with-tcl-config=$tclconfig --with-tk-config=$tkconfig --with-libintl-prefix=/opt/local --with-blas="-L/opt/local/lib -lopenblas" --with-lapack OBJCXX=clang++ || exit $?
 gmake -j$NCPU || exit $?
 rm -rf $PREFIX/share/claident/lib || sudo rm -rf $PREFIX/share/claident/lib || exit $?
 gmake install-strip 2> /dev/null || sudo gmake install-strip || exit $?
@@ -108,18 +110,18 @@ cd .. || exit $?
 rm -rf R-4.3.3 || exit $?
 gecho -e "CC=clang\nCXX=clang++" > Makevars.sass
 if test -w $PREFIX/share/claident/lib/R; then
-$PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages(c("RcppParallel","foreach","doParallel","htmlwidgets","wordcloud2","ggplot2","vegan"),repos="https://cloud.r-project.org/",dependencies=T,clean=T,Ncpus=detectCores(),upgrade="never")' || exit $?
-R_MAKEVARS_USER=`pwd`/Makevars.sass compiler=clang $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages("sass",repos="https://cloud.r-project.org/",dependencies=T,clean=T,Ncpus=detectCores(),upgrade="never")' || exit $?
-$PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages(c("RcppParallel","foreach","doParallel","htmlwidgets","wordcloud2","ggplot2","vegan"),repos="https://cloud.r-project.org/",dependencies=T,clean=T,Ncpus=detectCores(),upgrade="never")' || exit $?
-$PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);source("https://raw.githubusercontent.com/r-lib/remotes/master/install-github.R")$value("benjjneb/dada2@v1.26",dependencies=T,clean=T,Ncpus=detectCores(),upgrade="never")' || exit $?
+$PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages(c("RcppParallel","foreach","doParallel","htmlwidgets","wordcloud2","ggplot2","vegan"),repos="https://cloud.r-project.org/",clean=T,Ncpus=detectCores(),upgrade="never")' || exit $?
+R_MAKEVARS_USER=`pwd`/Makevars.sass $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages("sass",repos="https://cloud.r-project.org/",clean=T,Ncpus=detectCores(),upgrade="never")' || exit $?
+$PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages(c("RcppParallel","foreach","doParallel","htmlwidgets","wordcloud2","ggplot2","vegan"),repos="https://cloud.r-project.org/",clean=T,Ncpus=detectCores(),upgrade="never")' || exit $?
+$PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);source("https://raw.githubusercontent.com/r-lib/remotes/master/install-github.R")$value("benjjneb/dada2@v1.26",clean=T,Ncpus=detectCores(),upgrade="never")' || exit $?
 else
-sudo -E $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages(c("RcppParallel","foreach","doParallel","htmlwidgets","wordcloud2","ggplot2","vegan"),repos="https://cloud.r-project.org/",dependencies=T,clean=T,Ncpus=detectCores(),upgrade="never")' || exit $?
-R_MAKEVARS_USER=`pwd`/Makevars.sass compiler=clang sudo -E $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages("sass",repos="https://cloud.r-project.org/",dependencies=T,clean=T,Ncpus=detectCores(),upgrade="never")' || exit $?
-sudo -E $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages(c("RcppParallel","foreach","doParallel","htmlwidgets","wordcloud2","ggplot2","vegan"),repos="https://cloud.r-project.org/",dependencies=T,clean=T,Ncpus=detectCores(),upgrade="never")' || exit $?
-sudo -E $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);source("https://raw.githubusercontent.com/r-lib/remotes/master/install-github.R")$value("benjjneb/dada2@v1.26",dependencies=T,clean=T,Ncpus=detectCores(),upgrade="never")' || exit $?
+sudo -E $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages(c("RcppParallel","foreach","doParallel","htmlwidgets","wordcloud2","ggplot2","vegan"),repos="https://cloud.r-project.org/",clean=T,Ncpus=detectCores(),upgrade="never")' || exit $?
+R_MAKEVARS_USER=`pwd`/Makevars.sass sudo -E $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages("sass",repos="https://cloud.r-project.org/",clean=T,Ncpus=detectCores(),upgrade="never")' || exit $?
+sudo -E $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages(c("RcppParallel","foreach","doParallel","htmlwidgets","wordcloud2","ggplot2","vegan"),repos="https://cloud.r-project.org/",clean=T,Ncpus=detectCores(),upgrade="never")' || exit $?
+sudo -E $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);source("https://raw.githubusercontent.com/r-lib/remotes/master/install-github.R")$value("benjjneb/dada2@v1.26",clean=T,Ncpus=detectCores(),upgrade="never")' || exit $?
 fi
 $PREFIX/share/claident/bin/R --vanilla -e 'library(RcppParallel);library(foreach);library(doParallel);library(htmlwidgets);library(wordcloud2);library(ggplot2);library(vegan);library(dada2)' || exit $?
-rm Makevars.sass || exit $?
+rm -f Makevars.sass || exit $?
 rm -f R-4.3.3.tar.gz || exit $?
 touch .dada2 || exit $?
 fi

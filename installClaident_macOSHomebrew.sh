@@ -1,4 +1,4 @@
-brew install gdal udunits openssl make gcc coreutils grep wget unzip gnu-tar gzip xz zlib bzip2 pigz lbzip2 lmdb libomp autoconf automake pkg-config readline pcre2 jpeg libpng cairo pango libtiff tcl-tk openblas libxml2 imagemagick git curl || brew install --build-from-source gdal udunits openssl make gcc coreutils grep wget unzip gnu-tar gzip xz zlib bzip2 pigz lbzip2 lmdb libomp autoconf automake pkg-config readline pcre2 jpeg libpng cairo pango libtiff tcl-tk openblas libxml2 imagemagick git curl aria2 || exit $?
+brew install gdal udunits openssl make gcc coreutils grep wget unzip gnu-tar gzip xz zlib bzip2 pigz lbzip2 lmdb libomp autoconf automake pkg-config readline pcre2 jpeg libpng cairo pango libtiff tcl-tk openblas libxml2 imagemagick git curl aria2 || brew install --build-from-source gdal udunits openssl make gcc coreutils grep wget unzip gnu-tar gzip xz zlib bzip2 pigz lbzip2 lmdb libomp autoconf automake pkg-config readline pcre2 jpeg libpng cairo pango libtiff tcl-tk openblas libxml2 imagemagick git curl aria2 || exit $?
 if test -z $PREFIX; then
 PREFIX=/usr/local || exit $?
 fi
@@ -108,10 +108,14 @@ pnglib=`find $BREWPATH/Cellar -name libpng.dylib | sort | tail -n 1 | perl -npe 
 pnginclude=`find $BREWPATH/Cellar -name png.h | sort | tail -n 1 | perl -npe 's/\/png\.h$//'`
 pcre2lib=`find $BREWPATH/Cellar -name libpcre2-8.dylib | sort | tail -n 1 | perl -npe 's/\/libpcre2-8\.dylib$//'`
 pcre2include=`find $BREWPATH/Cellar -name pcre2.h | sort | tail -n 1 | perl -npe 's/\/pcre2\.h$//'`
+udunits2lib=`find $BREWPATH/Cellar -name libudunits2.dylib | sort | tail -n 1 | perl -npe 's/\/libudunits2\.dylib$//'`
+udunits2include=`find $BREWPATH/Cellar -name udunits2.h | sort | tail -n 1 | perl -npe 's/\/udunits2\.h$//'`
+#projlib=`find $BREWPATH/Cellar -name libproj.dylib | sort | tail -n 1 | perl -npe 's/\/libproj\.dylib$//'`
+#projinclude=`find $BREWPATH/Cellar -name proj.h | sort | tail -n 1 | perl -npe 's/\/proj\.h$//'`
 quadmathlib=`find $BREWPATH/Cellar -name libquadmath.dylib | sort | tail -n 1 | perl -npe 's/\/libquadmath\.dylib$//'`
 export CURL_CONFIG=`find $BREWPATH/Cellar -name curl-config | sort | tail -n 1`
 export compiler=gcc
-LDFLAGS="-L$lzmalib -L$jpeglib -L$pnglib -L$pcre2lib -L$quadmathlib" CPPFLAGS="-I$lzmainclude -I$jpeginclude -I$pnginclude -I$pcre2include" FCFLAGS="-static-libgfortran -static-libquadmath" ./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=yes --with-pic --with-x=no --with-aqua=no --enable-R-shlib=yes --with-tcl-config=$tclconfig --with-tk-config=$tkconfig --with-blas="-L$openblas -lopenblas" --with-lapack || exit $?
+LDFLAGS="-L$lzmalib -L$jpeglib -L$pnglib -L$pcre2lib -L$udunits2lib -L$quadmathlib" CPPFLAGS="-I$lzmainclude -I$jpeginclude -I$pnginclude -I$pcre2include -I$udunits2include" ./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=yes --with-pic --with-x=no --with-aqua=no --enable-R-shlib=yes --with-tcl-config=$tclconfig --with-tk-config=$tkconfig --with-blas="-L$openblas -lopenblas" --with-lapack OBJCXX=clang++ || exit $?
 gmake -j$NCPU || exit $?
 rm -rf $PREFIX/share/claident/lib || sudo rm -rf $PREFIX/share/claident/lib || exit $?
 gmake install-strip 2> /dev/null || sudo gmake install-strip || exit $?
@@ -119,18 +123,18 @@ cd .. || exit $?
 rm -rf R-4.3.3 || exit $?
 gecho -e "CC=clang\nCXX=clang++" > Makevars.sass
 if test -w $PREFIX/share/claident/lib/R; then
-$PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages(c("RcppParallel","foreach","doParallel","htmlwidgets","wordcloud2","ggplot2","vegan"),repos="https://cloud.r-project.org/",dependencies=T,clean=T,Ncpus=detectCores(),upgrade="never")' || exit $?
-R_MAKEVARS_USER=`pwd`/Makevars.sass compiler=clang $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages("sass",repos="https://cloud.r-project.org/",dependencies=T,clean=T,Ncpus=detectCores(),upgrade="never")' || exit $?
-$PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages(c("RcppParallel","foreach","doParallel","htmlwidgets","wordcloud2","ggplot2","vegan"),repos="https://cloud.r-project.org/",dependencies=T,clean=T,Ncpus=detectCores(),upgrade="never")' || exit $?
-$PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);source("https://raw.githubusercontent.com/r-lib/remotes/master/install-github.R")$value("benjjneb/dada2@v1.26",dependencies=T,clean=T,Ncpus=detectCores(),upgrade="never")' || exit $?
+$PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages(c("RcppParallel","foreach","doParallel","htmlwidgets","wordcloud2","ggplot2","vegan"),repos="https://cloud.r-project.org/",clean=T,Ncpus=detectCores(),upgrade="never")' || exit $?
+R_MAKEVARS_USER=`pwd`/Makevars.sass compiler=clang $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages("sass",repos="https://cloud.r-project.org/",clean=T,Ncpus=detectCores(),upgrade="never")' || exit $?
+$PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages(c("RcppParallel","foreach","doParallel","htmlwidgets","wordcloud2","ggplot2","vegan"),repos="https://cloud.r-project.org/",clean=T,Ncpus=detectCores(),upgrade="never")' || exit $?
+$PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);source("https://raw.githubusercontent.com/r-lib/remotes/master/install-github.R")$value("benjjneb/dada2@v1.26",clean=T,Ncpus=detectCores(),upgrade="never")' || exit $?
 else
-sudo -E $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages(c("RcppParallel","foreach","doParallel","htmlwidgets","wordcloud2","ggplot2","vegan"),repos="https://cloud.r-project.org/",dependencies=T,clean=T,Ncpus=detectCores(),upgrade="never")' || exit $?
-R_MAKEVARS_USER=`pwd`/Makevars.sass compiler=clang sudo -E $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages("sass",repos="https://cloud.r-project.org/",dependencies=T,clean=T,Ncpus=detectCores(),upgrade="never")' || exit $?
-sudo -E $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages(c("RcppParallel","foreach","doParallel","htmlwidgets","wordcloud2","ggplot2","vegan"),repos="https://cloud.r-project.org/",dependencies=T,clean=T,Ncpus=detectCores(),upgrade="never")' || exit $?
-sudo -E $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);source("https://raw.githubusercontent.com/r-lib/remotes/master/install-github.R")$value("benjjneb/dada2@v1.26",dependencies=T,clean=T,Ncpus=detectCores(),upgrade="never")' || exit $?
+sudo -E $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages(c("RcppParallel","foreach","doParallel","htmlwidgets","wordcloud2","ggplot2","vegan"),repos="https://cloud.r-project.org/",clean=T,Ncpus=detectCores(),upgrade="never")' || exit $?
+R_MAKEVARS_USER=`pwd`/Makevars.sass compiler=clang sudo -E $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages("sass",repos="https://cloud.r-project.org/",clean=T,Ncpus=detectCores(),upgrade="never")' || exit $?
+sudo -E $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages(c("RcppParallel","foreach","doParallel","htmlwidgets","wordcloud2","ggplot2","vegan"),repos="https://cloud.r-project.org/",clean=T,Ncpus=detectCores(),upgrade="never")' || exit $?
+sudo -E $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);source("https://raw.githubusercontent.com/r-lib/remotes/master/install-github.R")$value("benjjneb/dada2@v1.26",clean=T,Ncpus=detectCores(),upgrade="never")' || exit $?
 fi
 $PREFIX/share/claident/bin/R --vanilla -e 'library(RcppParallel);library(foreach);library(doParallel);library(htmlwidgets);library(wordcloud2);library(ggplot2);library(vegan);library(dada2)' || exit $?
-rm Makevars.sass || exit $?
+rm -f Makevars.sass || exit $?
 rm -f R-4.3.3.tar.gz || exit $?
 touch .dada2 || exit $?
 fi
