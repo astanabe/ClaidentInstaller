@@ -1,4 +1,4 @@
-brew install gdal udunits openssl make gcc coreutils grep wget unzip gnu-tar gzip xz zlib bzip2 pigz lbzip2 lmdb libomp autoconf automake pkg-config readline pcre2 jpeg libpng cairo pango libtiff tcl-tk openblas libxml2 imagemagick git curl aria2 || brew install --build-from-source gdal udunits openssl make gcc coreutils grep wget unzip gnu-tar gzip xz zlib bzip2 pigz lbzip2 lmdb libomp autoconf automake pkg-config readline pcre2 jpeg libpng cairo pango libtiff tcl-tk openblas libxml2 imagemagick git curl aria2 || exit $?
+brew install openssl make gcc coreutils grep wget unzip gnu-tar gzip xz zlib bzip2 pigz lbzip2 lmdb libomp autoconf automake pkg-config readline pcre2 jpeg libpng cairo pango libtiff tcl-tk openblas libxml2 imagemagick git curl aria2 || brew install --build-from-source openssl make gcc coreutils grep wget unzip gnu-tar gzip xz zlib bzip2 pigz lbzip2 lmdb libomp autoconf automake pkg-config readline pcre2 jpeg libpng cairo pango libtiff tcl-tk openblas libxml2 imagemagick git curl aria2 || exit $?
 if test -z $PREFIX; then
 PREFIX=/usr/local || exit $?
 fi
@@ -12,10 +12,11 @@ fi
 # set variables
 NCPU=`sysctl -n hw.logicalcpu_max`
 export SDKROOT="$(xcrun --sdk macosx --show-sdk-path)"
-BREWPATH=`brew --prefix`
-export CC=`ls -d $BREWPATH/bin/gcc-* | ggrep -P '\/gcc-\d+$' | sort | tail -n 1`
-export CXX=`ls -d $BREWPATH/bin/g++-* | ggrep -P '\/g\+\+-\d+$' | sort | tail -n 1`
-export FC=`ls -d $BREWPATH/bin/gfortran-* | ggrep -P '\/gfortran-\d+$' | sort | tail -n 1`
+export CC=`ls -d $HOMEBREW_PREFIX/bin/gcc-* | ggrep -P '\/gcc-\d+$' | sort | tail -n 1`
+export CXX=`ls -d $HOMEBREW_PREFIX/bin/g++-* | ggrep -P '\/g\+\+-\d+$' | sort | tail -n 1`
+export FC=`ls -d $HOMEBREW_PREFIX/bin/gfortran-* | ggrep -P '\/gfortran-\d+$' | sort | tail -n 1`
+export OBJC=$CC
+export OBJCXX=$CXX
 # download, and install Claident
 if ! test -e .claident; then
 wget -c https://github.com/astanabe/Claident/archive/v0.9.2024.06.10.tar.gz -O Claident-0.9.2024.06.10.tar.gz || exit $?
@@ -96,26 +97,13 @@ wget -c https://cran.r-project.org/src/base/R-4/R-4.3.3.tar.gz || exit $?
 gtar -xzf R-4.3.3.tar.gz || exit $?
 cd R-4.3.3 || exit $?
 perl -i -npe 's/^(\#define NCONNECTIONS) \d+/$1 1050/' src/main/connections.c || exit $?
-BREWPATH=`brew --prefix`
-tclconfig=`find $BREWPATH/Cellar -name tclConfig.sh | sort | tail -n 1`
-tkconfig=`find $BREWPATH/Cellar -name tkConfig.sh | sort | tail -n 1`
-openblas=`find $BREWPATH/Cellar -name libopenblas.dylib | sort | tail -n 1 | perl -npe 's/\/libopenblas\.dylib$//'`
-lzmalib=`find $BREWPATH/Cellar -name liblzma.dylib | sort | tail -n 1 | perl -npe 's/\/liblzma\.dylib$//'`
-lzmainclude=`find $BREWPATH/Cellar -name lzma.h | sort | tail -n 1 | perl -npe 's/\/lzma\.h$//'`
-jpeglib=`find $BREWPATH/Cellar -name libjpeg.dylib | sort | tail -n 1 | perl -npe 's/\/libjpeg\.dylib$//'`
-jpeginclude=`find $BREWPATH/Cellar -name jpeglib.h | sort | tail -n 1 | perl -npe 's/\/jpeglib\.h$//'`
-pnglib=`find $BREWPATH/Cellar -name libpng.dylib | sort | tail -n 1 | perl -npe 's/\/libpng\.dylib$//'`
-pnginclude=`find $BREWPATH/Cellar -name png.h | sort | tail -n 1 | perl -npe 's/\/png\.h$//'`
-pcre2lib=`find $BREWPATH/Cellar -name libpcre2-8.dylib | sort | tail -n 1 | perl -npe 's/\/libpcre2-8\.dylib$//'`
-pcre2include=`find $BREWPATH/Cellar -name pcre2.h | sort | tail -n 1 | perl -npe 's/\/pcre2\.h$//'`
-udunits2lib=`find $BREWPATH/Cellar -name libudunits2.dylib | sort | tail -n 1 | perl -npe 's/\/libudunits2\.dylib$//'`
-udunits2include=`find $BREWPATH/Cellar -name udunits2.h | sort | tail -n 1 | perl -npe 's/\/udunits2\.h$//'`
-#projlib=`find $BREWPATH/Cellar -name libproj.dylib | sort | tail -n 1 | perl -npe 's/\/libproj\.dylib$//'`
-#projinclude=`find $BREWPATH/Cellar -name proj.h | sort | tail -n 1 | perl -npe 's/\/proj\.h$//'`
-quadmathlib=`find $BREWPATH/Cellar -name libquadmath.dylib | sort | tail -n 1 | perl -npe 's/\/libquadmath\.dylib$//'`
-export CURL_CONFIG=`find $BREWPATH/Cellar -name curl-config | sort | tail -n 1`
+tclconfig=`find $HOMEBREW_PREFIX/Cellar -name tclConfig.sh | sort | tail -n 1`
+tkconfig=`find $HOMEBREW_PREFIX/Cellar -name tkConfig.sh | sort | tail -n 1`
+openblas=`find $HOMEBREW_PREFIX/Cellar -name libopenblas.dylib | sort | tail -n 1 | perl -npe 's/\/libopenblas\.dylib$//'`
+quadmathlib=`find $HOMEBREW_PREFIX/Cellar -name libquadmath.dylib | sort | tail -n 1 | perl -npe 's/\/libquadmath\.dylib$//'`
+export CURL_CONFIG=`find $HOMEBREW_PREFIX/Cellar -name curl-config | sort | tail -n 1`
 export compiler=gcc
-LDFLAGS="-L$lzmalib -L$jpeglib -L$pnglib -L$pcre2lib -L$udunits2lib -L$quadmathlib" CPPFLAGS="-I$lzmainclude -I$jpeginclude -I$pnginclude -I$pcre2include -I$udunits2include" ./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=yes --with-pic --with-x=no --with-aqua=no --enable-R-shlib=yes --with-tcl-config=$tclconfig --with-tk-config=$tkconfig --with-blas="-L$openblas -lopenblas" --with-lapack OBJCXX=clang++ || exit $?
+LDFLAGS="-L$HOMEBREW_PREFIX/lib -L$quadmathlib" CPPFLAGS="-I$HOMEBREW_PREFIX/include" FCFLAGS="-static-libgfortran -static-libquadmath" ./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=yes --with-pic --with-x=no --with-aqua=no --enable-R-shlib=yes --with-tcl-config=$tclconfig --with-tk-config=$tkconfig --with-blas="-L$openblas -lopenblas" --with-lapack OBJCXX=clang++ || exit $?
 gmake -j$NCPU || exit $?
 rm -rf $PREFIX/share/claident/lib || sudo rm -rf $PREFIX/share/claident/lib || exit $?
 gmake install-strip 2> /dev/null || sudo gmake install-strip || exit $?
