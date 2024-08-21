@@ -13,15 +13,15 @@ fi
 NCPU=`grep -c processor /proc/cpuinfo`
 # download, and install Claident
 if ! test -e .claident; then
-wget -c https://github.com/astanabe/Claident/archive/v0.9.2024.06.10.tar.gz -O Claident-0.9.2024.06.10.tar.gz || exit $?
-tar -xzf Claident-0.9.2024.06.10.tar.gz || exit $?
-cd Claident-0.9.2024.06.10 || exit $?
+wget -c https://github.com/astanabe/Claident/archive/v0.9.2024.08.22.tar.gz -O Claident-0.9.2024.08.22.tar.gz || exit $?
+tar -xzf Claident-0.9.2024.08.22.tar.gz || exit $?
+cd Claident-0.9.2024.08.22 || exit $?
 make PREFIX=$PREFIX -j$NCPU || exit $?
 make PREFIX=$PREFIX install 2> /dev/null || sudo make PREFIX=$PREFIX install || exit $?
 cp $PREFIX/share/claident/.claident ~/.claident || exit $?
 cd .. || exit $?
-rm -rf Claident-0.9.2024.06.10 || exit $?
-rm -f Claident-0.9.2024.06.10.tar.gz || exit $?
+rm -rf Claident-0.9.2024.08.22 || exit $?
+rm -f Claident-0.9.2024.08.22.tar.gz || exit $?
 touch .claident || exit $?
 fi
 # download, compile, and install Swarm
@@ -74,14 +74,19 @@ touch .vsearch5d || exit $?
 fi
 # download, and install BLAST+
 if ! test -e .blast; then
-wget -c https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.15.0/ncbi-blast-2.15.0+-x64-linux.tar.gz || exit $?
-tar -xzf ncbi-blast-2.15.0+-x64-linux.tar.gz || exit $?
-cd ncbi-blast-2.15.0+/bin || exit $?
+if test `uname -m` = 'x86_64'; then
+ARCH=x64
+elif test `uname -m` = 'aarch64'; then
+ARCH=aarch64
+fi
+wget -c https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.16.0/ncbi-blast-2.16.0+-$ARCH-linux.tar.gz || exit $?
+tar -xzf ncbi-blast-2.16.0+-$ARCH-linux.tar.gz || exit $?
+cd ncbi-blast-2.16.0+/bin || exit $?
 mkdir -p $PREFIX/share/claident/bin 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/bin || exit $?
 mv -f * $PREFIX/share/claident/bin/ 2> /dev/null || sudo mv -f * $PREFIX/share/claident/bin/ || exit $?
 cd ../.. || exit $?
-rm -rf ncbi-blast-2.15.0+ || exit $?
-rm -f ncbi-blast-2.15.0+-x64-linux.tar.gz || exit $?
+rm -rf ncbi-blast-2.16.0+ || exit $?
+rm -f ncbi-blast-2.16.0+-$ARCH-linux.tar.gz || exit $?
 touch .blast || exit $?
 fi
 # download, compile, and install R and DADA2
