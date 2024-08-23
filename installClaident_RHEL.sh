@@ -1,4 +1,4 @@
-sudo -E dnf install -y --skip-broken openssl-devel which binutils gcc gcc-c++ gcc-gfortran gcc-plugin-devel libstdc++ libgcc glibc-static libstdc++-static readline-devel bzip2-devel autoconf automake make wget zlib zlib-devel tar gzip xz xz-devel pigz lbzip2 unzip coreutils grep perl perl-local-lib perl-Time-HiRes perl-CPAN perl-File-Copy-Recursive perl-YAML perl-DBI perl-DBD-SQLite perl-libwww-perl tcsh libxml2-devel libcurl-devel pcre2-devel libpng-devel libjpeg-turbo-devel cairo-devel pango-devel libtiff-devel tcl-devel tk-devel openblas-devel ImageMagick git-core google-noto-fonts-common aria2 || exit $?
+sudo -E dnf install -y --skip-broken curl libidn perl-Net sqlite-devel cmake libgomp openssl-devel lmdb lmdb-devel which binutils gcc gcc-c++ gcc-gfortran gcc-plugin-devel libstdc++ libgcc glibc-static libstdc++-static readline-devel bzip2-devel autoconf automake make wget zlib zlib-devel tar gzip xz xz-devel pigz lbzip2 unzip coreutils grep perl perl-local-lib perl-Time-HiRes perl-CPAN perl-File-Copy-Recursive perl-YAML perl-DBI perl-DBD-SQLite perl-libwww-perl tcsh libxml2-devel libcurl-devel pcre2-devel libpng-devel libjpeg-turbo-devel cairo-devel pango-devel libtiff-devel tcl-devel tk-devel openblas-devel ImageMagick git-core google-noto-fonts-common aria2 || exit $?
 if test -z $PREFIX; then
 PREFIX=/usr/local || exit $?
 fi
@@ -74,19 +74,15 @@ touch .vsearch5d || exit $?
 fi
 # download, and install BLAST+
 if ! test -e .blast; then
-if test `uname -m` = 'x86_64'; then
-ARCH=x64
-elif test `uname -m` = 'aarch64'; then
-ARCH=aarch64
-fi
-wget -c https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.16.0/ncbi-blast-2.16.0+-$ARCH-linux.tar.gz || exit $?
-tar -xzf ncbi-blast-2.16.0+-$ARCH-linux.tar.gz || exit $?
-cd ncbi-blast-2.16.0+/bin || exit $?
-mkdir -p $PREFIX/share/claident/bin 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/bin || exit $?
-mv -f * $PREFIX/share/claident/bin/ 2> /dev/null || sudo mv -f * $PREFIX/share/claident/bin/ || exit $?
+wget -c https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.15.0/ncbi-blast-2.15.0+-src.tar.gz || exit $?
+tar -xzf ncbi-blast-2.15.0+-src.tar.gz || exit $?
+cd ncbi-blast-2.15.0+-src/c++ || exit $?
+./configure.orig --prefix=$PREFIX/share/claident --with-build-root=./ReleaseMT --with-bin-release --without-strip --with-experimental=Int8GI --without-libunwind --with-mt --with-openmp --with-64 --with-lfs --without-debug --without-boost --without-gbench --without-gui --without-ctools --without-vdb || exit $?
+make -j$NCPU || exit $?
+make install 2> /dev/null || sudo make install || exit $?
 cd ../.. || exit $?
-rm -rf ncbi-blast-2.16.0+ || exit $?
-rm -f ncbi-blast-2.16.0+-$ARCH-linux.tar.gz || exit $?
+rm -rf ncbi-blast-2.15.0+-src || exit $?
+rm -f ncbi-blast-2.15.0+-src.tar.gz || exit $?
 touch .blast || exit $?
 fi
 # download, compile, and install R and DADA2

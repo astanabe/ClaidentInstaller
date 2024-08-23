@@ -1,4 +1,4 @@
-sudo -E apt -y install libssl-dev gcc g++ gfortran make autoconf automake zlib1g-dev libbz2-dev liblzma-dev libreadline-dev libpcre2-dev libjpeg-dev libpng-dev libcairo2-dev libpango1.0-dev libtiff-dev tcl-dev tk-dev tar gzip bzip2 xz-utils pigz lbzip2 unzip coreutils grep perl libdbi-perl libdbd-sqlite3-perl libwww-perl libfile-copy-recursive-perl libmath-basecnv-perl libopenblas-serial-dev libopenblas64-serial-dev libcurl4-openssl-dev libxml2-dev imagemagick git fonts-noto aria2 || exit $?
+sudo -E apt -y install build-essential curl libidn12 libnet-perl wget libsqlite3-dev cmake libgomp1 libssl-dev liblmdb-dev liblmdb++-dev gcc g++ gfortran make autoconf automake zlib1g-dev libbz2-dev liblzma-dev libreadline-dev libpcre2-dev libjpeg-dev libpng-dev libcairo2-dev libpango1.0-dev libtiff-dev tcl-dev tk-dev tar gzip bzip2 xz-utils pigz lbzip2 unzip coreutils grep perl libdbi-perl libdbd-sqlite3-perl libwww-perl libfile-copy-recursive-perl libmath-basecnv-perl libopenblas-serial-dev libopenblas64-serial-dev libcurl4-openssl-dev libxml2-dev imagemagick git fonts-noto aria2 || exit $?
 if test -z $PREFIX; then
 PREFIX=/usr/local || exit $?
 fi
@@ -74,19 +74,15 @@ touch .vsearch5d || exit $?
 fi
 # download, and install BLAST+
 if ! test -e .blast; then
-if test `uname -m` = 'x86_64'; then
-ARCH=x64
-elif test `uname -m` = 'aarch64'; then
-ARCH=aarch64
-fi
-wget -c https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.16.0/ncbi-blast-2.16.0+-$ARCH-linux.tar.gz || exit $?
-tar -xzf ncbi-blast-2.16.0+-$ARCH-linux.tar.gz || exit $?
-cd ncbi-blast-2.16.0+/bin || exit $?
-mkdir -p $PREFIX/share/claident/bin 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/bin || exit $?
-mv -f * $PREFIX/share/claident/bin/ 2> /dev/null || sudo mv -f * $PREFIX/share/claident/bin/ || exit $?
+wget -c https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.15.0/ncbi-blast-2.15.0+-src.tar.gz || exit $?
+tar -xzf ncbi-blast-2.15.0+-src.tar.gz || exit $?
+cd ncbi-blast-2.15.0+-src/c++ || exit $?
+./configure.orig --prefix=$PREFIX/share/claident --with-build-root=./ReleaseMT --with-bin-release --without-strip --with-experimental=Int8GI --without-libunwind --with-mt --with-openmp --with-64 --with-lfs --without-debug --without-boost --without-gbench --without-gui --without-ctools --without-vdb || exit $?
+make -j$NCPU || exit $?
+make install 2> /dev/null || sudo make install || exit $?
 cd ../.. || exit $?
-rm -rf ncbi-blast-2.16.0+ || exit $?
-rm -f ncbi-blast-2.16.0+-$ARCH-linux.tar.gz || exit $?
+rm -rf ncbi-blast-2.15.0+-src || exit $?
+rm -f ncbi-blast-2.15.0+-src.tar.gz || exit $?
 touch .blast || exit $?
 fi
 # download, compile, and install R and DADA2

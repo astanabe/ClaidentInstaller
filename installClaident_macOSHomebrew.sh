@@ -80,19 +80,15 @@ touch .vsearch5d || exit $?
 fi
 # download, and install BLAST+
 if ! test -e .blast; then
-if test `uname -m` = 'x86_64'; then
-ARCH=x64
-elif test `uname -m` = 'arm64'; then
-ARCH=aarch64
-fi
-wget -c https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.16.0/ncbi-blast-2.16.0+-$ARCH-macosx.tar.gz || exit $?
-gtar -xzf ncbi-blast-2.16.0+-$ARCH-macosx.tar.gz || exit $?
-cd ncbi-blast-2.16.0+/bin || exit $?
-mkdir -p $PREFIX/share/claident/bin 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/bin || exit $?
-mv -f * $PREFIX/share/claident/bin/ 2> /dev/null || sudo mv -f * $PREFIX/share/claident/bin/ || exit $?
+wget -c https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.15.0/ncbi-blast-2.15.0+-src.tar.gz || exit $?
+gtar -xzf ncbi-blast-2.15.0+-src.tar.gz || exit $?
+cd ncbi-blast-2.15.0+-src/c++ || exit $?
+./configure.orig --prefix=$PREFIX/share/claident --with-build-root=./ReleaseMT --with-bin-release --without-strip --with-experimental=Int8GI --without-libunwind --with-mt --with-openmp --with-64 --with-lfs --without-debug --without-boost --without-gbench --without-gui --without-ctools --without-vdb || exit $?
+gmake -j$NCPU || exit $?
+gmake install 2> /dev/null || sudo gmake install || exit $?
 cd ../.. || exit $?
-rm -rf ncbi-blast-2.16.0+ || exit $?
-rm -f ncbi-blast-2.16.0+-$ARCH-macosx.tar.gz || exit $?
+rm -rf ncbi-blast-2.15.0+-src || exit $?
+rm -f ncbi-blast-2.15.0+-src.tar.gz || exit $?
 touch .blast || exit $?
 fi
 # download, compile, and install R and DADA2
