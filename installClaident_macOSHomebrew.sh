@@ -83,7 +83,7 @@ if ! test -e .blast; then
 wget -c https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.15.0/ncbi-blast-2.15.0+-src.tar.gz || exit $?
 gtar -xzf ncbi-blast-2.15.0+-src.tar.gz || exit $?
 cd ncbi-blast-2.15.0+-src/c++ || exit $?
-./configure.orig --prefix=$PREFIX/share/claident --with-build-root=./ReleaseMT --with-bin-release --without-strip --with-experimental=Int8GI --without-libunwind --with-mt --with-openmp --with-64 --with-lfs --without-debug --without-boost --without-gbench --without-gui --without-ctools --without-vdb || exit $?
+./configure.orig --prefix=$PREFIX/share/claident --with-build-root=./ReleaseMT --with-bin-release --with-strip --with-optimization --with-flat-makefile --with-experimental=Int8GI --without-libunwind --with-mt --with-openmp --with-64 --with-lfs --without-debug --without-boost --without-gbench --without-gui --without-ctools --without-vdb || exit $?
 gmake -j$NCPU || exit $?
 gmake install 2> /dev/null || sudo gmake install || exit $?
 cd ../.. || exit $?
