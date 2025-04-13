@@ -1,7 +1,8 @@
-sudo -E port -N install openssl pkgconfig gmake gcc14 libgcc14 llvm-18 clang-18 libcxx xar coreutils grep wget unzip gnutar xz zlib gzip bzip2 pigz lbzip2 lmdb autoconf automake OpenBLAS pcre2 readline jpeg libpng cairo pango gettext tiff libxml2 tcl tk ImageMagick git curl aria2 || exit $?
+sudo -E port -N install openssl pkgconfig gmake gcc14 libgcc14 llvm-18 clang-18 libcxx xar coreutils grep wget unzip gnutar xz zlib gzip bzip2 pigz pbzip2 lbzip2 lmdb autoconf automake OpenBLAS pcre2 readline jpeg libpng cairo pango gettext tiff libxml2 tcl tk ImageMagick git curl aria2 || exit $?
 if test -z $PREFIX; then
 PREFIX=/usr/local || exit $?
 fi
+mkdir -p $PREFIX || sudo mkdir -p $PREFIX || exit $?
 # download, compile, and install Perl modules
 if ! test -e .perlmodules; then
 wget http://xrl.us/cpanm || exit $?

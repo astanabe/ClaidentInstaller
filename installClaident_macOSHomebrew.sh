@@ -1,7 +1,8 @@
-brew install openssl make gcc coreutils grep wget unzip gnu-tar gzip xz zlib bzip2 pigz lbzip2 lmdb autoconf automake pkg-config readline pcre2 jpeg libpng cairo pango gettext libtiff tcl-tk openblas libxml2 imagemagick git curl aria2 || brew install --build-from-source openssl make gcc coreutils grep wget unzip gnu-tar gzip xz zlib bzip2 pigz lbzip2 lmdb autoconf automake pkg-config readline pcre2 jpeg libpng cairo pango gettext libtiff tcl-tk openblas libxml2 imagemagick git curl aria2 || exit $?
+brew install openssl make gcc coreutils grep wget unzip gnu-tar gzip xz zlib bzip2 pigz pbzip2 lbzip2 lmdb autoconf automake pkg-config readline pcre2 jpeg libpng cairo pango gettext libtiff tcl-tk openblas libxml2 imagemagick git curl aria2 || brew install --build-from-source openssl make gcc coreutils grep wget unzip gnu-tar gzip xz zlib bzip2 pigz pbzip2 lbzip2 lmdb autoconf automake pkg-config readline pcre2 jpeg libpng cairo pango gettext libtiff tcl-tk openblas libxml2 imagemagick git curl aria2 || exit $?
 if test -z $PREFIX; then
 PREFIX=/usr/local || exit $?
 fi
+mkdir -p $PREFIX || sudo mkdir -p $PREFIX || exit $?
 # download, compile, and install Perl modules
 if ! test -e .perlmodules; then
 wget http://xrl.us/cpanm || exit $?
