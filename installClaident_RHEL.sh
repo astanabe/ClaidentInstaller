@@ -4,24 +4,32 @@ PREFIX=/usr/local || exit $?
 fi
 # install Perl modules
 if ! test -e .perlmodules; then
-sudo -HE sh -c "yes '' | cpan -v" || exit $?
-sudo -HE sh -c "yes '' | cpan -fi Math::BaseCnv Math::CDF" || exit $?
-perl -e 'use Math::BaseCnv;use Math::CDF' || exit $?
+wget http://xrl.us/cpanm || exit $?
+chmod 755 cpanm || exit $?
+if test -w $PREFIX; then
+mkdir -p $PREFIX/share/claident || exit $?
+./cpanm -L $PREFIX/share/claident Math::BaseCnv Math::CDF || exit $?
+else
+sudo -E mkdir -p $PREFIX/share/claident || exit $?
+sudo -E ./cpanm -L $PREFIX/share/claident Math::BaseCnv Math::CDF || exit $?
+fi
+perl -I$PREFIX/share/claident/lib/perl5 -e 'use File::Copy::Recursive;use DBD::SQLite;use Math::BaseCnv;use Math::CDF' || exit $?
+rm -f cpanm || exit $?
 touch .perlmodules || exit $?
 fi
 # set variables
 NCPU=`grep -c processor /proc/cpuinfo`
 # download, and install Claident
 if ! test -e .claident; then
-wget -c https://github.com/astanabe/Claident/archive/v0.9.2024.08.24.tar.gz -O Claident-0.9.2024.08.24.tar.gz || exit $?
-tar -xzf Claident-0.9.2024.08.24.tar.gz || exit $?
-cd Claident-0.9.2024.08.24 || exit $?
+wget -c https://github.com/astanabe/Claident/archive/v0.9.2025.04.13.tar.gz -O Claident-0.9.2025.04.13.tar.gz || exit $?
+tar -xzf Claident-0.9.2025.04.13.tar.gz || exit $?
+cd Claident-0.9.2025.04.13 || exit $?
 make PREFIX=$PREFIX -j$NCPU || exit $?
 make PREFIX=$PREFIX install 2> /dev/null || sudo make PREFIX=$PREFIX install || exit $?
 cp $PREFIX/share/claident/.claident ~/.claident || exit $?
 cd .. || exit $?
-rm -rf Claident-0.9.2024.08.24 || exit $?
-rm -f Claident-0.9.2024.08.24.tar.gz || exit $?
+rm -rf Claident-0.9.2025.04.13 || exit $?
+rm -f Claident-0.9.2025.04.13.tar.gz || exit $?
 touch .claident || exit $?
 fi
 # download, compile, and install Swarm

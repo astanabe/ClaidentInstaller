@@ -4,9 +4,17 @@ PREFIX=/usr/local || exit $?
 fi
 # download, compile, and install Perl modules
 if ! test -e .perlmodules; then
-sudo -HE sh -c "yes '' | cpan -v" || exit $?
-sudo -HE sh -c "yes '' | cpan -fi File::Copy::Recursive DBI DBD::SQLite Math::BaseCnv Math::CDF" || exit $?
-perl -e 'use File::Copy::Recursive;use DBD::SQLite;use Math::BaseCnv;use Math::CDF' || exit $?
+wget http://xrl.us/cpanm || exit $?
+chmod 755 cpanm || exit $?
+if test -w $PREFIX; then
+mkdir -p $PREFIX/share/claident || exit $?
+./cpanm -L $PREFIX/share/claident File::Copy::Recursive DBI DBD::SQLite Math::BaseCnv Math::CDF || exit $?
+else
+sudo -E mkdir -p $PREFIX/share/claident || exit $?
+sudo -E ./cpanm -L $PREFIX/share/claident File::Copy::Recursive DBI DBD::SQLite Math::BaseCnv Math::CDF || exit $?
+fi
+perl -I$PREFIX/share/claident/lib/perl5 -e 'use File::Copy::Recursive;use DBD::SQLite;use Math::BaseCnv;use Math::CDF' || exit $?
+rm -f cpanm || exit $?
 touch .perlmodules || exit $?
 fi
 # set variables
@@ -14,15 +22,15 @@ NCPU=`sysctl -n hw.logicalcpu_max`
 export SDKROOT="$(xcrun --sdk macosx --show-sdk-path)"
 # download, and install Claident
 if ! test -e .claident; then
-wget -c https://github.com/astanabe/Claident/archive/v0.9.2024.08.24.tar.gz -O Claident-0.9.2024.08.24.tar.gz || exit $?
-gtar -xzf Claident-0.9.2024.08.24.tar.gz || exit $?
-cd Claident-0.9.2024.08.24 || exit $?
+wget -c https://github.com/astanabe/Claident/archive/v0.9.2025.04.13.tar.gz -O Claident-0.9.2025.04.13.tar.gz || exit $?
+gtar -xzf Claident-0.9.2025.04.13.tar.gz || exit $?
+cd Claident-0.9.2025.04.13 || exit $?
 gmake PREFIX=$PREFIX -j$NCPU || exit $?
 gmake PREFIX=$PREFIX install 2> /dev/null || sudo gmake PREFIX=$PREFIX install || exit $?
 cp $PREFIX/share/claident/.claident ~/.claident || exit $?
 cd .. || exit $?
-rm -rf Claident-0.9.2024.08.24 || exit $?
-rm -f Claident-0.9.2024.08.24.tar.gz || exit $?
+rm -rf Claident-0.9.2025.04.13 || exit $?
+rm -f Claident-0.9.2025.04.13.tar.gz || exit $?
 touch .claident || exit $?
 fi
 # download, compile, and install Swarm
