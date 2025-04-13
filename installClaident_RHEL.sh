@@ -102,7 +102,7 @@ cd R-4.4.3 || exit $?
 perl -i -npe 's/^(static int NCONNECTIONS =) \d+/$1 1050/' src/main/connections.c || exit $?
 CFLAGS="-Wno-error=incompatible-pointer-types -Wno-error=implicit-function-declaration -Wno-error=int-conversion" ./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=yes --with-pic --with-x=no --enable-R-shlib=yes --with-blas=-lopenblas --with-lapack || exit $?
 make -j$NCPU || exit $?
-rm -rf $PREFIX/share/claident/lib || sudo rm -rf $PREFIX/share/claident/lib || exit $?
+rm -rf $PREFIX/share/claident/lib/R || sudo rm -rf $PREFIX/share/claident/lib/R || exit $?
 make install-strip 2> /dev/null || sudo make install-strip || exit $?
 cd .. || exit $?
 rm -rf R-4.4.3 || exit $?

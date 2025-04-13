@@ -109,7 +109,7 @@ quadmathlib=`find $HOMEBREW_PREFIX/Cellar -name libquadmath.dylib | sort | tail 
 export CURL_CONFIG=`find $HOMEBREW_PREFIX/Cellar -name curl-config | sort | tail -n 1`
 compiler=clang CC=clang CXX=clang++ FC=`ls -d $HOMEBREW_PREFIX/bin/gfortran-* | ggrep -P '\/gfortran-\d+$' | sort | tail -n 1` OBJC=clang OBJCXX=clang++ CFLAGS="-Wno-error=incompatible-pointer-types -Wno-error=implicit-function-declaration -Wno-error=int-conversion" CPPFLAGS="-I$HOMEBREW_PREFIX/include" LDFLAGS="-L$HOMEBREW_PREFIX/lib -L$quadmathlib" FCFLAGS="-static-libgfortran -static-libquadmath" ./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=yes --with-pic --with-x=no --with-aqua=no --enable-R-shlib=yes --with-tcl-config=$tclconfig --with-tk-config=$tkconfig --with-libintl-prefix="$intlprefix" --with-blas="-L$openblas -lopenblas" --with-lapack || exit $?
 gmake -j$NCPU || exit $?
-rm -rf $PREFIX/share/claident/lib || sudo rm -rf $PREFIX/share/claident/lib || exit $?
+rm -rf $PREFIX/share/claident/lib/R || sudo rm -rf $PREFIX/share/claident/lib/R || exit $?
 gmake install-strip 2> /dev/null || sudo gmake install-strip || exit $?
 cd .. || exit $?
 rm -rf R-4.4.3 || exit $?

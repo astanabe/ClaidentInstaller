@@ -107,7 +107,7 @@ export CURL_CONFIG=`find /opt/local -path /opt/local/var -prune -o -name curl-co
 quadmathlib=`find /opt/local -path /opt/local/var -prune -o -name libquadmath.dylib -print | grep gcc14 | sort | tail -n 1 | perl -npe 's/\/libquadmath\.dylib$//'`
 compiler=clang CC=/opt/local/bin/clang-mp-18 CXX=/opt/local/bin/clang++-mp-18 FC=/opt/local/bin/gfortran-mp-14 OBJC=/opt/local/bin/clang-mp-18 OBJCXX=/opt/local/bin/clang++-mp-18 CFLAGS="-Wno-error=incompatible-pointer-types -Wno-error=implicit-function-declaration -Wno-error=int-conversion" CPPFLAGS="-I/opt/local/include" LDFLAGS="-L/opt/local/lib -L$quadmathlib" FCFLAGS="-static-libgfortran -static-libquadmath" ./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=yes --with-pic --with-x=no --with-aqua=no --enable-R-shlib=yes --with-tcl-config=$tclconfig --with-tk-config=$tkconfig --with-libintl-prefix=/opt/local --with-blas="-lopenblas" --with-lapack || exit $?
 gmake -j$NCPU || exit $?
-rm -rf $PREFIX/share/claident/lib || sudo rm -rf $PREFIX/share/claident/lib || exit $?
+rm -rf $PREFIX/share/claident/lib/R || sudo rm -rf $PREFIX/share/claident/lib/R || exit $?
 gmake install-strip 2> /dev/null || sudo gmake install-strip || exit $?
 cd .. || exit $?
 rm -rf R-4.4.3 || exit $?
