@@ -100,7 +100,7 @@ wget -c https://cran.r-project.org/src/base/R-4/R-4.4.3.tar.xz || exit $?
 tar -xJf R-4.4.3.tar.xz || exit $?
 cd R-4.4.3 || exit $?
 perl -i -npe 's/^(static int NCONNECTIONS =) \d+/$1 1050/' src/main/connections.c || exit $?
-./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=yes --with-pic --with-x=no --enable-R-shlib=yes --with-blas=-lopenblas --with-lapack || exit $?
+CFLAGS="-Wno-error=incompatible-pointer-types -Wno-error=implicit-function-declaration -Wno-error=int-conversion" ./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=yes --with-pic --with-x=no --enable-R-shlib=yes --with-blas=-lopenblas --with-lapack || exit $?
 make -j$NCPU || exit $?
 rm -rf $PREFIX/share/claident/lib || sudo rm -rf $PREFIX/share/claident/lib || exit $?
 make install-strip 2> /dev/null || sudo make install-strip || exit $?
@@ -108,10 +108,10 @@ cd .. || exit $?
 rm -rf R-4.4.3 || exit $?
 if test -w $PREFIX/share/claident/lib/R; then
 $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages(c("RcppParallel","foreach","doParallel","htmlwidgets","wordcloud2","ggplot2","vegan","remotes"),repos="https://cloud.r-project.org/",clean=T,Ncpus=detectCores(),upgrade="never")' || exit $?
-$PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);library(remotes);install_bioc(c("3.20/BiocParallel","3.20/Rhtslib","3.20/Rsamtools","3.20/ShortRead","3.20/dada2"),clean=T,Ncpus=detectCores(),upgrade="always")' || exit $?
+$PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);library(remotes);install_bioc(c("3.20/BiocParallel","3.20/Rhtslib","3.20/Rsamtools","3.20/Biostrings","3.20/pwalign","3.20/ShortRead","3.20/dada2"),clean=T,Ncpus=detectCores(),upgrade="always")' || exit $?
 else
 sudo -E $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages(c("RcppParallel","foreach","doParallel","htmlwidgets","wordcloud2","ggplot2","vegan","remotes"),repos="https://cloud.r-project.org/",clean=T,Ncpus=detectCores(),upgrade="never")' || exit $?
-sudo -E $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);library(remotes);install_bioc(c("3.20/BiocParallel","3.20/Rhtslib","3.20/Rsamtools","3.20/ShortRead","3.20/dada2"),clean=T,Ncpus=detectCores(),upgrade="always")' || exit $?
+sudo -E $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);library(remotes);install_bioc(c("3.20/BiocParallel","3.20/Rhtslib","3.20/Rsamtools","3.20/Biostrings","3.20/pwalign","3.20/ShortRead","3.20/dada2"),clean=T,Ncpus=detectCores(),upgrade="always")' || exit $?
 fi
 $PREFIX/share/claident/bin/R --vanilla -e 'library(RcppParallel);library(foreach);library(doParallel);library(htmlwidgets);library(wordcloud2);library(ggplot2);library(vegan);library(dada2)' || exit $?
 rm -f R-4.4.3.tar.xz || exit $?

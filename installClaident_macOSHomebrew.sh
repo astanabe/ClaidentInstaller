@@ -107,7 +107,7 @@ intlprefix=`find $HOMEBREW_PREFIX/Cellar -name libintl.dylib | sort | tail -n 1 
 openblas=`find $HOMEBREW_PREFIX/Cellar -name libopenblas.dylib | sort | tail -n 1 | perl -npe 's/\/libopenblas\.dylib$//'`
 quadmathlib=`find $HOMEBREW_PREFIX/Cellar -name libquadmath.dylib | sort | tail -n 1 | perl -npe 's/\/libquadmath\.dylib$//'`
 export CURL_CONFIG=`find $HOMEBREW_PREFIX/Cellar -name curl-config | sort | tail -n 1`
-compiler=clang CC=clang CXX=clang++ FC=`ls -d $HOMEBREW_PREFIX/bin/gfortran-* | ggrep -P '\/gfortran-\d+$' | sort | tail -n 1` OBJC=clang OBJCXX=clang++ CFLAGS="-Wno-error=incompatible-pointer-types" CPPFLAGS="-I$HOMEBREW_PREFIX/include" LDFLAGS="-L$HOMEBREW_PREFIX/lib -L$quadmathlib" FCFLAGS="-static-libgfortran -static-libquadmath" ./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=yes --with-pic --with-x=no --with-aqua=no --enable-R-shlib=yes --with-tcl-config=$tclconfig --with-tk-config=$tkconfig --with-libintl-prefix="$intlprefix" --with-blas="-L$openblas -lopenblas" --with-lapack || exit $?
+compiler=clang CC=clang CXX=clang++ FC=`ls -d $HOMEBREW_PREFIX/bin/gfortran-* | ggrep -P '\/gfortran-\d+$' | sort | tail -n 1` OBJC=clang OBJCXX=clang++ CFLAGS="-Wno-error=incompatible-pointer-types -Wno-error=implicit-function-declaration -Wno-error=int-conversion" CPPFLAGS="-I$HOMEBREW_PREFIX/include" LDFLAGS="-L$HOMEBREW_PREFIX/lib -L$quadmathlib" FCFLAGS="-static-libgfortran -static-libquadmath" ./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=yes --with-pic --with-x=no --with-aqua=no --enable-R-shlib=yes --with-tcl-config=$tclconfig --with-tk-config=$tkconfig --with-libintl-prefix="$intlprefix" --with-blas="-L$openblas -lopenblas" --with-lapack || exit $?
 gmake -j$NCPU || exit $?
 rm -rf $PREFIX/share/claident/lib || sudo rm -rf $PREFIX/share/claident/lib || exit $?
 gmake install-strip 2> /dev/null || sudo gmake install-strip || exit $?
@@ -115,10 +115,10 @@ cd .. || exit $?
 rm -rf R-4.4.3 || exit $?
 if test -w $PREFIX/share/claident/lib/R; then
 $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages(c("RcppParallel","foreach","doParallel","htmlwidgets","wordcloud2","ggplot2","vegan","remotes"),repos="https://cloud.r-project.org/",clean=T,Ncpus=detectCores(),upgrade="never")' || exit $?
-$PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);library(remotes);install_bioc(c("3.20/BiocParallel","3.20/Rhtslib","3.20/Rsamtools","3.20/ShortRead","3.20/dada2"),clean=T,Ncpus=detectCores(),upgrade="always")' || exit $?
+$PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);library(remotes);install_bioc(c("3.20/BiocParallel","3.20/Rhtslib","3.20/Rsamtools","3.20/Biostrings","3.20/pwalign","3.20/ShortRead","3.20/dada2"),clean=T,Ncpus=detectCores(),upgrade="always")' || exit $?
 else
 sudo -E $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);install.packages(c("RcppParallel","foreach","doParallel","htmlwidgets","wordcloud2","ggplot2","vegan","remotes"),repos="https://cloud.r-project.org/",clean=T,Ncpus=detectCores(),upgrade="never")' || exit $?
-sudo -E $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);library(remotes);install_bioc(c("3.20/BiocParallel","3.20/Rhtslib","3.20/Rsamtools","3.20/ShortRead","3.20/dada2"),clean=T,Ncpus=detectCores(),upgrade="always")' || exit $?
+sudo -E $PREFIX/share/claident/bin/R --vanilla -e 'options(download.file.method="wget");library(parallel);library(remotes);install_bioc(c("3.20/BiocParallel","3.20/Rhtslib","3.20/Rsamtools","3.20/Biostrings","3.20/pwalign","3.20/ShortRead","3.20/dada2"),clean=T,Ncpus=detectCores(),upgrade="always")' || exit $?
 fi
 $PREFIX/share/claident/bin/R --vanilla -e 'library(RcppParallel);library(foreach);library(doParallel);library(htmlwidgets);library(wordcloud2);library(ggplot2);library(vegan);library(dada2)' || exit $?
 rm -f R-4.4.3.tar.xz || exit $?
