@@ -23,15 +23,15 @@ NCPU=`sysctl -n hw.logicalcpu_max`
 export SDKROOT="$(xcrun --sdk macosx --show-sdk-path)"
 # download, and install Claident
 if ! test -e .claident; then
-wget -c https://github.com/astanabe/Claident/archive/v0.9.2025.04.13.tar.gz -O Claident-0.9.2025.04.13.tar.gz || exit $?
-gtar -xzf Claident-0.9.2025.04.13.tar.gz || exit $?
-cd Claident-0.9.2025.04.13 || exit $?
+wget -c https://github.com/astanabe/Claident/archive/v0.9.2025.05.07.tar.gz -O Claident-0.9.2025.05.07.tar.gz || exit $?
+gtar -xzf Claident-0.9.2025.05.07.tar.gz || exit $?
+cd Claident-0.9.2025.05.07 || exit $?
 gmake PREFIX=$PREFIX -j$NCPU || exit $?
 gmake PREFIX=$PREFIX install 2> /dev/null || sudo gmake PREFIX=$PREFIX install || exit $?
 cp $PREFIX/share/claident/.claident ~/.claident || exit $?
 cd .. || exit $?
-rm -rf Claident-0.9.2025.04.13 || exit $?
-rm -f Claident-0.9.2025.04.13.tar.gz || exit $?
+rm -rf Claident-0.9.2025.05.07 || exit $?
+rm -f Claident-0.9.2025.05.07.tar.gz || exit $?
 touch .claident || exit $?
 fi
 # download, compile, and install Swarm
