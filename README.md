@@ -53,6 +53,29 @@ In addition, mac users also need to install 1 of the following package manager.
 - [MacPorts](https://www.macports.org/install.php)
 - [Homebrew](https://brew.sh/)
 
+If you want to generate wordcloud of community composition by using "clplotwordcloud" command, Google Chrome or Chromium is also required.
+On Debian GNU/Linux compatible distributions, the following commands will install Google Chrome to your machines.
+
+```
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo dpkg -i google-chrome-stable_current_amd64.deb
+sudo apt --fix-broken install
+sudo dpkg -i google-chrome-stable_current_amd64.deb
+```
+
+On Red Hat Enterprise Linux compatible distributions, use the following commands to install Google Chrome.
+
+```
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
+sudo dnf localinstall google-chrome-stable_current_x86_64.rpm
+```
+
+On macOS, download installer from [Google](https://www.google.com/chrome), install Google Chrome, and execute the following command in the terminal before running "clplotwordcloud" command.
+
+```
+alias google-chrome='/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
+```
+
 ## How to use
 
 ```
