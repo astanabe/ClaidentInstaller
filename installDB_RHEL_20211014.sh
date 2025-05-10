@@ -3,11 +3,11 @@ export PREFIX=/usr/local || exit $?
 fi
 # download, check, and install BLAST and taxonomy databases
 if ! test -e .taxdb; then
-aria2c -c https://www.claident.org/TAXDBURL.txt.xz || exit $?
-rm -f TAXDBURL.txt || exit $?
-xz -d TAXDBURL.txt.xz || exit $?
-aria2c -c -i TAXDBURL.txt -j 3 -x 1 --max-overall-download-limit=50M || exit $?
-rm -f TAXDBURL.txt || exit $?
+aria2c -c https://www.claident.org/TAXDBURL_20211014.txt.xz || exit $?
+rm -f TAXDBURL_20211014.txt || exit $?
+xz -d TAXDBURL_20211014.txt.xz || exit $?
+aria2c -c -i TAXDBURL_20211014.txt -j 3 -x 1 --max-overall-download-limit=50M || exit $?
+rm -f TAXDBURL_20211014.txt || exit $?
 ls *.sha256 | xargs -P 4 -I {} sh -c 'sha256sum -c {} || exit $?' || exit $?
 ls *.tar.xz | xargs -P 4 -I {} sh -c 'tar -xJf {} || exit $?' || exit $?
 mkdir -p $PREFIX/share/claident/taxdb 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/taxdb || exit $?
@@ -166,11 +166,11 @@ echo 'The taxonomy databases were installed correctly!'
 fi
 # download, check, and install BLAST databases
 if ! test -e .blastdb; then
-aria2c -c https://www.claident.org/BLASTDBURL.txt.xz || exit $?
-rm -f BLASTDBURL.txt || exit $?
-xz -d BLASTDBURL.txt.xz || exit $?
-aria2c -c -i BLASTDBURL.txt -j 3 -x 1 --max-overall-download-limit=50M || exit $?
-rm -f BLASTDBURL.txt || exit $?
+aria2c -c https://www.claident.org/BLASTDBURL_20211014.txt.xz || exit $?
+rm -f BLASTDBURL_20211014.txt || exit $?
+xz -d BLASTDBURL_20211014.txt.xz || exit $?
+aria2c -c -i BLASTDBURL_20211014.txt -j 3 -x 1 --max-overall-download-limit=50M || exit $?
+rm -f BLASTDBURL_20211014.txt || exit $?
 ls *.sha256 | xargs -P 4 -I {} sh -c 'sha256sum -c {} || exit $?' || exit $?
 ls *.tar.xz | xargs -P 4 -I {} sh -c 'tar -xJf {} || exit $?' || exit $?
 mkdir -p $PREFIX/share/claident/blastdb 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/blastdb || exit $?
