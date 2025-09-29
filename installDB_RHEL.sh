@@ -1,15 +1,29 @@
 if test -z $PREFIX; then
 export PREFIX=/usr/local || exit $?
 fi
-# download, check, and install BLAST and taxonomy databases
+# dowload
+aria2c -c https://github.com/astanabe/ClaidentDB/releases/download/v0.9.2024.03.08/downloadDB-0.9.2024.03.08.sh || exit $?
+sh downloadDB-0.9.2024.03.08.sh || exit $?
+# check and install UCHIME databases
+if ! test -e .cdu; then
+sha256sum -c cdu_20250503.tar.xz.sha256 || exit $?
+tar -xJf cdu_20250503.tar.xz || exit $?
+mkdir -p $PREFIX/share/claident/uchimedb 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/uchimedb || exit $?
+for db in cdu12s cdu16s cducox1 cducytb cdudloop cdumatk cdurbcl cdutrnhpsba
+do
+$PREFIX/share/claident/bin/vsearch --dbmask none --makeudb_usearch $db.fasta --output $db.udb || exit $?
+chmod 644 $db.fasta $db.udb || exit $?
+mv -f $db.fasta $db.udb $PREFIX/share/claident/uchimedb/ 2> /dev/null || sudo mv -f $db.fasta $db.udb $PREFIX/share/claident/uchimedb/ || exit $?
+done
+rm -f cdu_20250503.tar.xz.sha256 || exit $?
+rm -f cdu_20250503.tar.xz || exit $?
+echo 'UCHIME databases were installed correctly!'
+touch .cdu || exit $?
+fi
+# check and install taxonomy databases
 if ! test -e .taxdb; then
-aria2c -c https://www.claident.org/TAXDBURL.txt.xz || exit $?
-rm -f TAXDBURL.txt || exit $?
-xz -d TAXDBURL.txt.xz || exit $?
-aria2c -c -i TAXDBURL.txt -j 3 -x 1 --max-overall-download-limit=50M || exit $?
-rm -f TAXDBURL.txt || exit $?
-ls *.sha256 | xargs -P 4 -I {} sh -c 'sha256sum -c {} || exit $?' || exit $?
-ls *.tar.xz | xargs -P 4 -I {} sh -c 'tar -xJf {} || exit $?' || exit $?
+ls *.taxdb.tar.xz.sha256 | xargs -P 4 -I {} sh -c 'sha256sum -c {} || exit $?' || exit $?
+ls *.taxdb.tar.xz | xargs -P 4 -I {} sh -c 'tar -xJf {} || exit $?' || exit $?
 mkdir -p $PREFIX/share/claident/taxdb 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/taxdb || exit $?
 rm -f $PREFIX/share/claident/taxdb/animals_12S_genus.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_12S_genus.taxdb
 rm -f $PREFIX/share/claident/taxdb/animals_12S_species_wsp.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/animals_12S_species_wsp.taxdb
@@ -159,18 +173,13 @@ rm -f $PREFIX/share/claident/taxdb/overall_species_man.taxdb 2> /dev/null || sud
 rm -f $PREFIX/share/claident/taxdb/overall_species_wosp_man.taxdb 2> /dev/null || sudo rm -f $PREFIX/share/claident/taxdb/overall_species_wosp_man.taxdb
 chmod 666 *.taxdb 2> /dev/null || sudo chmod 666 *.taxdb || exit $?
 mv -f *.taxdb $PREFIX/share/claident/taxdb/ 2> /dev/null || sudo mv -f *.taxdb $PREFIX/share/claident/taxdb/ || exit $?
-rm *.sha256 || exit $?
-rm *.tar.xz || exit $?
+rm *.taxdb.tar.xz.sha256 || exit $?
+rm *.taxdb.tar.xz || exit $?
 touch .taxdb || exit $?
 echo 'The taxonomy databases were installed correctly!'
 fi
-# download, check, and install BLAST databases
+# check and install BLAST databases
 if ! test -e .blastdb; then
-aria2c -c https://www.claident.org/BLASTDBURL.txt.xz || exit $?
-rm -f BLASTDBURL.txt || exit $?
-xz -d BLASTDBURL.txt.xz || exit $?
-aria2c -c -i BLASTDBURL.txt -j 3 -x 1 --max-overall-download-limit=50M || exit $?
-rm -f BLASTDBURL.txt || exit $?
 ls *.sha256 | xargs -P 4 -I {} sh -c 'sha256sum -c {} || exit $?' || exit $?
 ls *.tar.xz | xargs -P 4 -I {} sh -c 'tar -xJf {} || exit $?' || exit $?
 mkdir -p $PREFIX/share/claident/blastdb 2> /dev/null || sudo mkdir -p $PREFIX/share/claident/blastdb || exit $?

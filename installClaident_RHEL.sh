@@ -3,6 +3,7 @@ if test -z $PREFIX; then
 PREFIX=/usr/local || exit $?
 fi
 mkdir -p $PREFIX || sudo mkdir -p $PREFIX || exit $?
+arch=`uname -m`
 # install Perl modules
 if ! test -e .perlmodules; then
 wget -c http://xrl.us/cpanm || exit $?
@@ -83,15 +84,29 @@ touch .vsearch5d || exit $?
 fi
 # download, and install BLAST+
 if ! test -e .blast; then
-wget -c https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.15.0/ncbi-blast-2.15.0+-src.tar.gz || exit $?
-tar -xzf ncbi-blast-2.15.0+-src.tar.gz || exit $?
-cd ncbi-blast-2.15.0+-src/c++ || exit $?
+if test ${arch} -eq 'x86_64'; then
+wget -c https://ftp.ncbi.nih.gov/blast/executables/blast+/2.17.0/ncbi-blast-2.17.0+-x64-linux.tar.gz || exit $?
+tar -xzf ncbi-blast-2.17.0+-x64-linux.tar.gz || exit $?
+mv -f ncbi-blast-2.17.0+/bin/* $PREFIX/share/claident/bin/ 2> /dev/null || sudo mv -f ncbi-blast-2.17.0+/bin/* $PREFIX/share/claident/bin/ || exit $?
+rm -rf ncbi-blast-2.17.0+ || exit $?
+rm -f ncbi-blast-2.17.0+-x64-linux.tar.gz || exit $?
+elif test ${arch} -eq 'aarch64'; then
+wget -c https://ftp.ncbi.nih.gov/blast/executables/blast+/2.17.0/ncbi-blast-2.17.0+-aarch64-linux.tar.gz || exit $?
+tar -xzf ncbi-blast-2.17.0+-aarch64-linux.tar.gz || exit $?
+mv -f ncbi-blast-2.17.0+/bin/* $PREFIX/share/claident/bin/ 2> /dev/null || sudo mv -f ncbi-blast-2.17.0+/bin/* $PREFIX/share/claident/bin/ || exit $?
+rm -rf ncbi-blast-2.17.0+ || exit $?
+rm -f ncbi-blast-2.17.0+-aarch64-linux.tar.gz || exit $?
+else
+wget -c https://ftp.ncbi.nih.gov/blast/executables/blast+/2.17.0/ncbi-blast-2.17.0+-src.tar.gz || exit $?
+tar -xzf ncbi-blast-2.17.0+-src.tar.gz || exit $?
+cd ncbi-blast-2.17.0+-src/c++ || exit $?
 ./configure.orig --prefix=$PREFIX/share/claident --with-build-root=./ReleaseMT --with-bin-release --with-strip --with-optimization --with-experimental=Int8GI --without-libunwind --with-mt --with-openmp --with-64 --with-lfs --without-debug --without-boost --without-gbench --without-gui --without-ctools --without-vdb || exit $?
 make -j$NCPU || exit $?
 make install 2> /dev/null || sudo make install || exit $?
 cd ../.. || exit $?
-rm -rf ncbi-blast-2.15.0+-src || exit $?
-rm -f ncbi-blast-2.15.0+-src.tar.gz || exit $?
+rm -rf ncbi-blast-2.17.0+-src || exit $?
+rm -f ncbi-blast-2.17.0+-src.tar.gz || exit $?
+fi
 touch .blast || exit $?
 fi
 # download, compile, and install R and DADA2

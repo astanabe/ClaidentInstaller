@@ -12,7 +12,7 @@ Running these installer scripts as newly created user is the best solution.
 ## Notice about UCHIMEDB
 
 This installer no longer install SILVA, RDP Gold, DAIRYdb and UNITE databases because their server often down or require manual registration.
-Still, I recommend SILVA SSUParc for prokaryotic 16S, eukaryotic mitochondrial 16S and eukaryotic nuclear 18S (SSU), SILVA LSUParc for prokaryotic 23S and eukaryotic nuclear 28S (LSU), Full UNITE+INSD of all eukaryotes for nuclear ITS.
+Still, I recommend SILVA SSUParc for prokaryotic 16S, eukaryotic mitochondrial 16S and eukaryotic nuclear 18S (SSU), SILVA LSUParc for prokaryotic 23S and eukaryotic nuclear 28S (LSU), Full UNITE+INSD of all eukaryotes for fungal nuclear ITS.
 In order to install FASTA file as UCHIMEDB to your machine, run the following commands AFTER INSTALLATION OF CLAIDENT.
 
 ```
