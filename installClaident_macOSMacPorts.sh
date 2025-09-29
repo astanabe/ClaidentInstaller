@@ -85,13 +85,13 @@ touch .vsearch5d || exit $?
 fi
 # download, and install BLAST+
 if ! test -e .blast; then
-if test ${arch} -eq 'x86_64'; then
+if test ${arch} = 'x86_64'; then
 wget -c https://ftp.ncbi.nih.gov/blast/executables/blast+/2.17.0/ncbi-blast-2.17.0+-x64-macosx.tar.gz || exit $?
 gnutar -xzf ncbi-blast-2.17.0+-x64-macosx.tar.gz || exit $?
 mv -f ncbi-blast-2.17.0+/bin/* $PREFIX/share/claident/bin/ 2> /dev/null || sudo mv -f ncbi-blast-2.17.0+/bin/* $PREFIX/share/claident/bin/ || exit $?
 rm -rf ncbi-blast-2.17.0+ || exit $?
 rm -f ncbi-blast-2.17.0+-x64-macosx.tar.gz || exit $?
-elif test ${arch} -eq 'arm64'; then
+elif test ${arch} = 'arm64'; then
 wget -c https://ftp.ncbi.nih.gov/blast/executables/blast+/2.17.0/ncbi-blast-2.17.0+-aarch64-macosx.tar.gz || exit $?
 gnutar -xzf ncbi-blast-2.17.0+-aarch64-macosx.tar.gz || exit $?
 mv -f ncbi-blast-2.17.0+/bin/* $PREFIX/share/claident/bin/ 2> /dev/null || sudo mv -f ncbi-blast-2.17.0+/bin/* $PREFIX/share/claident/bin/ || exit $?
