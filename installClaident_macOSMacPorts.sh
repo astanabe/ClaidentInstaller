@@ -1,4 +1,4 @@
-sudo -E port -N install openssl pkgconfig gmake gcc14 libgcc14 llvm-18 clang-18 libcxx xar coreutils grep wget unzip gnutar xz zlib gzip bzip2 pigz pbzip2 lbzip2 lmdb autoconf automake OpenBLAS pcre2 readline jpeg libpng cairo pango gettext tiff libxml2 tcl tk ImageMagick git curl aria2 || exit $?
+sudo -E port -N install openssl pkgconfig gmake gcc15 libgcc15 llvm-18 clang-18 libcxx xar coreutils grep wget unzip gnutar xz zlib gzip bzip2 pigz pbzip2 lbzip2 lmdb autoconf automake OpenBLAS pcre2 readline jpeg libpng cairo pango gettext tiff libxml2 tcl tk ImageMagick git curl aria2 || exit $?
 if test -z $PREFIX; then
 PREFIX=/usr/local || exit $?
 fi
@@ -119,8 +119,8 @@ perl -i -npe 's/^(static int NCONNECTIONS =) \d+/$1 1050/' src/main/connections.
 tclconfig=`find /opt/local -path /opt/local/var -prune -o -name tclConfig.sh -print | sort | tail -n 1`
 tkconfig=`find /opt/local -path /opt/local/var -prune -o -name tkConfig.sh -print | sort | tail -n 1`
 export CURL_CONFIG=`find /opt/local -path /opt/local/var -prune -o -name curl-config -print | sort | tail -n 1`
-quadmathlib=`find /opt/local -path /opt/local/var -prune -o -name libquadmath.dylib -print | grep gcc14 | sort | tail -n 1 | perl -npe 's/\/libquadmath\.dylib$//'`
-compiler=clang CC=/opt/local/bin/clang-mp-18 CXX=/opt/local/bin/clang++-mp-18 FC=/opt/local/bin/gfortran-mp-14 OBJC=/opt/local/bin/clang-mp-18 OBJCXX=/opt/local/bin/clang++-mp-18 CFLAGS="-Wno-error=incompatible-pointer-types -Wno-error=implicit-function-declaration -Wno-error=int-conversion" CPPFLAGS="-I/opt/local/include" LDFLAGS="-L/opt/local/lib -L$quadmathlib" FCFLAGS="-static-libgfortran -static-libquadmath" ./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=yes --with-pic --with-x=no --with-aqua=no --enable-R-shlib=yes --with-tcl-config=$tclconfig --with-tk-config=$tkconfig --with-libintl-prefix=/opt/local --with-blas="-lopenblas" --with-lapack || exit $?
+quadmathlib=`find /opt/local -path /opt/local/var -prune -o -name libquadmath.dylib -print | grep gcc15 | sort | tail -n 1 | perl -npe 's/\/libquadmath\.dylib$//'`
+compiler=clang CC=/opt/local/bin/clang-mp-18 CXX=/opt/local/bin/clang++-mp-18 FC=/opt/local/bin/gfortran-mp-15 OBJC=/opt/local/bin/clang-mp-18 OBJCXX=/opt/local/bin/clang++-mp-18 CFLAGS="-Wno-error=incompatible-pointer-types -Wno-error=implicit-function-declaration -Wno-error=int-conversion" CPPFLAGS="-I/opt/local/include" LDFLAGS="-L/opt/local/lib -L$quadmathlib" FCFLAGS="-static-libgfortran -static-libquadmath" ./configure --prefix=$PREFIX/share/claident --enable-java=no --with-recommended-packages=yes --with-pic --with-x=no --with-aqua=no --enable-R-shlib=yes --with-tcl-config=$tclconfig --with-tk-config=$tkconfig --with-libintl-prefix=/opt/local --with-blas="-lopenblas" --with-lapack || exit $?
 gmake -j$NCPU || exit $?
 rm -rf $PREFIX/share/claident/lib/R || sudo rm -rf $PREFIX/share/claident/lib/R || exit $?
 gmake install-strip 2> /dev/null || sudo gmake install-strip || exit $?
