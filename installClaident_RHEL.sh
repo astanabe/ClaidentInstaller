@@ -23,15 +23,15 @@ fi
 NCPU=`grep -c processor /proc/cpuinfo`
 # download, and install Claident
 if ! test -e .claident; then
-wget -c https://github.com/astanabe/Claident/archive/v0.9.2025.05.10.tar.gz -O Claident-0.9.2025.05.10.tar.gz || exit $?
-tar -xzf Claident-0.9.2025.05.10.tar.gz || exit $?
-cd Claident-0.9.2025.05.10 || exit $?
+wget -c https://github.com/astanabe/Claident/archive/v0.9.2025.09.29.tar.gz -O Claident-0.9.2025.09.29.tar.gz || exit $?
+tar -xzf Claident-0.9.2025.09.29.tar.gz || exit $?
+cd Claident-0.9.2025.09.29 || exit $?
 make PREFIX=$PREFIX -j$NCPU || exit $?
 make PREFIX=$PREFIX install 2> /dev/null || sudo make PREFIX=$PREFIX install || exit $?
 cp $PREFIX/share/claident/.claident ~/.claident || exit $?
 cd .. || exit $?
-rm -rf Claident-0.9.2025.05.10 || exit $?
-rm -f Claident-0.9.2025.05.10.tar.gz || exit $?
+rm -rf Claident-0.9.2025.09.29 || exit $?
+rm -f Claident-0.9.2025.09.29.tar.gz || exit $?
 touch .claident || exit $?
 fi
 # download, compile, and install Swarm
